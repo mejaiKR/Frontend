@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
+import React, { useState } from "react";
 export default function Home() {
-  const [isSearchVisible, setIsSearchVisible] = useState(false)
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-7xl mb-6 font-mono">
@@ -49,5 +49,5 @@ export default function Home() {
         </div>
       </form>
     </div>
-  )
+  );
 }
