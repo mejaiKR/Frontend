@@ -13,13 +13,13 @@ export default function Mejais({ index }: { index: number }) {
         className="w-auto h-auto"
       />
       <span
-        className="absolute top-2 right-0 text-white text-lg"
+        className="absolute top-1.5 right-0 text-white text-lg"
         style={{
           textShadow:
             "2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000",
         }}
       >
-        {20}
+        {index + 1}
       </span>
     </div>
   );
