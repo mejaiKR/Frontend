@@ -1,26 +1,31 @@
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+
 import Image from "next/image";
-import React from "react";
 
 export default function Mejais({ index }: { index: number }) {
   return (
-    <div className="relative m-0.5">
-      <Image
-        key={index}
-        src="/mejai.png"
-        alt="Mejai's Soulstealer"
-        width={40}
-        height={40}
-        className="w-auto h-auto"
-      />
-      <span
-        className="absolute top-1.5 right-0 text-white text-lg"
-        style={{
-          textShadow:
-            "2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000",
-        }}
-      >
-        {index + 1}
-      </span>
-    </div>
+    <>
+      <HoverCard openDelay={0} closeDelay={0}>
+        <HoverCardTrigger>
+          <div className="relative m-0.5">
+            <Image
+              key={index}
+              src="/mejai.png"
+              alt="Mejai's Soulstealer"
+              width={40}
+              height={40}
+              className="w-auto h-auto"
+            />
+          </div>
+        </HoverCardTrigger>
+        <HoverCardContent className="HoverCardContent">
+          1월 27일 3승 3패
+        </HoverCardContent>
+      </HoverCard>
+    </>
   );
 }
