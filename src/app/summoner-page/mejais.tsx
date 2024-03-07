@@ -9,6 +9,7 @@ import Image from "next/image";
 export default function Mejais({ index }: { index: number }) {
   return (
     <>
+    {index % 3 === 0 ?
       <HoverCard openDelay={0} closeDelay={0}>
         <HoverCardTrigger>
           <div className="relative m-0.5">
@@ -19,13 +20,24 @@ export default function Mejais({ index }: { index: number }) {
               width={40}
               height={40}
               className="w-auto h-auto"
-            />
+              />
           </div>
         </HoverCardTrigger>
         <HoverCardContent className="HoverCardContent">
           1월 27일 3승 3패
         </HoverCardContent>
       </HoverCard>
+      : <div className="relative m-0.5">
+      <Image
+        key={index}
+        src="/empty-item.png"
+        alt="Mejai's Soulstealer"
+        width={40}
+        height={40}
+        className="w-auto h-auto"
+        />
+    </div>
+            }
     </>
   );
 }
