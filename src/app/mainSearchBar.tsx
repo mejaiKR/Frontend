@@ -1,20 +1,25 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+import { FormEvent, useRef } from "react";
 
 export default function MainSearchBar() {
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null); // 입력 필드 참조 생성
 
   const handleSubmit = (event: FormEvent) => {
-    // 폼의 기본 제출 동작을 방지
     event.preventDefault();
 
-    // 사용자가 입력한 검색어를 가져옴
-    const searchTerm = event.target.elements["default-search"].value;
+    // useRef를 사용하여 입력 필드에서 검색어를 가져옴
+    const searchTerm = inputRef.current?.value;
 
-    // 검색어를 이용하여 원하는 경로로 이동 (예: /search 페이지, 검색어를 쿼리 파라미터로 포함)
-    router.push(`/summoner-page?nickname=${encodeURIComponent(searchTerm)}`);
+    if (searchTerm) {
+      router.push(`/summoner-page?nickname=${encodeURIComponent(searchTerm)}`);
+      // 검색 후 입력 필드 초기화
+      inputRef.current.value = "";
+      // input 태그 focus 해제
+      inputRef.current.blur();
+    }
   };
 
   return (
@@ -43,6 +48,7 @@ export default function MainSearchBar() {
         <input
           type="search"
           id="default-search"
+          ref={inputRef}
           pattern="^[A-Za-z가-힣0-9]+#[A-Za-z가-힣0-9]+$"
           className="block w-full p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="소환사명#태그"
