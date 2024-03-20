@@ -14,7 +14,7 @@ export default function NavSearchBar() {
     const searchTerm = inputRef.current?.value;
 
     if (searchTerm) {
-      router.push(`/summoner-page?query=${encodeURIComponent(searchTerm)}`);
+      router.push(`/summoner-page?nickname=${encodeURIComponent(searchTerm)}`);
       // 검색 후 입력 필드 초기화
       inputRef.current.value = "";
       // input 태그 focus 해제
@@ -48,6 +48,7 @@ export default function NavSearchBar() {
         <input
           type="search"
           id="default-search"
+          pattern="^[A-Za-z가-힣0-9]+#[A-Za-z가-힣0-9]+$"
           ref={inputRef}
           className="block w-full p-2 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="소환사명#태그"
