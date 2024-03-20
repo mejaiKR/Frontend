@@ -1,21 +1,22 @@
-import Image from 'next/image'
-import { ModeToggle } from '@/app/mode-toggle'
-import React from 'react'
-import NavSearchBar from '@/app/nav-search-bar'
+import Image from "next/image";
+import { ModeToggle } from "@/app/mode-toggle";
+import React from "react";
+import NavSearchBar from "@/app/nav-search-bar";
+import Link from "next/link";
 
 export default function NavBar() {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
+        <Link
+          href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <Image src="/mejai.png" alt="loading" width={40} height={40} />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="font-[BFL-B] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Mejai.GG
           </span>
-        </a>
+        </Link>
         <NavSearchBar />
         <button
           data-collapse-toggle="navbar-default"
@@ -73,5 +74,5 @@ export default function NavBar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
