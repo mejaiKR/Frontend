@@ -6,7 +6,7 @@ import {
 
 import Image from "next/image";
 
-export default function Mejais({ index }: { index: number }) {
+export default function MejaiBox({ index }: { index: number }) {
   return (
     <>
       {index % 3 === 0 ? (
