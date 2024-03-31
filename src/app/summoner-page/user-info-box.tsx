@@ -1,5 +1,7 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
+import { useQuery } from "react-query";
 
 function ImageSkeleton() {
   return (
@@ -13,14 +15,18 @@ function ImageSkeleton() {
   );
 }
 export default function UserInfoBox() {
+  // 여기서 useQuery사용해서 fetch해야겠다
+  // const { data, isLoading, error } = useQuery("user", async () => {});
+
   return (
     <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      {/*<Image*/}
-      {/*  src="/profileIcon6271.png"*/}
-      {/*  alt="Profile Icon"*/}
-      {/*  width={100}*/}
-      {/*  height={100}*/}
-      {/*/>*/}
+      <Image
+        src="/profileIcon6271.png"
+        alt="Profile Icon"
+        draggable={false}
+        width={100}
+        height={100}
+      />
       <ImageSkeleton />
       <div className="w-60 h-full flex flex-col justify-center ml-4">
         {/*<h1 className="font-bold text-2xl">hide on bush#KR1</h1>*/}

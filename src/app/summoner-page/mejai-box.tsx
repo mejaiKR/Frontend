@@ -15,6 +15,7 @@ export default function MejaiBox({ index }: { index: number }) {
             <div className="relative m-0.5">
               <Image
                 key={index}
+                draggable={false}
                 src="/mejai.png"
                 alt="Mejai's Soulstealer"
                 width={40}
@@ -31,6 +32,7 @@ export default function MejaiBox({ index }: { index: number }) {
         <div className="relative m-0.5">
           <Image
             key={index}
+            draggable={false}
             src="/empty-item.png"
             alt="Mejai's Soulstealer"
             width={40}
