@@ -49,24 +49,33 @@ export default function UserInfoBox() {
   console.log(data);
   return (
     <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <Image
-        src={data.profileIcon}
-        alt="Profile Icon"
-        draggable={false}
-        width={100}
-        height={100}
-      />
-      <div className="w-60 h-full flex flex-col justify-center ml-4">
-        <h1 className="font-bold text-2xl">{data.userName}</h1>
-        <h2>{data.level}</h2>
-        <h3>{data.tier} I</h3>
+      <div className="flex flex-col items-center relative">
+        <Image
+          src={data.profileIcon}
+          alt="Profile Icon"
+          draggable={false}
+          width={100}
+          height={100}
+        />
+        <span className="transform -translate-x-1/2 bg-gray-900 text-white px-2 rounded-full text-xs absolute top-full left-1/2">
+          {data.level}
+        </span>
       </div>
-      {/*<button*/}
-      {/*  type="button"*/}
-      {/*  className="h-10 w-30 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"*/}
-      {/*>*/}
-      {/*  전적 갱신*/}
-      {/*</button>*/}
+      <div className="w-60 h-full flex flex-col justify-center ml-4">
+        <h1 className="font-bold text-2xl">
+          {data.userName}
+          <span className="font-medium text-gray-500"> #{data.tagLine}</span>
+        </h1>
+        <h3>
+          {data.tier} {data.rank}
+        </h3>
+      </div>
+      <button
+        type="button"
+        className="h-10 w-30 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >
+        전적 갱신
+      </button>
       {/*<button*/}
       {/*  type="button"*/}
       {/*  className="h-10 w-30 text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-400 dark:hover:bg-green-500 focus:outline-none dark:focus:ring-green-800"*/}
