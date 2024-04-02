@@ -20,10 +20,11 @@ function ImageSkeleton() {
 
 const fetchUserInfo = async ({ queryKey }) => {
   const [_key, { id, tag }] = queryKey;
+  // if (!id) return null;
   const response = await axios.get(
     `http://localhost:8080/users/profile?id=${id}&tag=${tag}`,
   );
-  return response.data();
+  return response.data;
 };
 
 export default function UserInfoBox() {
@@ -34,6 +35,7 @@ export default function UserInfoBox() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
+    staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
   });
 
   if (isLoading)
@@ -48,16 +50,16 @@ export default function UserInfoBox() {
   return (
     <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Image
-        src="/profileIcon6271.png"
+        src={data.profileIcon}
         alt="Profile Icon"
         draggable={false}
         width={100}
         height={100}
       />
       <div className="w-60 h-full flex flex-col justify-center ml-4">
-        {/*<h1 className="font-bold text-2xl">hide on bush#KR1</h1>*/}
-        {/*<h2>999LV</h2>*/}
-        {/*<h3>CHALLENGER I</h3>*/}
+        <h1 className="font-bold text-2xl">{data.userName}</h1>
+        <h2>{data.level}</h2>
+        <h3>{data.tier} I</h3>
       </div>
       {/*<button*/}
       {/*  type="button"*/}
