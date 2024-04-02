@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function ImageSkeleton() {
   return (
@@ -28,12 +28,11 @@ const fetchUserInfo = async ({ queryKey }) => {
   return response.data;
 };
 
-export default function UserInfoBox() {
+export default function TierBox() {
   const params = useSearchParams(); // useRouter 훅 사용
   const id = params.get("id"); // router.query에서 id와 tag 추출
   const tag = params.get("tag");
 
-  console.log(id, tag);
   const { data, isLoading, error } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
@@ -52,36 +51,24 @@ export default function UserInfoBox() {
   console.log(data);
   return (
     <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className="flex flex-col items-center relative">
+      <div className="flex flex-col items-center">
         <Image
-          src={data.profileIcon}
+          src={data.tierIcon}
           alt="Profile Icon"
           draggable={false}
           width={100}
           height={100}
         />
-        <span className="transform -translate-x-1/2 bg-gray-900 text-white px-2 rounded-full text-xs absolute top-full left-1/2">
-          {data.level}
-        </span>
       </div>
       <div className="w-60 h-full flex flex-col justify-center ml-4">
         <h1 className="font-bold text-2xl">
-          {data.userName}
-          <span className="font-medium text-gray-500"> #{data.tagLine}</span>
+          {data.tier} {data.rank}
         </h1>
+        <h4>{data.leaguePoints}LP</h4>
+        <h5 className="font-light text-gray-500">
+          {data.wins}승 {data.losses}패
+        </h5>
       </div>
-      <button
-        type="button"
-        className="h-10 w-30 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        공유하기
-      </button>
-      {/*<button*/}
-      {/*  type="button"*/}
-      {/*  className="h-10 w-30 text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-400 dark:hover:bg-green-500 focus:outline-none dark:focus:ring-green-800"*/}
-      {/*>*/}
-      {/*  공유하기*/}
-      {/*</button>*/}
     </div>
   );
 }
