@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
-import { useQuery } from "react-query";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 function ImageSkeleton() {
   return (
@@ -14,10 +17,34 @@ function ImageSkeleton() {
     </div>
   );
 }
-export default function UserInfoBox() {
-  // 여기서 useQuery사용해서 fetch해야겠다
-  // const { data, isLoading, error } = useQuery("user", async () => {});
 
+const fetchUserInfo = async ({ queryKey }) => {
+  const [_key, { id, tag }] = queryKey;
+  const response = await axios.get(
+    `http://localhost:8080/users/profile?id=${id}&tag=${tag}`,
+  );
+  return response.data();
+};
+
+export default function UserInfoBox() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const tag = params.get("tag");
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["userInfo", { id, tag }],
+    queryFn: fetchUserInfo,
+  });
+
+  if (isLoading)
+    return (
+      <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <ImageSkeleton />
+        <div className="w-60 h-full flex flex-col justify-center ml-4"></div>
+      </div>
+    );
+  if (error) return <div>Error: {error.message}</div>;
+  console.log(data);
   return (
     <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Image
@@ -27,7 +54,6 @@ export default function UserInfoBox() {
         width={100}
         height={100}
       />
-      <ImageSkeleton />
       <div className="w-60 h-full flex flex-col justify-center ml-4">
         {/*<h1 className="font-bold text-2xl">hide on bush#KR1</h1>*/}
         {/*<h2>999LV</h2>*/}

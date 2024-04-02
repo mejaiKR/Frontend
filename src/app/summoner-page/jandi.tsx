@@ -1,4 +1,4 @@
-import MejaiBox from "@/app/summoner-page/mejai-box";
+import MejaiBox from "@/app/summoner-page/mejaiBox";
 import dayjs from "dayjs";
 import { Button } from "@/components/ui/button";
 // interface MatchData {
