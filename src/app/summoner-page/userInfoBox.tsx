@@ -27,7 +27,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
     staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
-    cacheTime: 1000 * 60 * 15,
+    gcTime: 1000 * 60 * 15,
   });
 
   if (isLoading)
