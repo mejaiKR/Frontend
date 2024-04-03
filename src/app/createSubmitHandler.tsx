@@ -11,14 +11,9 @@ export default function createSubmitHandler(
     let searchTerm = inputRef.current?.value;
     let id, tag;
 
-    if (!searchTerm) {
-      return;
-    }
-
-    if (searchTerm.includes("#") && searchTerm.split("#").length !== 2) {
-      return;
-    }
-
+    // 이거 예외처리 opgg fowkr같은 경우 처리를 안하네 왜지??
+    if (!searchTerm) return;
+    // if (searchTerm.includes("#") && searchTerm.split("#").length !== 2) return;
     if (searchTerm.includes("#")) {
       [id, tag] = searchTerm.split("#");
     } else {
