@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useRef } from "react";
+import { useRef } from "react";
 import createSubmitHandler from "@/app/createSubmitHandler";
 
 export default function MainSearchBar() {

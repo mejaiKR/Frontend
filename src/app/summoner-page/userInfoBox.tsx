@@ -3,10 +3,8 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-import { SERVER_URL } from "@/lib/utils";
+import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
 
 function ImageSkeleton() {
   return (
@@ -20,24 +18,11 @@ function ImageSkeleton() {
   );
 }
 
-const fetchUserInfo = async ({
-  queryKey,
-}: {
-  queryKey: [string, { id: string; tag: string }];
-}) => {
-  const [_key, { id, tag }] = queryKey;
-  const response = await axios.get(
-    `${SERVER_URL}users/profile?id=${id}&tag=${tag}`,
-  );
-  return response.data;
-};
-
-export default function UserInfoBox() {
-  const params = useSearchParams(); // useRouter 훅 사용
-  const id = params.get("id") || ""; // router.query에서 id와 tag 추출
-  const tag = params.get("tag") || "";
-
-  console.log(id, tag);
+interface TierBoxProps {
+  id: string;
+  tag: string;
+}
+export default function UserInfoBox({ id, tag }: TierBoxProps) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
@@ -52,8 +37,17 @@ export default function UserInfoBox() {
         <div className="w-60 h-full flex flex-col justify-center ml-4"></div>
       </div>
     );
-  if (error) return <div>Error: {error.message}</div>;
-  console.log(data);
+  if (error) {
+    return (
+      <div className="h-32 flex justify-center items-center m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <span className="text-xl font-[NETMARBLE-Bold] text-blue-600">
+          {error.response?.status === 404
+            ? "소환사를 찾을 수 없습니다"
+            : error.message}
+        </span>
+      </div>
+    );
+  }
   return (
     <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex flex-col items-center relative">
