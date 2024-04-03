@@ -32,6 +32,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'NETMARBLE-Light', sans-serif;
   }
 
   .dark {
@@ -57,132 +58,50 @@
   }
 
   @font-face {
-    font-family: 'BFL-B';
-    src: url('/fonts/BeaufortforLOL-Bold.otf') format('opentype');
+    font-family: 'BITBIT';
+    src: url('/fonts/DNFBitBitv2.otf') format('opentype');;
+    /*font-style: normal;*/
+    /*font-display: swap;*/
+  }
+
+  @font-face {
+    font-family: 'NETMARBLE-Bold';
+    src: url('/fonts/netmarbleB.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'BFL-BI';
-    src: url('/fonts/BeaufortforLOL-BoldItalic.otf') format('opentype');
-    font-weight: bold;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-H';
-    src: url('/fonts/BeaufortforLOL-Heavy.otf') format('opentype');
-    font-weight: 800;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-HI';
-    src: url('/fonts/BeaufortforLOL-HeavyItalic.otf') format('opentype');
-    font-weight: 800;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-I';
-    src: url('/fonts/BeaufortforLOL-Italic.otf') format('opentype');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-L';
-    src: url('/fonts/BeaufortforLOL-Light.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-LI';
-    src: url('/fonts/BeaufortforLOL-LightItalic.otf') format('opentype');
-    font-weight: 300;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-M';
-    src: url('/fonts/BeaufortforLOL-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-MI';
-    src: url('/fonts/BeaufortforLOL-MediumItalic.otf') format('opentype');
-    font-weight: 500;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'BFL-R';
-    src: url('/fonts/BeaufortforLOL-Regular.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'S-B';
-    src: url('/fonts/Spiegel-Bold.otf') format('opentype');
+    font-family: 'NETMARBLE-Light';
+    src: url('/fonts/netmarbleL.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'S-BI';
-    src: url('/fonts/Spiegel-BoldItalic.otf') format('opentype');
+    font-family: 'NETMARBLE-Medium';
+    src: url('/fonts/netmarbleM.otf') format('opentype');
     font-weight: bold;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'S-R';
-    src: url('/fonts/Spiegel-Regular.otf') format('opentype');
-    font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'S-RI';
-    src: url('/fonts/Spiegel-RegularItalic.otf') format('opentype');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'S-SB';
-    src: url('/fonts/Spiegel-SemiBold.otf') format('opentype');
-    font-weight: 600;
+    font-family: 'WEDRIVEOTF';
+    src: url('/fonts/wedrive(맥용OTF).otf') format('opentype');
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'S-SBI';
-    src: url('/fonts/Spiegel-SemiBoldItalic.otf') format('opentype');
-    font-weight: normal;
+    font-family: 'WEDRIVETTF';
+    src: url('/fonts/wedrive(윈도우용TTF).ttf') format('opentype');
     font-style: normal;
     font-display: swap;
   }
+
 }
 .HoverCardContent {
   width: var(--radix-popover-width);
