@@ -5,6 +5,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getServerUrl() {
-  return "http://localhost:8080";
-}
+export const SERVER_URL = "http://localhost:8080";
