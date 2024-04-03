@@ -32,7 +32,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'NETMARBLE-Light', sans-serif;
+    font-family: 'GMARKET-Medium', sans-serif;
   }
 
   .dark {
@@ -102,6 +102,24 @@
     font-display: swap;
   }
 
+  @font-face {
+    font-family: 'GMARKET-Bold';
+    src: url('/fonts/GmarketSansTTFBold.ttf') format('opentype');
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GMARKET-Light';
+    src: url('/fonts/GmarketSansTTFLight.ttf') format('opentype');
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GMARKET-Medium';
+    src: url('/fonts/GmarketSansTTFMedium.ttf') format('opentype');
+    font-style: normal;
+    font-display: swap;
+  }
 }
 .HoverCardContent {
   width: var(--radix-popover-width);

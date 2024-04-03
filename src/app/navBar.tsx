@@ -19,8 +19,8 @@ export default function NavBar() {
             width={40}
             height={40}
           />
-          <span className="font-[BITBIT] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Mejai.GG
+          <span className="font-[GMARKET-Bold] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            mejai.gg
           </span>
         </Link>
         <NavSearchBar />

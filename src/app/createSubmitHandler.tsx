@@ -1,5 +1,5 @@
 import React, { FormEvent } from "react";
-import { NextRouter } from "next/navigation";
+import { NextRouter } from "next/router";
 
 export default function createSubmitHandler(
   inputRef: React.RefObject<HTMLInputElement>,
