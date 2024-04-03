@@ -5,7 +5,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { getServerUrl } from "@/lib/utils";
 
 function ImageSkeleton() {
   return (
@@ -23,7 +24,7 @@ const fetchUserInfo = async ({ queryKey }) => {
   const [_key, { id, tag }] = queryKey;
   // if (!id) return null;
   const response = await axios.get(
-    `http://localhost:8080/users/profile?id=${id}&tag=${tag}`,
+    `${getServerUrl()}/users/profile?id=${id}&tag=${tag}`,
   );
   return response.data;
 };
