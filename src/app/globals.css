@@ -66,7 +66,7 @@
 
   @font-face {
     font-family: 'NETMARBLE-Bold';
-    src: url('/fonts/netmarbleB.otf') format('opentype');
+    src: url('/fonts/netmarbleB.ttf') format('opentype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -74,7 +74,7 @@
 
   @font-face {
     font-family: 'NETMARBLE-Light';
-    src: url('/fonts/netmarbleL.otf') format('opentype');
+    src: url('/fonts/netmarbleL.ttf') format('opentype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -82,7 +82,7 @@
 
   @font-face {
     font-family: 'NETMARBLE-Medium';
-    src: url('/fonts/netmarbleM.otf') format('opentype');
+    src: url('/fonts/netmarbleM.ttf') format('opentype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
