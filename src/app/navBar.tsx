@@ -12,8 +12,14 @@ export default function NavBar() {
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <Image src="/mejai.png" alt="loading" width={40} height={40} />
-          <span className="font-[BFL-B] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <Image
+            src="/mejai.png"
+            alt="loading"
+            draggable={false}
+            width={40}
+            height={40}
+          />
+          <span className="font-[BITBIT] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Mejai.GG
           </span>
         </Link>
