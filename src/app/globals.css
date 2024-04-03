@@ -59,9 +59,7 @@
 
   @font-face {
     font-family: 'BITBIT';
-    src: url('/fonts/DNFBitBitv2.otf') format('opentype');;
-    /*font-style: normal;*/
-    /*font-display: swap;*/
+    src: url('/fonts/DNFBitBitv2.otf') format('opentype');
   }
 
   @font-face {
@@ -84,20 +82,6 @@
     font-family: 'NETMARBLE-Medium';
     src: url('/fonts/netmarbleM.ttf') format('opentype');
     font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'WEDRIVEOTF';
-    src: url('/fonts/wedrive(맥용OTF).otf') format('opentype');
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'WEDRIVETTF';
-    src: url('/fonts/wedrive(윈도우용TTF).ttf') format('opentype');
     font-style: normal;
     font-display: swap;
   }
