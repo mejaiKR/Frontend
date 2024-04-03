@@ -2,28 +2,12 @@
 
 import React, { FormEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
+import createSubmitHandler from "@/app/createSubmitHandler";
 
 export default function NavSearchBar() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null); // 입력 필드 참조 생성
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-
-    // useRef를 사용하여 입력 필드에서 검색어를 가져옴
-    let searchTerm = inputRef.current?.value;
-    // 태그 없으면 자동으로 #KR1 붙이기
-    if (searchTerm && !searchTerm.includes("#")) {
-      searchTerm += "#KR1";
-    }
-    if (searchTerm) {
-      router.push(`/summoner-page?nickname=${encodeURIComponent(searchTerm)}`);
-      // 검색 후 입력 필드 초기화
-      inputRef.current.value = "";
-      // input 태그 focus 해제
-      inputRef.current.blur();
-    }
-  };
+  const handleSubmit = createSubmitHandler(inputRef, router); // 이벤트 핸들러 함수 생성
 
   return (
     <form className="w-1/2" onSubmit={handleSubmit}>
@@ -51,6 +35,7 @@ export default function NavSearchBar() {
         <input
           type="search"
           id="default-search"
+          maxLength={22}
           ref={inputRef}
           className="block w-full p-2 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="소환사명#태그"

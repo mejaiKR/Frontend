@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { ModeToggle } from "@/app/mode-toggle";
+import { ModeToggle } from "@/app/modeToggle";
 import React from "react";
-import NavSearchBar from "@/app/nav-search-bar";
+import NavSearchBar from "@/app/navSearchBar";
 import Link from "next/link";
 
 export default function NavBar() {
@@ -12,9 +12,15 @@ export default function NavBar() {
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <Image src="/mejai.png" alt="loading" width={40} height={40} />
-          <span className="font-[BFL-B] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Mejai.GG
+          <Image
+            src="/mejai.png"
+            alt="loading"
+            draggable={false}
+            width={40}
+            height={40}
+          />
+          <span className="font-[GMARKET-Bold] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            mejai.gg
           </span>
         </Link>
         <NavSearchBar />
@@ -35,9 +41,9 @@ export default function NavBar() {
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M1 1h15M1 7h15M1 13h15"
             />
           </svg>
