@@ -19,9 +19,12 @@ function ImageSkeleton() {
   );
 }
 
-const fetchUserInfo = async ({ queryKey }) => {
+const fetchUserInfo = async ({
+  queryKey,
+}: {
+  queryKey: [string, { id: string; tag: string }];
+}) => {
   const [_key, { id, tag }] = queryKey;
-  // if (!id) return null;
   const response = await axios.get(
     `http://localhost:8080/users/profile?id=${id}&tag=${tag}`,
   );
@@ -30,8 +33,8 @@ const fetchUserInfo = async ({ queryKey }) => {
 
 export default function UserInfoBox() {
   const params = useSearchParams(); // useRouter 훅 사용
-  const id = params.get("id"); // router.query에서 id와 tag 추출
-  const tag = params.get("tag");
+  const id = params.get("id") || ""; // router.query에서 id와 tag 추출
+  const tag = params.get("tag") || "";
 
   console.log(id, tag);
   const { data, isLoading, error } = useQuery({
@@ -70,12 +73,12 @@ export default function UserInfoBox() {
           <span className="font-medium text-gray-500"> #{data.tagLine}</span>
         </h1>
       </div>
-      <button
-        type="button"
-        className="h-10 w-30 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        공유하기
-      </button>
+      {/*<button*/}
+      {/*  type="button"*/}
+      {/*  className="h-10 w-30 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"*/}
+      {/*>*/}
+      {/*  공유하기*/}
+      {/*</button>*/}
       {/*<button*/}
       {/*  type="button"*/}
       {/*  className="h-10 w-30 text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-400 dark:hover:bg-green-500 focus:outline-none dark:focus:ring-green-800"*/}
