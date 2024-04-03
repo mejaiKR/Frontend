@@ -23,8 +23,10 @@ export default function createSubmitHandler(
 
     if (searchTerm) {
       router.push(`/summoner-page?id=${id}&tag=${tag}`);
-      inputRef.current.value = "";
-      inputRef.current.blur();
+      if (inputRef.current) {
+        inputRef.current.value = "";
+        inputRef.current.blur();
+      }
     }
   };
 }
