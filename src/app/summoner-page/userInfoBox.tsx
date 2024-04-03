@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
+import { AxiosError } from "axios";
 
 function ImageSkeleton() {
   return (
@@ -22,6 +23,7 @@ interface TierBoxProps {
   id: string;
   tag: string;
 }
+
 export default function UserInfoBox({ id, tag }: TierBoxProps) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["userInfo", { id, tag }],
@@ -37,7 +39,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
         <div className="w-60 h-full flex flex-col justify-center ml-4"></div>
       </div>
     );
-  if (error) {
+  if (error instanceof AxiosError) {
     return (
       <div className="h-32 flex justify-center items-center m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <span className="text-xl font-[NETMARBLE-Bold] text-blue-600">
@@ -68,18 +70,6 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
           <span className="font-medium text-gray-500"> #{data.tagLine}</span>
         </h1>
       </div>
-      {/*<button*/}
-      {/*  type="button"*/}
-      {/*  className="h-10 w-30 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"*/}
-      {/*>*/}
-      {/*  공유하기*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  type="button"*/}
-      {/*  className="h-10 w-30 text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-400 dark:hover:bg-green-500 focus:outline-none dark:focus:ring-green-800"*/}
-      {/*>*/}
-      {/*  공유하기*/}
-      {/*</button>*/}
     </div>
   );
 }
