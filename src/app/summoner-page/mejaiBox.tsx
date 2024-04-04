@@ -24,8 +24,9 @@ export default function MejaiBox({ index }: { index: number }) {
               />
             </div>
           </HoverCardTrigger>
-          <HoverCardContent className="HoverCardContent font-[BFL-B]">
-            1월 27일 3승 3패
+          <HoverCardContent className="HoverCardContent flex flex-col items-center justify-center">
+            <p>1월 27일</p>
+            <p>3승 3패</p>
           </HoverCardContent>
         </HoverCard>
       ) : (
