@@ -36,9 +36,9 @@ export default function LazyLoadedMonthMejaiCard({
       {isVisible ? (
         <Card>
           <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
-            <span className="text-4xl font-semibold mb-5">{month}월</span>
             {/* 실제 컴포넌트 로딩 */}
             <MonthMejaiCard month={month} />
+            <span className="text-2xl font-semibold mt-4">{month}월</span>
           </CardContent>
         </Card>
       ) : (
