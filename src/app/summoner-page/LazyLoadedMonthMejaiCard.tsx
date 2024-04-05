@@ -36,7 +36,6 @@ export default function LazyLoadedMonthMejaiCard({
       {isVisible ? (
         <Card>
           <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
-            {/* 실제 컴포넌트 로딩 */}
             <MonthMejaiCard month={month} />
             <span className="text-2xl font-semibold mt-4">{month}월</span>
           </CardContent>
@@ -44,7 +43,7 @@ export default function LazyLoadedMonthMejaiCard({
       ) : (
         <div className="flex justify-center items-center w-[320px] h-[320px]">
           Loading...
-        </div> // 여기에 스피너 컴포넌트를 넣을 수 있습니다.
+        </div>
       )}
     </div>
   );
