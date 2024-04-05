@@ -40,7 +40,7 @@ export default function TierBox({ id, tag }: TierBoxProps) {
   if (error) {
     return (
       <div className="h-32 flex justify-center items-center m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <span className="text-xl font-[NETMARBLE-Bold]"></span>
+        <span className="text-lg font-[NETMARBLE-Bold]"></span>
       </div>
     );
   }
@@ -56,7 +56,7 @@ export default function TierBox({ id, tag }: TierBoxProps) {
         />
       </div>
       <div className="w-60 h-full flex flex-col justify-center ml-4">
-        <h1 className="font-bold text-2xl">
+        <h1 className="font-bold text-xl">
           {data.tier} {data.rank}
         </h1>
         <h4>{data.leaguePoints}LP</h4>

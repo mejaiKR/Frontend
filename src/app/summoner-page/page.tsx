@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
 import ErrorPage from "@/app/summoner-page/errorPage";
-
+import JandiBox from "@/app/summoner-page/jandiBox";
 export default function SummonerPage() {
   const params = useSearchParams(); // useRouter 훅 사용
   const id = params.get("id") || ""; // router.query에서 id와 tag 추출
@@ -27,7 +27,8 @@ export default function SummonerPage() {
     <>
       <UserInfoBox id={id} tag={tag} />
       <TierBox id={id} tag={tag} />
-      <Jandi />
+      <JandiBox />
+      {/*<Jandi />*/}
     </>
   );
 }

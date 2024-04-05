@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function Footer() {
   return (
@@ -21,16 +21,8 @@ export default function Footer() {
               github
             </a>
           </li>
-          <li>
-            <a
-              href="https://github.com/orgs/iburnhub/repositories"
-              className="hover:underline"
-            >
-              Contact
-            </a>
-          </li>
         </ul>
       </div>
     </footer>
-  )
+  );
 }

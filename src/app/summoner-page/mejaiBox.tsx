@@ -5,16 +5,19 @@ import {
 } from "@/components/ui/hover-card";
 
 import Image from "next/image";
+interface MejaiBoxProps {
+  date: string;
+  gameCount: number;
+}
 
-export default function MejaiBox({ index }: { index: number }) {
+export default function MejaiBox({ date, gameCount }: MejaiBoxProps) {
   return (
     <>
-      {index % 3 === 0 ? (
+      {gameCount !== 0 ? (
         <HoverCard openDelay={0} closeDelay={0}>
           <HoverCardTrigger>
             <div className="relative m-0.5">
               <Image
-                key={index}
                 draggable={false}
                 src="/mejai.png"
                 alt="Mejai's Soulstealer"
@@ -24,14 +27,14 @@ export default function MejaiBox({ index }: { index: number }) {
               />
             </div>
           </HoverCardTrigger>
-          <HoverCardContent className="HoverCardContent font-[BFL-B]">
-            1월 27일 3승 3패
+          <HoverCardContent className="HoverCardContent flex flex-col items-center justify-center text-xs">
+            <p>{date}</p>
+            <p>{gameCount}판</p>
           </HoverCardContent>
         </HoverCard>
       ) : (
         <div className="relative m-0.5">
           <Image
-            key={index}
             draggable={false}
             src="/empty-item.png"
             alt="Mejai's Soulstealer"
