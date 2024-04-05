@@ -1,61 +1,34 @@
 "use client";
 
+import React, { useState, useEffect, useRef } from "react";
 import {
   Carousel,
-  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import MejaiBox from "@/app/summoner-page/mejaiBox";
+import LazyLoadedMonthMejaiCard from "@/app/summoner-page/LazyLoadedMonthMejaiCard";
 
 export default function JandiBox() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
+  const nowMonth = new Date().getMonth() + 1;
 
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
   return (
-    <div className=" flex justify-center flex-col items-center">
-      <Carousel setApi={setApi} className="w-full max-w-xs">
+    <div className="flex justify-center flex-col items-center">
+      <Carousel
+        opts={{ align: "center", loop: true, startIndex: nowMonth - 1 }}
+        className="w-full max-w-xs"
+      >
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {Array.from({ length: nowMonth }).map((_, index) => (
             <CarouselItem key={index}>
-              <Card>
-                <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold mb-5">
-                    {index + 1}월
-                  </span>
-                  <div className="grid grid-cols-7 gap-1">
-                    {Array.from({ length: 31 }).map((_, index) => (
-                      <MejaiBox key={index} index={index} />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <LazyLoadedMonthMejaiCard month={index + 1} />
             </CarouselItem>
           ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <div className="py-2 text-center text-sm text-muted-foreground">
-        {current} of {count}
-      </div>
     </div>
   );
 }
