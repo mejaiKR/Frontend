@@ -7,7 +7,7 @@ import { fetchJandi } from "@/app/summoner-page/fetchFunc";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
-interface DayGameData {
+export interface DayGameData {
   date: string;
   gameCount: number;
 }
