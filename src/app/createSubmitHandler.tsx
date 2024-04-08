@@ -1,9 +1,8 @@
 import React, { FormEvent } from "react";
-import { NextRouter } from "next/router";
 
 export default function createSubmitHandler(
   inputRef: React.RefObject<HTMLInputElement>,
-  router: NextRouter,
+  router: any, // 아니이거 router type이 호환이 안되는디??
 ) {
   // 실제 이벤트 핸들러 함수 반환
   return (event: FormEvent) => {
