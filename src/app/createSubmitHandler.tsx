@@ -1,9 +1,8 @@
 import React, { FormEvent } from "react";
-import { NextRouter } from "next/router";
 
 export default function createSubmitHandler(
   inputRef: React.RefObject<HTMLInputElement>,
-  router: NextRouter,
+  router: any, // router 타입이 업데이트시 변경 예정
 ) {
   // 실제 이벤트 핸들러 함수 반환
   return (event: FormEvent) => {
@@ -11,9 +10,7 @@ export default function createSubmitHandler(
     let searchTerm = inputRef.current?.value;
     let id, tag;
 
-    // 이거 예외처리 opgg fowkr같은 경우 처리를 안하네 왜지??
     if (!searchTerm) return;
-    // if (searchTerm.includes("#") && searchTerm.split("#").length !== 2) return;
     if (searchTerm.includes("#")) {
       [id, tag] = searchTerm.split("#");
     } else {

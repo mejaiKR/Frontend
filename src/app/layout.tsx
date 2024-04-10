@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
 import React from "react";
 import Footer from "@/app/footer";
 import NavBar from "@/app/navBar";
-import { QueryClientProvider } from "@tanstack/react-query";
 import ReactQueryProvider from "@/components/reactQueryProvider";
 
 export const metadata: Metadata = {

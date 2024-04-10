@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useRef } from "react";
+import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
 import createSubmitHandler from "@/app/createSubmitHandler";
 
