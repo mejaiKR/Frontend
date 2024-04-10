@@ -1,7 +1,6 @@
 "use client";
 
 import React, { Suspense } from "react";
-// import Jandi from "@/app/summoner-page/jandi";
 import UserInfoBox from "@/app/summoner-page/userInfoBox";
 import TierBox from "@/app/summoner-page/tierBox";
 import { useSearchParams } from "next/navigation";
@@ -29,7 +28,6 @@ function AwaitPage() {
       <UserInfoBox id={id} tag={tag} />
       <TierBox id={id} tag={tag} />
       <JandiBox />
-      {/*<Jandi />*/}
     </>
   );
 }
