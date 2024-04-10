@@ -16,14 +16,21 @@ export const fetchUserInfo = async ({
   return response.data;
 };
 
+type JandiQueryKey = [
+  string,
+  {
+    id: string;
+    tag: string;
+    year: number;
+    month: number;
+  },
+];
+
 export const fetchJandi = async ({
   queryKey,
 }: QueryFunctionContext<QueryKey>) => {
   // queryKey에서 필요한 값을 안전하게 추출
-  const [_key, { id, tag, year, month }] = queryKey as [
-    string,
-    { id: string; tag: string; year: number; month: number },
-  ];
+  const [_key, { id, tag, year, month }] = queryKey as JandiQueryKey;
 
   const response = await axios.get<DayGameData[]>(
     `${SERVER_URL}/users/streak?id=${id}&tag=${tag}&year=${year}&month=${month}`,
