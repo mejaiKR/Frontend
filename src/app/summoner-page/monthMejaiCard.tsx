@@ -12,9 +12,11 @@ export interface DayGameData {
   gameCount: number;
 }
 
-function updateGameCountForMonth(inputData: DayGameData[], month: number) {
-  const year = 2024;
-
+function updateGameCountForMonth(
+  inputData: DayGameData[],
+  year: number,
+  month: number,
+) {
   const startOfMonth = dayjs(new Date(year, month - 1, 1));
   const endOfMonth = dayjs(new Date(year, month, 0));
 
@@ -49,6 +51,7 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
   const params = useSearchParams();
   const id = params.get("id") || "";
   const tag = params.get("tag") || "";
+  let year = 2024;
 
   const { data, error, isLoading } = useQuery<DayGameData[]>({
     queryKey: ["jandi", { id, tag, year: 2024, month: month }],
@@ -59,7 +62,7 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
 
   useEffect(() => {
     if (data) {
-      const updatedData = updateGameCountForMonth(data, month);
+      const updatedData = updateGameCountForMonth(data, year, month);
       setMonthData(updatedData);
       console.log(updatedData);
     }
@@ -74,10 +77,15 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
   if (error instanceof AxiosError) return <div>Error...</div>;
 
   return (
-    <div className="grid grid-cols-7 gap-1">
-      {monthData.map((day, index) => (
-        <MejaiBox key={index} date={day.date} gameCount={day.gameCount} />
-      ))}
+    <div className="flex flex-col items-center">
+      <div className="grid grid-cols-7 gap-1">
+        {monthData.map((day, index) => (
+          <MejaiBox key={index} date={day.date} gameCount={day.gameCount} />
+        ))}
+      </div>
+      <span className="text-2xl font-semibold mt-4">
+        {year}년 {month}월
+      </span>
     </div>
   );
 }
