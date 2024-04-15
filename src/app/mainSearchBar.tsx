@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import createSubmitHandler from "@/app/createSubmitHandler";
 
 export default function MainSearchBar() {
@@ -9,8 +9,12 @@ export default function MainSearchBar() {
   const inputRef = useRef<HTMLInputElement>(null); // 입력 필드 참조 생성
   const handleSubmit = createSubmitHandler(inputRef, router); // 이벤트 핸들러 함수 생성
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
+
   return (
-    <form className="w-1/2" onSubmit={handleSubmit}>
+    <form className="w-3/4" onSubmit={handleSubmit}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
