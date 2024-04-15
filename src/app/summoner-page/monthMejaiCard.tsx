@@ -10,6 +10,7 @@ import { AxiosError } from "axios";
 export interface DayGameData {
   date: string;
   gameCount: number;
+  imageUrl: string;
 }
 
 function updateGameCountForMonth(
@@ -27,6 +28,7 @@ function updateGameCountForMonth(
     daysArray.push({
       date: day.format("YYYY-MM-DD"),
       gameCount: 0,
+      imageUrl: "",
     });
     day = day.add(1, "day");
   }
@@ -36,6 +38,7 @@ function updateGameCountForMonth(
     const index = daysArray.findIndex((day) => day.date === data.date);
     if (index !== -1) {
       daysArray[index].gameCount = data.gameCount;
+      daysArray[index].imageUrl = data.imageUrl;
     }
   });
 
@@ -70,17 +73,24 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center h-[200px] w-[200px]">
+      <div className="flex justify-center items-center h-48 w-48">
         Loading...
       </div>
     );
-  if (error instanceof AxiosError) return <div>Error...</div>;
+  if (error instanceof AxiosError)
+    return <div className="text-red-500 text-center mx-auto">Error...</div>;
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="grid grid-cols-7 gap-1">
+    <div className="flex flex-col items-center w-full">
+      <div className="grid grid-cols-7 gap-1 w-full">
         {monthData.map((day, index) => (
-          <MejaiBox key={index} date={day.date} gameCount={day.gameCount} />
+          <div key={index} className="aspect-w-1 aspect-h-1">
+            <MejaiBox
+              date={day.date}
+              gameCount={day.gameCount}
+              imageUrl={day.imageUrl}
+            />
+          </div>
         ))}
       </div>
       <span className="text-2xl font-semibold mt-4">

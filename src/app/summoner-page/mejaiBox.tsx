@@ -12,9 +12,10 @@ import Image from "next/image";
 interface MejaiBoxProps {
   date: string;
   gameCount: number;
+  imageUrl: string;
 }
 
-export default function MejaiBox({ date, gameCount }: MejaiBoxProps) {
+export default function MejaiBox({ date, gameCount, imageUrl }: MejaiBoxProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -31,14 +32,14 @@ export default function MejaiBox({ date, gameCount }: MejaiBoxProps) {
           closeDelay={0}
         >
           <HoverCardTrigger asChild onClick={handleToggle}>
-            <div className="relative m-0.5">
+            <div className=" m-0.5">
               <Image
                 draggable={false}
-                src="/mejai.png"
+                src={imageUrl}
                 alt="Mejai's Soulstealer"
-                width={40}
-                height={40}
-                className="w-auto h-auto"
+                width={90}
+                height={90}
+                className="w-full h-full"
               />
             </div>
           </HoverCardTrigger>
@@ -53,9 +54,9 @@ export default function MejaiBox({ date, gameCount }: MejaiBoxProps) {
             draggable={false}
             src="/empty-item.png"
             alt="Mejai's Soulstealer"
-            width={40}
-            height={40}
-            className="w-auto h-auto"
+            width={90}
+            height={90}
+            className="w-full h-full"
           />
         </div>
       )}
