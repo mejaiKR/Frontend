@@ -15,7 +15,7 @@ export default function JandiBox() {
     <div className="flex justify-center flex-col items-center">
       <Carousel
         opts={{ align: "center", loop: true, startIndex: nowMonth - 1 }}
-        className="w-2/3 max-w-x flex flex-col "
+        className="w-full max-w-x flex flex-col "
       >
         <CarouselContent>
           {Array.from({ length: nowMonth }).map((_, index) => (
@@ -24,8 +24,8 @@ export default function JandiBox() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {/*<CarouselPrevious />*/}
+        {/*<CarouselNext />*/}
       </Carousel>
     </div>
   );
