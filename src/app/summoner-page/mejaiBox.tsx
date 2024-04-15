@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   HoverCard,
   HoverCardContent,
@@ -5,17 +8,29 @@ import {
 } from "@/components/ui/hover-card";
 
 import Image from "next/image";
+
 interface MejaiBoxProps {
   date: string;
   gameCount: number;
 }
 
 export default function MejaiBox({ date, gameCount }: MejaiBoxProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       {gameCount !== 0 ? (
-        <HoverCard openDelay={0} closeDelay={0}>
-          <HoverCardTrigger>
+        <HoverCard
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          openDelay={0}
+          closeDelay={0}
+        >
+          <HoverCardTrigger asChild onClick={handleToggle}>
             <div className="relative m-0.5">
               <Image
                 draggable={false}
