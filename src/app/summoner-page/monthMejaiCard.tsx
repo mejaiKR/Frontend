@@ -7,6 +7,7 @@ import { fetchJandi } from "@/app/summoner-page/fetchFunc";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
+import Spinner from "@/components/ui/spinner";
 export interface DayGameData {
   date: string;
   gameCount: number;
@@ -96,7 +97,7 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-48 w-48">
-        Loading...
+        <Spinner />
       </div>
     );
   if (error instanceof AxiosError)

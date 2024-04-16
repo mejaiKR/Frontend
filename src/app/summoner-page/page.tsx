@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
 import ErrorPage from "@/app/summoner-page/errorPage";
 import JandiBox from "@/app/summoner-page/jandiBox";
+import Spinner from "@/components/ui/spinner";
 
 function AwaitPage() {
   const params = useSearchParams();
@@ -25,7 +26,11 @@ function AwaitPage() {
   }
   if (isLoading) {
     // userInfo 로딩하고 나서 그 다음에 jandibox 로딩하게 하자 일단 임시로 로딩박아둠
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
   return (
     <>
