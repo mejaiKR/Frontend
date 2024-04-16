@@ -51,16 +51,17 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     );
   }
   return (
-    <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className="flex flex-col items-center relative">
+    <div className=" h-32 flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className=" flex flex-col justify-center items-center relative">
         <Image
           src={data.profileIcon}
           alt="Profile Icon"
           draggable={false}
-          width={100}
-          height={100}
+          width={90}
+          height={90}
+          className="rounded-2xl"
         />
-        <span className="transform -translate-x-1/2 bg-gray-900 text-white px-2 rounded-full text-xs absolute top-full left-1/2">
+        <span className="transform -translate-x-1/2 -translate-y-2 bg-gray-900 text-white px-2 rounded-full text-xs absolute top-full left-1/2">
           {data.level}
         </span>
       </div>

@@ -27,7 +27,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="w-full max-w-[550px] flex flex-col min-h-screen">
+            <div className="w-full max-w-[550px] min-w-[340px] flex flex-col min-h-screen">
               <NavBar />
               <NavSearchBar />
               <div className="flex-grow">
