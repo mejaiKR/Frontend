@@ -81,7 +81,6 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
     if (data) {
       const updatedData = updateGameCountForMonth(data, year, month);
       setMonthData(updatedData);
-      console.log(updatedData);
     }
   }, [data]);
 
