@@ -1,13 +1,12 @@
 import Image from "next/image";
-import { ModeToggle } from "@/app/modeToggle";
 import React from "react";
-import NavSearchBar from "@/app/navSearchBar";
 import Link from "next/link";
+import { ModeToggle } from "@/app/modeToggle";
 
 export default function NavBar() {
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="border-gray-200 ">
+      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <Link
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -23,10 +22,7 @@ export default function NavBar() {
             mejai.gg
           </span>
         </Link>
-        <NavSearchBar />
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ModeToggle />
-        </div>
+        <ModeToggle />
       </div>
     </nav>
   );

@@ -5,6 +5,7 @@ import React from "react";
 import Footer from "@/app/footer";
 import NavBar from "@/app/navBar";
 import ReactQueryProvider from "@/components/reactQueryProvider";
+import NavSearchBar from "@/app/navSearchBar";
 
 export const metadata: Metadata = {
   title: "mejai.gg",
@@ -17,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
-      <body>
+    <html lang="ko" suppressHydrationWarning>
+      <body className="flex justify-center">
         <ReactQueryProvider>
           <ThemeProvider
             attribute="class"
@@ -26,11 +27,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col min-h-screen">
+            <div className="w-full max-w-[550px] min-w-[340px] flex flex-col min-h-screen">
               <NavBar />
+              <NavSearchBar />
               <div className="flex-grow">
                 <div className="flex justify-center h-full">
-                  <div className="w-full max-w-[1300px] px-4">{children}</div>
+                  <div className="w-full ">{children}</div>
                 </div>
               </div>
               <Footer />

@@ -45,14 +45,14 @@ export default function TierBox({ id, tag }: TierBoxProps) {
     );
   }
   return (
-    <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className="flex flex-col items-center">
+    <div className="h-32 flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="flex flex-col justify-center items-center">
         <Image
           src={data.tierIcon}
           alt="Profile Icon"
           draggable={false}
-          width={100}
-          height={100}
+          width={90}
+          height={90}
         />
       </div>
       <div className="w-60 h-full flex flex-col justify-center ml-4">

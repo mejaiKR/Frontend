@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import createSubmitHandler from "@/app/createSubmitHandler";
 
 export default function MainSearchBar() {
@@ -9,8 +9,12 @@ export default function MainSearchBar() {
   const inputRef = useRef<HTMLInputElement>(null); // 입력 필드 참조 생성
   const handleSubmit = createSubmitHandler(inputRef, router); // 이벤트 핸들러 함수 생성
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
+
   return (
-    <form className="w-1/2" onSubmit={handleSubmit}>
+    <form className="w-3/4" onSubmit={handleSubmit}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -37,7 +41,7 @@ export default function MainSearchBar() {
           id="default-search"
           maxLength={22}
           ref={inputRef}
-          className="block w-full p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="block w-full pr-28 p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="소환사명#태그"
           required
         />

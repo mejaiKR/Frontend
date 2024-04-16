@@ -3,8 +3,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import LazyLoadedMonthMejaiCard from "@/app/summoner-page/LazyLoadedMonthMejaiCard";
 
@@ -15,7 +13,7 @@ export default function JandiBox() {
     <div className="flex justify-center flex-col items-center">
       <Carousel
         opts={{ align: "center", loop: true, startIndex: nowMonth - 1 }}
-        className="w-full max-w-xs"
+        className="w-full max-w-x flex flex-col "
       >
         <CarouselContent>
           {Array.from({ length: nowMonth }).map((_, index) => (
@@ -24,8 +22,6 @@ export default function JandiBox() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </div>
   );

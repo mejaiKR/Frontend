@@ -7,14 +7,18 @@ import { fetchJandi } from "@/app/summoner-page/fetchFunc";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
+import Spinner from "@/components/ui/spinner";
 export interface DayGameData {
   date: string;
   gameCount: number;
+  imageUrl: string;
 }
 
-function updateGameCountForMonth(inputData: DayGameData[], month: number) {
-  const year = 2024;
-
+function updateGameCountForMonth(
+  inputData: DayGameData[],
+  year: number,
+  month: number,
+) {
   const startOfMonth = dayjs(new Date(year, month - 1, 1));
   const endOfMonth = dayjs(new Date(year, month, 0));
 
@@ -25,6 +29,7 @@ function updateGameCountForMonth(inputData: DayGameData[], month: number) {
     daysArray.push({
       date: day.format("YYYY-MM-DD"),
       gameCount: 0,
+      imageUrl: "",
     });
     day = day.add(1, "day");
   }
@@ -34,6 +39,7 @@ function updateGameCountForMonth(inputData: DayGameData[], month: number) {
     const index = daysArray.findIndex((day) => day.date === data.date);
     if (index !== -1) {
       daysArray[index].gameCount = data.gameCount;
+      daysArray[index].imageUrl = data.imageUrl;
     }
   });
 
@@ -44,11 +50,25 @@ interface MonthMejaiCardProps {
   month: number;
 }
 
+const WeekDays = () => {
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
+  return (
+    <div className="w-full grid grid-cols-7 gap-1 text-xl">
+      {days.map((day) => (
+        <div key={day} className="flex justify-center">
+          {day}
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
   const [monthData, setMonthData] = useState<DayGameData[]>([]);
   const params = useSearchParams();
   const id = params.get("id") || "";
   const tag = params.get("tag") || "";
+  let year = 2024;
 
   const { data, error, isLoading } = useQuery<DayGameData[]>({
     queryKey: ["jandi", { id, tag, year: 2024, month: month }],
@@ -59,25 +79,47 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
 
   useEffect(() => {
     if (data) {
-      const updatedData = updateGameCountForMonth(data, month);
+      const updatedData = updateGameCountForMonth(data, year, month);
       setMonthData(updatedData);
-      console.log(updatedData);
     }
   }, [data]);
 
+  // 빈 블록을 계산
+  const emptyBlocks = [];
+  const startOfMonth = dayjs(new Date(year, month - 1, 1));
+  const dayOfWeek = startOfMonth.day(); // 일요일은 0, 토요일은 6
+
+  for (let i = 0; i < dayOfWeek; i++) {
+    emptyBlocks.push(<div key={`empty-${i}`} className="w-full"></div>);
+  }
+
   if (isLoading)
     return (
-      <div className="flex justify-center items-center h-[200px] w-[200px]">
-        Loading...
+      <div className="flex justify-center items-center h-48 w-48">
+        <Spinner />
       </div>
     );
-  if (error instanceof AxiosError) return <div>Error...</div>;
+  if (error instanceof AxiosError)
+    return <div className="text-red-500 text-center mx-auto">Error...</div>;
 
   return (
-    <div className="grid grid-cols-7 gap-1">
-      {monthData.map((day, index) => (
-        <MejaiBox key={index} date={day.date} gameCount={day.gameCount} />
-      ))}
+    <div className="flex flex-col items-center justify-between w-full">
+      <span className="text-2xl font-semibold mt-4 mb-4">
+        {year}년 {month}월
+      </span>
+      <WeekDays />
+      <div className="grid grid-cols-7 gap-1 w-full">
+        {emptyBlocks}
+        {monthData.map((day, index) => (
+          <div key={index} className="aspect-w-1 aspect-h-1">
+            <MejaiBox
+              date={day.date}
+              gameCount={day.gameCount}
+              imageUrl={day.imageUrl}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
