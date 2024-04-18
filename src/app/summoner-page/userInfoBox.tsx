@@ -48,7 +48,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     if (popoverOpen) {
       const timer = setTimeout(() => {
         setPopoverOpen(false);
-      }, 1000); // 2초 후에 Popover 닫힘
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [popoverOpen]);

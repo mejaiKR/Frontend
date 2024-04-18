@@ -25,7 +25,6 @@ function AwaitPage() {
     return <ErrorPage />;
   }
   if (isLoading) {
-    // userInfo 로딩하고 나서 그 다음에 jandibox 로딩하게 하자 일단 임시로 로딩박아둠
     return (
       <div className="w-full h-full flex justify-center items-center">
         <Spinner />
