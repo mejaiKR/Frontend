@@ -1,7 +1,8 @@
 
 개발중....
 
-https://github.com/mejaiGG/Frontend/assets/81581828/d381e418-9dbd-442a-9ee2-75af4610d9a5
+https://github.com/mejaiGG/Frontend/assets/81581828/16c9fd78-af98-404c-9cb5-6e191abf91d6
+
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
