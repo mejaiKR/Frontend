@@ -1,11 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
 import { AxiosError } from "axios";
+import ShareSvgIcon from "@/components/ui/shareSvgIcon";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 function ImageSkeleton() {
   return (
@@ -18,7 +25,6 @@ function ImageSkeleton() {
     </div>
   );
 }
-
 interface TierBoxProps {
   id: string;
   tag: string;
@@ -31,6 +37,21 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
     gcTime: 1000 * 60 * 15,
   });
+
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+  };
+
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
+  useEffect(() => {
+    if (popoverOpen) {
+      const timer = setTimeout(() => {
+        setPopoverOpen(false);
+      }, 1000); // 2초 후에 Popover 닫힘
+      return () => clearTimeout(timer);
+    }
+  }, [popoverOpen]);
 
   if (isLoading)
     return (
@@ -66,10 +87,22 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
         </span>
       </div>
       <div className="w-60 h-full flex flex-col justify-center ml-4">
-        <h1 className="font-bold text-2xl">
+        <h1 className="font-bold text-xl">
           {data.userName}
           <span className="font-medium text-gray-500"> #{data.tagLine}</span>
         </h1>
+        <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+          <PopoverTrigger asChild>
+            <button onClick={copyUrl} className="w-fit h-fit">
+              <ShareSvgIcon />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className="font-medium flex justify-center items-center">
+              클립보드에 url이 복사되었습니다
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     </div>
   );
