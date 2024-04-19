@@ -53,6 +53,7 @@ export default function TierBox({ id, tag }: TierBoxProps) {
           draggable={false}
           width={90}
           height={90}
+          priority={true} // lazy loading에서 제외
         />
       </div>
       <div className="w-60 h-full flex flex-col justify-center ml-4">

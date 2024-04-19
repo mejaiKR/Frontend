@@ -6,7 +6,7 @@ import createSubmitHandler from "@/app/createSubmitHandler";
 
 export default function MainSearchBar() {
   const router = useRouter();
-  const inputRef = useRef<HTMLInputElement>(null); // 입력 필드 참조 생성
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleSubmit = createSubmitHandler(inputRef, router); // 이벤트 핸들러 함수 생성
 
   useEffect(() => {
