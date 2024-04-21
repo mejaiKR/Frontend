@@ -1,6 +1,8 @@
-"use client";
-
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { removeBookmarkId } from "@/lib/bookMarkFunc";
+import { useState } from "react";
 
 function getBookmarks(): string[] {
   const bookmarkString = localStorage.getItem("bookmark");
@@ -8,28 +10,39 @@ function getBookmarks(): string[] {
 }
 
 export default function BookMarkBox() {
-  const bookmarks = getBookmarks();
+  const [bookmarkArr, setBookmarkArr] = useState(getBookmarks());
+
   return (
-    <div className="h-100 w-full flex">
-      <div className="w-1/2 h-full">
-        <div className="w-full h-10 border-2 border-black">북마크</div>
-        {bookmarks.map((bookmark) => {
+    <ScrollArea className="h-29 w-full rounded-md border">
+      <div className="p-4">
+        <h4 className="mb-4 flex justify-center font-medium leading-none">
+          즐겨찾기
+        </h4>
+        {bookmarkArr.map((bookmark) => {
           const [id, key] = bookmark.split("#");
           return (
-            <Link href={`/summoner-page?id=${id}&tag=${key}`}>
-              <div className="w-full h-10 border-2 border-black">
-                {bookmark}
+            <>
+              <Separator className="my-1" />
+              <div className="flex justify-between items-center w-full">
+                <Link href={`/summoner-page?id=${id}&tag=${key}`}>
+                  <div className=" text-xs w-full h-10 flex justify-center items-center">
+                    {bookmark}
+                  </div>
+                </Link>
+                <button
+                  onClick={() => {
+                    removeBookmarkId(bookmark);
+                    setBookmarkArr(getBookmarks());
+                  }}
+                  className="text-xs"
+                >
+                  x
+                </button>
               </div>
-            </Link>
+            </>
           );
         })}
       </div>
-      <div className="w-1/2 h-full">
-        <div className="w-full h-10 border-2 border-black">검색기록</div>
-        <div className="w-full h-10 border-2 border-black">1</div>
-        <div className="w-full h-10 border-2 border-black">2</div>
-        <div className="w-full h-10 border-2 border-black">3</div>
-      </div>
-    </div>
+    </ScrollArea>
   );
 }

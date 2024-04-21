@@ -70,7 +70,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
           {data.userName}
           <span className="font-medium text-gray-500"> #{data.tagLine}</span>
         </h1>
-        <div className="flex items-center">
+        <div className="flex items-center mt-2">
           <ShareButton />
           <BookMarkButton id={id} tag={tag} />
         </div>

@@ -2,35 +2,18 @@
 
 import BookMarkStar from "@/components/ui/bookMarkStar";
 import { useEffect, useState } from "react";
+import {
+  addBookmarkId,
+  isLocalStorageBookmarked,
+  removeBookmarkId,
+} from "@/lib/bookMarkFunc";
 
 interface BookMarkStarButtonProps {
   id: string;
   tag: string;
 }
 
-function addBookmarkId(id: string) {
-  const bookmarkString = localStorage.getItem("bookmark");
-  const bookmarks: string[] = bookmarkString ? JSON.parse(bookmarkString) : [];
-  if (!bookmarks.includes(id)) {
-    bookmarks.push(id);
-    localStorage.setItem("bookmark", JSON.stringify(bookmarks));
-  }
-}
-
-function removeBookmarkId(id: string) {
-  const bookmarkString = localStorage.getItem("bookmark");
-  const bookmarks: string[] = bookmarkString ? JSON.parse(bookmarkString) : [];
-  const filteredBookmarks = bookmarks.filter((bookmarkId) => bookmarkId !== id);
-  localStorage.setItem("bookmark", JSON.stringify(filteredBookmarks));
-}
-
-function isLocalStorageBookmarked(id: string): boolean {
-  const bookmarkString = localStorage.getItem("bookmark");
-  const bookmarks: string[] = bookmarkString ? JSON.parse(bookmarkString) : [];
-  return bookmarks.includes(id);
-}
-
-function toggleBookMark(
+export function toggleBookMark(
   isBookMarked: boolean,
   setIsBookMarked: Function,
   id: string,
