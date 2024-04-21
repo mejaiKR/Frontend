@@ -1,4 +1,9 @@
 import MainSearchBar from "@/app/mainSearchBar";
+import dynamic from "next/dynamic";
+
+const BookMarkBox = dynamic(() => import("@/app/bookMarkBox"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
@@ -7,6 +12,7 @@ export default function Home() {
         mejai.gg
       </h1>
       <MainSearchBar />
+      <BookMarkBox />
     </div>
   );
 }
