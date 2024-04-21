@@ -1,3 +1,5 @@
+"use client";
+
 import axios from "axios";
 import { SERVER_URL } from "@/lib/utils";
 import { DayGameData } from "@/app/summoner-page/monthMejaiCard";

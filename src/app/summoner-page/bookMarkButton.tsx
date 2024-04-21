@@ -1,3 +1,5 @@
+"use client";
+
 import BookMarkStar from "@/components/ui/bookMarkStar";
 import { useEffect, useState } from "react";
 
