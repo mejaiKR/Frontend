@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 function getBookmarks(): string[] {
   const bookmarkString = localStorage.getItem("bookmark");
   return bookmarkString ? JSON.parse(bookmarkString) : [];
@@ -11,11 +13,16 @@ export default function BookMarkBox() {
     <div className="h-100 w-full flex">
       <div className="w-1/2 h-full">
         <div className="w-full h-10 border-2 border-black">북마크</div>
-        {bookmarks.map((id) => (
-          <div key={id} className="w-full h-10 border-2 border-black">
-            {id}
-          </div>
-        ))}
+        {bookmarks.map((bookmark) => {
+          const [id, key] = bookmark.split("#");
+          return (
+            <Link href={`/summoner-page?id=${id}&tag=${key}`}>
+              <div className="w-full h-10 border-2 border-black">
+                {bookmark}
+              </div>
+            </Link>
+          );
+        })}
       </div>
       <div className="w-1/2 h-full">
         <div className="w-full h-10 border-2 border-black">검색기록</div>
