@@ -1,3 +1,5 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,7 +15,7 @@ export default function BookMarkBox() {
   const [bookmarkArr, setBookmarkArr] = useState(getBookmarks());
 
   return (
-    <ScrollArea className="h-29 w-full rounded-md border">
+    <ScrollArea className="h-22 w-full rounded-md border">
       <div className="p-4">
         <h4 className="mb-4 flex justify-center font-medium leading-none">
           즐겨찾기
