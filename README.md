@@ -1,8 +1,28 @@
 
+## 프로젝트 소개
+
+<p align="justify">
+사용자의 league of legend 게임 월간 이용량을 시각화 하는 서비스
+</p>
+
 https://github.com/mejaiGG/Frontend/assets/81581828/2c66db76-a1a5-4358-a396-127622a5b3b6
 
-### react-query 사용 해서 유저 정보, 이용량 받아오는 api 최적화 : https://github.com/mejaiGG/Frontend/pull/2
 
-### IntersectionObserver 사용해서 api 사용 컴포넌트 Lazy loading 구현 : https://github.com/mejaiGG/Frontend/pull/4
+<br>
 
-### LocalStorage 사용해서 즐겨찾기, 검색 기록 기능 구현 :  https://github.com/mejaiGG/Frontend/pull/16
+## 기술 스택
+
+typescript, next.js, tailwindcss, react-query, shadcn
+<br>
+
+## 구현 기능
+
+### 기능 1
+  react-query 사용 해서 유저 정보, 이용량 받아오는 api 최적화 : https://github.com/mejaiGG/Frontend/pull/2
+### 기능 2
+  IntersectionObserver 사용해서 api 사용 컴포넌트 Lazy loading 구현 : https://github.com/mejaiGG/Frontend/pull/4
+### 기능 3
+  LocalStorage 사용해서 즐겨찾기, 검색 기록 기능 구현 :  https://github.com/mejaiGG/Frontend/pull/16
+### 기능 4
+
+<br>
