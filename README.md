@@ -24,6 +24,8 @@ typescript, next.js, tailwindcss, react-query, shadcn
 ### 기능 2
   IntersectionObserver 사용해서 api 사용 컴포넌트 Lazy loading 구현 : https://github.com/mejaiGG/Frontend/pull/4
 ### 기능 3
+  링크 공유 기능 구현 : https://github.com/mejaiGG/Frontend/pull/14
+### 기능 4
   LocalStorage 사용해서 즐겨찾기, 검색 기록 기능 구현 :  https://github.com/mejaiGG/Frontend/pull/16
 
 
