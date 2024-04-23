@@ -4,6 +4,8 @@
 <p align="justify">
 사용자의 league of legend 게임 월간 이용량을 시각화 하는 서비스입니다.
 </p>
+<img width="339" alt="스크린샷 2024-04-23 오후 7 33 53" src="https://github.com/mejaiGG/Frontend/assets/81581828/2e15b0ce-b311-453b-bcce-58b8eb79d82f">
+<img width="343" alt="스크린샷 2024-04-23 오후 7 34 18" src="https://github.com/mejaiGG/Frontend/assets/81581828/c9c31cbb-6100-44d8-8b8c-2b06c961776f">
 
 https://github.com/mejaiGG/Frontend/assets/81581828/2c66db76-a1a5-4358-a396-127622a5b3b6
 
