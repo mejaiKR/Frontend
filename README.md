@@ -2,7 +2,7 @@
 ## 프로젝트 소개
 
 <p align="justify">
-사용자의 league of legend 게임 월간 이용량을 시각화 하는 서비스
+사용자의 league of legend 게임 월간 이용량을 시각화 하는 서비스입니다.
 </p>
 
 https://github.com/mejaiGG/Frontend/assets/81581828/2c66db76-a1a5-4358-a396-127622a5b3b6
