@@ -1,4 +1,5 @@
 import React, { FormEvent } from "react";
+import { addSearchHistory } from "@/lib/searchHistoryFunc";
 
 export default function createSubmitHandler(
   inputRef: React.RefObject<HTMLInputElement>,
@@ -20,6 +21,7 @@ export default function createSubmitHandler(
 
     if (searchTerm) {
       router.push(`/summoner-page?id=${id}&tag=${tag}`);
+      addSearchHistory(`${id}#${tag}`);
       if (inputRef.current) {
         inputRef.current.value = "";
         inputRef.current.blur();

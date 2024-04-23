@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import MonthMejaiCard from "@/app/summoner-page/monthMejaiCard";

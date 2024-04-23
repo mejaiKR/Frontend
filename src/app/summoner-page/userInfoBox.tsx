@@ -1,18 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
 import { AxiosError } from "axios";
-import ShareSvgIcon from "@/components/ui/shareSvgIcon";
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import ShareButton from "@/app/summoner-page/shareButton";
+import BookMarkButton from "@/app/summoner-page/bookMarkButton";
 
 function ImageSkeleton() {
   return (
@@ -37,21 +31,6 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
     gcTime: 1000 * 60 * 15,
   });
-
-  const copyUrl = () => {
-    navigator.clipboard.writeText(window.location.href);
-  };
-
-  const [popoverOpen, setPopoverOpen] = useState(false);
-
-  useEffect(() => {
-    if (popoverOpen) {
-      const timer = setTimeout(() => {
-        setPopoverOpen(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [popoverOpen]);
 
   if (isLoading)
     return (
@@ -91,18 +70,10 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
           {data.userName}
           <span className="font-medium text-gray-500"> #{data.tagLine}</span>
         </h1>
-        <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-          <PopoverTrigger asChild>
-            <button onClick={copyUrl} className="w-fit h-fit">
-              <ShareSvgIcon />
-            </button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className="font-medium flex justify-center items-center">
-              클립보드에 url이 복사되었습니다
-            </div>
-          </PopoverContent>
-        </Popover>
+        <div className="flex items-center mt-2">
+          <ShareButton />
+          <BookMarkButton id={id} tag={tag} />
+        </div>
       </div>
     </div>
   );

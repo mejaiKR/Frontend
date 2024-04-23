@@ -18,9 +18,11 @@ function updateGameCountForMonth(
   inputData: DayGameData[],
   year: number,
   month: number,
+  setSumOfGameCount: (value: number) => void,
 ) {
   const startOfMonth = dayjs(new Date(year, month - 1, 1));
   const endOfMonth = dayjs(new Date(year, month, 0));
+  let sumOfGameCount = 0;
 
   let daysArray: DayGameData[] = [];
   let day = startOfMonth;
@@ -39,10 +41,11 @@ function updateGameCountForMonth(
     const index = daysArray.findIndex((day) => day.date === data.date);
     if (index !== -1) {
       daysArray[index].gameCount = data.gameCount;
+      sumOfGameCount += data.gameCount;
       daysArray[index].imageUrl = data.imageUrl;
     }
   });
-
+  setSumOfGameCount(sumOfGameCount);
   return daysArray;
 }
 
@@ -69,6 +72,7 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
   const id = params.get("id") || "";
   const tag = params.get("tag") || "";
   let year = 2024;
+  const [sumOfGameCount, setSumOfGameCount] = useState(0);
 
   const { data, error, isLoading } = useQuery<DayGameData[]>({
     queryKey: ["jandi", { id, tag, year: 2024, month: month }],
@@ -79,7 +83,12 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
 
   useEffect(() => {
     if (data) {
-      const updatedData = updateGameCountForMonth(data, year, month);
+      const updatedData = updateGameCountForMonth(
+        data,
+        year,
+        month,
+        setSumOfGameCount,
+      );
       setMonthData(updatedData);
     }
   }, [data]);
@@ -107,6 +116,7 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
       <span className="text-2xl font-semibold mt-4 mb-4">
         {year}년 {month}월
       </span>
+      <span className="mb-2">총 {sumOfGameCount}게임</span>
       <WeekDays />
       <div className="grid grid-cols-7 gap-1 w-full">
         {emptyBlocks}
