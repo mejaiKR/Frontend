@@ -18,6 +18,47 @@ function ImageSkeleton() {
   );
 }
 
+interface RankInfo {
+  leaguePoints: number;
+  losses: number;
+  queueType: string;
+  rank: string;
+  tier: string;
+  tierIcon: string;
+  wins: number;
+}
+
+interface TierUnitProps {
+  rankInfo: RankInfo;
+}
+
+const TierUnit = ({ rankInfo }: TierUnitProps) => {
+  return (
+    <div className="w-1/2 flex flex-col justify-center items-center">
+      <span>
+        {rankInfo.queueType === "RANKED_SOLO_5x5" ? "솔로랭크" : "자유랭크"}
+      </span>
+      <Image
+        src={rankInfo.tierIcon}
+        alt="Profile Icon"
+        draggable={false}
+        width={90}
+        height={90}
+        priority={true} // lazy loading에서 제외
+      />
+      <div className="h-full flex flex-col justify-center items-center">
+        <h1 className="font-bold text-sm">
+          {rankInfo.tier} {rankInfo.rank}
+        </h1>
+        <h4 className="text-xs mt-1">{rankInfo.leaguePoints}LP</h4>
+        <h5 className="text-xs mt-1 font-light text-gray-500">
+          {rankInfo.wins}승 {rankInfo.losses}패
+        </h5>
+      </div>
+    </div>
+  );
+};
+
 interface TierBoxProps {
   id: string;
   tag: string;
@@ -40,31 +81,15 @@ export default function TierBox({ id, tag }: TierBoxProps) {
   if (error) {
     return (
       <div className="h-32 flex justify-center items-center m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <span className="text-lg font-[NETMARBLE-Bold]"></span>
+        <span className="text-lg font-[NETMARBLE-Bold]">error</span>
       </div>
     );
   }
   return (
-    <div className="h-32 flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className="flex flex-col justify-center items-center">
-        <Image
-          src={data.tierIcon}
-          alt="Profile Icon"
-          draggable={false}
-          width={90}
-          height={90}
-          priority={true} // lazy loading에서 제외
-        />
-      </div>
-      <div className="w-60 h-full flex flex-col justify-center ml-4">
-        <h1 className="font-bold text-xl">
-          {data.tier} {data.rank}
-        </h1>
-        <h4>{data.leaguePoints}LP</h4>
-        <h5 className="font-light text-gray-500">
-          {data.wins}승 {data.losses}패
-        </h5>
-      </div>
+    <div className=" flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      {data.rank.map((rankInfo: RankInfo, index: number) => (
+        <TierUnit key={index} rankInfo={rankInfo} />
+      ))}
     </div>
   );
 }

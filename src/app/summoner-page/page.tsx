@@ -9,6 +9,7 @@ import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
 import ErrorPage from "@/app/summoner-page/errorPage";
 import JandiBox from "@/app/summoner-page/jandiBox";
 import Spinner from "@/components/ui/spinner";
+import { AxiosError } from "axios";
 
 function AwaitPage() {
   const params = useSearchParams();
@@ -22,7 +23,7 @@ function AwaitPage() {
   });
 
   if (error) {
-    return <ErrorPage />;
+    return <ErrorPage error={error as AxiosError} />;
   }
   if (isLoading) {
     return (
