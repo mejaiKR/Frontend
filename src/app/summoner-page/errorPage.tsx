@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { SERVER_URL } from "@/lib/utils";
+import { S3_URL, SERVER_URL } from "@/lib/utils";
 import { AxiosError } from "axios";
 
 interface ErrorPageProps {
@@ -12,7 +12,7 @@ export default function ErrorPage({ error }: ErrorPageProps) {
       <div>
         <Image
           draggable={false}
-          src={`${SERVER_URL}/poppyError.png`}
+          src={`${S3_URL}/poppyError.png`}
           alt="poppy error"
           width={90}
           height={90}

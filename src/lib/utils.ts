@@ -5,4 +5,5 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const SERVER_URL = "http://localhost:8080";
+export const SERVER_URL = process.env.SERVER_URL;
+export const S3_URL = process.env.S3_URL;
