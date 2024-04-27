@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import Spinner from "@/components/ui/spinner";
+import Image from "next/image";
 export interface DayGameData {
   date: string;
   gameCount: number;
@@ -109,8 +110,10 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
       </div>
     );
   if (error instanceof AxiosError)
-    return <div className="text-red-500 text-center mx-auto">Error...</div>;
-
+    return <div className="text-red-500 text-center mx-auto">
+      <Image src={"https://" + process.env.NEXT_PUBLIC_S3_URL+"/poppyError.png"} alt="Error.." width={1000} height={1000}/>
+      현재 서버에 너무 많은 요청이 있어요... 잠시 후 다시 시도해주세요.
+      </div>;
   return (
     <div className="flex flex-col items-center justify-between w-full">
       <span className="text-2xl font-semibold mt-4 mb-4">
