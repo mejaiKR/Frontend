@@ -8,8 +8,8 @@ import ReactQueryProvider from "@/components/reactQueryProvider";
 import NavSearchBar from "@/app/navSearchBar";
 
 export const metadata: Metadata = {
-  title: "mejai.gg",
-  description: "mejai.gg",
+  title: "mejai.kr",
+  description: "mejai.kr",
 };
 
 export default function RootLayout({

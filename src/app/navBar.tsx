@@ -19,7 +19,7 @@ export default function NavBar() {
             height={40}
           />
           <span className="font-[GMARKET-Bold] self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            mejai.gg
+            mejai.kr
           </span>
         </Link>
         <ModeToggle />
