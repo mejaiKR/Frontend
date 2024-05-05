@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   title: "mejai.kr",
   description: "mejai.kr",
   keywords: "mejai.kr",
-  goo,
 };
 
 export default function RootLayout({
