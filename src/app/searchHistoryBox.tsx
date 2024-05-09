@@ -20,10 +20,10 @@ export default function SearchHistoryBox() {
         <h4 className="mb-4 flex justify-center font-medium leading-none">
           검색기록
         </h4>
-        {searchHistoryArr.map((searchHistoryId) => {
+        {searchHistoryArr.map((searchHistoryId, idx) => {
           const [id, key] = searchHistoryId.split("#");
           return (
-            <>
+            <div key={idx}>
               <Separator className="my-1" />
               <div className="flex justify-between items-center w-full">
                 <Link href={`/summoner-page?id=${id}&tag=${key}`}>
@@ -41,7 +41,7 @@ export default function SearchHistoryBox() {
                   x
                 </button>
               </div>
-            </>
+            </div>
           );
         })}
       </div>

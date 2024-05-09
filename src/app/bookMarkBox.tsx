@@ -20,10 +20,10 @@ export default function BookMarkBox() {
         <h4 className="mb-4 flex justify-center font-medium leading-none">
           즐겨찾기
         </h4>
-        {bookmarkArr.map((bookmark) => {
+        {bookmarkArr.map((bookmark, idx) => {
           const [id, key] = bookmark.split("#");
           return (
-            <>
+            <div key={idx}>
               <Separator className="my-1" />
               <div className="flex justify-between items-center w-full">
                 <Link href={`/summoner-page?id=${id}&tag=${key}`}>
@@ -41,7 +41,7 @@ export default function BookMarkBox() {
                   x
                 </button>
               </div>
-            </>
+            </div>
           );
         })}
       </div>
