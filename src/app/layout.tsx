@@ -6,7 +6,7 @@ import Footer from "@/app/footer";
 import NavBar from "@/app/navBar";
 import ReactQueryProvider from "@/components/reactQueryProvider";
 import NavSearchBar from "@/app/navSearchBar";
-import Head from "next/head";
+import GoogleAd from "@/components/googleAd";
 
 export const metadata: Metadata = {
   title: "mejai.kr",
@@ -21,13 +21,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <Head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2095945219977195"
-          crossOrigin="anonymous"
-        ></script>
-      </Head>
       <body className="flex justify-center">
         <ReactQueryProvider>
           <ThemeProvider
@@ -49,6 +42,7 @@ export default function RootLayout({
           </ThemeProvider>
         </ReactQueryProvider>
       </body>
+      <GoogleAd />
     </html>
   );
 }
