@@ -1,6 +1,5 @@
 import MainSearchBar from "@/app/mainSearchBar";
 import dynamic from "next/dynamic";
-import LeaderBoardBox from "@/app/leaderBoardBox";
 
 const LocalStatusBox = dynamic(() => import("@/app/localStatusBox"), {
   ssr: false,
@@ -14,7 +13,6 @@ export default function Home() {
       </h1>
       <MainSearchBar />
       <LocalStatusBox />
-      <LeaderBoardBox />
     </div>
   );
 }
