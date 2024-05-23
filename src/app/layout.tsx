@@ -6,9 +6,10 @@ import Footer from "@/app/footer";
 import NavBar from "@/app/navBar";
 import ReactQueryProvider from "@/components/reactQueryProvider";
 import NavSearchBar from "@/app/navSearchBar";
-import GoogleAd from "@/components/googleAd";
+// import GoogleAd from "@/components/googleAd";
 import LeaderBoardBox from "@/app/leaderBoardBox";
-
+// import dynamic from "next/dynamic";
+// const LeaderBoardBox = dynamic(() => import("@/app/leaderBoardBox"));
 export const metadata: Metadata = {
   title: "mejai.kr",
   description: "mejai.kr",
@@ -44,7 +45,7 @@ export default function RootLayout({
           </ThemeProvider>
         </ReactQueryProvider>
       </body>
-      <GoogleAd />
+      {/*<GoogleAd />*/}
     </html>
   );
 }
