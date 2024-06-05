@@ -4,7 +4,7 @@ import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
+import { fetchUserInfo } from "@/lib/fetchFunc";
 
 function ImageSkeleton() {
   return (

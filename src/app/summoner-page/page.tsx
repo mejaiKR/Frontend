@@ -5,7 +5,7 @@ import UserInfoBox from "@/app/summoner-page/userInfoBox";
 import TierBox from "@/app/summoner-page/tierBox";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserInfo } from "@/app/summoner-page/fetchFunc";
+import { fetchUserInfo } from "@/lib/fetchFunc";
 import ErrorPage from "@/app/summoner-page/errorPage";
 import JandiBox from "@/app/summoner-page/jandiBox";
 import Spinner from "@/components/ui/spinner";
