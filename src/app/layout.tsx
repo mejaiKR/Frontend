@@ -7,9 +7,11 @@ import NavBar from "@/app/navBar";
 import ReactQueryProvider from "@/components/reactQueryProvider";
 import NavSearchBar from "@/app/navSearchBar";
 // import GoogleAd from "@/components/googleAd";
-import LeaderBoardBox from "@/app/leaderBoardBox";
-// import dynamic from "next/dynamic";
-// const LeaderBoardBox = dynamic(() => import("@/app/leaderBoardBox"));
+// import LeaderBoardBox from "@/app/leaderBoardBox";
+import dynamic from "next/dynamic";
+const LeaderBoardBox = dynamic(() => import("@/app/leaderBoardBox"), {
+  ssr: false,
+});
 export const metadata: Metadata = {
   title: "mejai.kr",
   description: "mejai.kr",

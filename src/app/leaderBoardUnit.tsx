@@ -1,5 +1,5 @@
-import axios from "axios";
-import { SERVER_URL } from "@/lib/utils";
+"use client";
+
 import {
   Table,
   TableBody,
@@ -10,29 +10,33 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { fetchLeaderBoard } from "@/lib/fetchFunc";
 
 interface LeaderBoardProps {
   year: number;
   month: number;
 }
-
-interface RankingData {
-  topRanking: {
-    summonerName: string;
-    tagLine: string;
-    totalGameCount: number;
-  }[];
+interface UserData {
+  summonerName: string;
+  tagLine: string;
+  totalGameCount: number;
 }
 
-export default async function LeaderBoardUnit({
-  year,
-  month,
-}: LeaderBoardProps) {
-  let rankingData: RankingData | undefined =
-    (await axios
-      .get(`${SERVER_URL}/ranking?year=${year}&month=${month}`)
-      .then((res) => res.data)) || undefined;
-  if (rankingData === undefined) return <></>;
+export interface RankingData {
+  topRanking: UserData[];
+}
+
+export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
+  const { data, error, isLoading } = useQuery<RankingData>({
+    queryKey: ["leaderboard", { year: year, month: month }],
+    queryFn: fetchLeaderBoard,
+    staleTime: 1000 * 60 * 15,
+    gcTime: 1000 * 60 * 15,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error || data === undefined) return <div>Error</div>;
 
   return (
     <Table className="mt-4">
@@ -45,17 +49,19 @@ export default async function LeaderBoardUnit({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {rankingData.topRanking.map((data, idx) => (
+        {data.topRanking.map((userData: UserData, idx: number) => (
           <TableRow key={idx}>
             <TableCell className="font-medium">{idx + 1}</TableCell>
             <TableCell>
               <Link
-                href={`/summoner-page?id=${data.summonerName}&tag=${data.tagLine}`}
+                href={`/summoner-page?id=${userData.summonerName}&tag=${userData.tagLine}`}
               >
-                {data.summonerName}#{data.tagLine}
+                {userData.summonerName}#{userData.tagLine}
               </Link>
             </TableCell>
-            <TableCell className="text-right">{data.totalGameCount}</TableCell>
+            <TableCell className="text-right">
+              {userData.totalGameCount}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
