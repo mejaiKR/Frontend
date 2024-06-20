@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import LeaderBoardUnit from "@/app/leaderBoardUnit";
+import LeaderBoardUnit from "@/app/_component/leaderBoardUnit";
 
 export default function LeaderBoardBox() {
   const currentMonth = new Date().getMonth() + 1;

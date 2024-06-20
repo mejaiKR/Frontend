@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/lib/fetchFunc";
 import { AxiosError } from "axios";
-import ShareButton from "@/app/summoner-page/shareButton";
-import BookMarkButton from "@/app/summoner-page/bookMarkButton";
+import ShareButton from "@/app/summoner-page/_component/shareButton";
+import BookMarkButton from "@/app/summoner-page/_component/bookMarkButton";
 
 function ImageSkeleton() {
   return (

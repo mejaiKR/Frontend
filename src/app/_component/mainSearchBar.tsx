@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
-import createSubmitHandler from "@/app/createSubmitHandler";
+import createSubmitHandler from "@/app/_component/createSubmitHandler";
 
 export default function MainSearchBar() {
   const router = useRouter();
