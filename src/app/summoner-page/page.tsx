@@ -1,13 +1,13 @@
 "use client";
 
 import React, { Suspense } from "react";
-import UserInfoBox from "@/app/summoner-page/_component/userInfoBox";
-import TierBox from "@/app/summoner-page/_component/tierBox";
+import UserInfoBox from "@/app/summoner-page/_components/userInfoBox";
+import TierBox from "@/app/summoner-page/_components/tierBox";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/lib/fetchFunc";
-import ErrorPage from "@/app/summoner-page/_component/errorPage";
-import JandiBox from "@/app/summoner-page/_component/jandiBox";
+import ErrorPage from "@/app/summoner-page/_components/errorPage";
+import JandiBox from "@/app/summoner-page/_components/jandiBox";
 import Spinner from "@/components/ui/spinner";
 import { AxiosError } from "axios";
 

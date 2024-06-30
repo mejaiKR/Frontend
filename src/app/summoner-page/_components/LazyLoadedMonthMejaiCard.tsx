@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import MonthMejaiCard from "@/app/summoner-page/_component/monthMejaiCard";
+import MonthMejaiCard from "@/app/summoner-page/_components/monthMejaiCard";
 
 interface LazyLoadedMonthMejaiCardProps {
   month: number;

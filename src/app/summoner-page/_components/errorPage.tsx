@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { S3_URL, SERVER_URL } from "@/lib/utils";
+import { S3_URL } from "@/lib/utils";
 import { AxiosError } from "axios";
 
 interface ErrorPageProps {

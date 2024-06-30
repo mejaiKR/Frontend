@@ -1,8 +1,8 @@
-import MainSearchBar from "@/app/_component/mainSearchBar";
+import MainSearchBar from "@/app/_components/mainSearchBar";
 import dynamic from "next/dynamic";
 
 const LocalStatusBox = dynamic(
-  () => import("@/app/_component/localStatusBox"),
+  () => import("@/app/_components/localStatusBox"),
   {
     ssr: false,
   },
