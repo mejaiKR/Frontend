@@ -8,12 +8,6 @@ const LocalStatusBox = dynamic(
     ssr: false,
   },
 );
-const LeaderBoardBox = dynamic(
-  () => import("@/app/_components/leaderBoardBox"),
-  {
-    ssr: false,
-  },
-);
 export default function Home() {
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -22,7 +16,6 @@ export default function Home() {
       </h1>
       <MainSearchBar />
       <LocalStatusBox />
-      <LeaderBoardBox />
     </div>
   );
 }
