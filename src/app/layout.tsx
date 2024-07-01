@@ -7,13 +7,13 @@ import NavBar from "@/app/_components/navBar";
 import ReactQueryProvider from "@/components/reactQueryProvider";
 import NavSearchBar from "@/app/_components/navSearchBar";
 import GoogleAd from "@/components/googleAd";
-import dynamic from "next/dynamic";
-const LeaderBoardBox = dynamic(
-  () => import("@/app/_components/leaderBoardBox"),
-  {
-    ssr: false,
-  },
-);
+// import dynamic from "next/dynamic";
+// const LeaderBoardBox = dynamic(
+//   () => import("@/app/_components/leaderBoardBox"),
+//   {
+//     ssr: false,
+//   },
+// );
 export const metadata: Metadata = {
   title: "mejai.kr",
   description: "mejai.kr",
@@ -43,7 +43,7 @@ export default function RootLayout({
                   <div className="w-full ">{children}</div>
                 </div>
               </div>
-              <LeaderBoardBox />
+              {/*<LeaderBoardBox />*/}
               <Footer />
             </div>
           </ThemeProvider>
