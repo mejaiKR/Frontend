@@ -5,9 +5,9 @@ import React from "react";
 import Footer from "@/app/_components/footer";
 import NavBar from "@/app/_components/navBar";
 import ReactQueryProvider from "@/components/reactQueryProvider";
-import NavSearchBar from "@/app/_components/navSearchBar";
 import GoogleAd from "@/components/googleAd";
 import dynamic from "next/dynamic";
+import MainSearchBar from "@/app/_components/mainSearchBar";
 const LeaderBoardBox = dynamic(
   () => import("@/app/_components/leaderBoardBox"),
   {
@@ -37,7 +37,7 @@ export default function RootLayout({
           >
             <div className="w-full max-w-[550px] min-w-[340px] flex flex-col min-h-screen">
               <NavBar />
-              <NavSearchBar />
+              <MainSearchBar />
               <div className="flex-grow">
                 <div className="flex justify-center h-full">
                   <div className="w-full ">{children}</div>

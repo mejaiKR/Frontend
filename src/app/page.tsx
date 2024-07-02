@@ -1,4 +1,3 @@
-import MainSearchBar from "@/app/_components/mainSearchBar";
 import React from "react";
 
 export default function Home() {
@@ -7,7 +6,6 @@ export default function Home() {
       <h1 className="mt-28 mb-28 font-[GMARKET-Bold] text-5xl font-extrabold tracking-tight lg:text-7xl">
         mejai.kr
       </h1>
-      <MainSearchBar />
     </div>
   );
 }
