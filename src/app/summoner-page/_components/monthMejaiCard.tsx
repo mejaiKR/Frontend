@@ -70,8 +70,8 @@ const WeekDays = () => {
 export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
   const [monthData, setMonthData] = useState<DayGameData[]>([]);
   const params = useSearchParams();
-  const id = params.get("id") || "";
-  const tag = params.get("tag") || "";
+  const id = params?.get("id") || "";
+  const tag = params?.get("tag") || "";
   let year = 2024;
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
 
