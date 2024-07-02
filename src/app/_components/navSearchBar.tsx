@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
 import createSubmitHandler from "@/app/_components/createSubmitHandler";
+import { Input } from "@/components/ui/input";
 
 export default function NavSearchBar() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function NavSearchBar() {
               />
             </svg>
           </div>
-          <input
+          <Input
             type="search"
             id="default-search"
             maxLength={22}

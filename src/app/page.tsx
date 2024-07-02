@@ -1,13 +1,6 @@
 import MainSearchBar from "@/app/_components/mainSearchBar";
-import dynamic from "next/dynamic";
 import React from "react";
 
-const LocalStatusBox = dynamic(
-  () => import("@/app/_components/localStatusBox"),
-  {
-    ssr: false,
-  },
-);
 export default function Home() {
   return (
     <div className="w-full flex flex-col items-center justify-center">
@@ -15,7 +8,6 @@ export default function Home() {
         mejai.kr
       </h1>
       <MainSearchBar />
-      <LocalStatusBox />
     </div>
   );
 }
