@@ -13,8 +13,8 @@ import { AxiosError } from "axios";
 
 function AwaitPage() {
   const params = useSearchParams();
-  const id = params.get("id") || "";
-  const tag = params.get("tag") || "";
+  const id = params?.get("id") || "";
+  const tag = params?.get("tag") || "";
   const { error, isLoading } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
