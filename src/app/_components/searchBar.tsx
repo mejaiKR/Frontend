@@ -7,6 +7,7 @@ import axios from "axios";
 import LocalStatusBox from "@/app/_components/localStatusBox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import ReadingGlassSvgIcon from "@/components/ui/readingGlassSvgIcon";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -63,18 +64,7 @@ export default function SearchBar() {
             onBlur={() => setTimeout(() => setIsFocused(false), 200)}
           />
           <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-            <svg
-              className="w-5 h-5 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
+            <ReadingGlassSvgIcon />
           </div>
           <Button
             type="submit"
