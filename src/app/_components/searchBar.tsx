@@ -75,7 +75,7 @@ export default function SearchBar() {
         </div>
       </form>
       {isFocused && (
-        <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-10 max-h-120 overflow-y-auto">
+        <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
             searchResults.map((item, idx) => (
               <button
