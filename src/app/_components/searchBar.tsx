@@ -8,11 +8,11 @@ import LocalStatusBox from "@/app/_components/localStatusBox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function MainSearchBar() {
+export default function SearchBar() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [curInputValue, setCurInputValue] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
   const [isFocused, setIsFocused] = useState(false);
 
@@ -31,10 +31,10 @@ export default function MainSearchBar() {
             })
             .then((res) => {
               setSearchResults(res.data);
-              console.log(res.data);
             })
             .catch((err) => {
               console.error(err.response?.data || err);
+              setSearchResults([]);
             });
         });
       } else {
@@ -85,22 +85,25 @@ export default function MainSearchBar() {
         </div>
       </form>
       {isFocused && (
-        <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-l-md shadow-xl z-10 max-h-60 overflow-y-auto">
-          {searchResults.map((item, idx) => (
-            <button
-              key={idx}
-              className="w-full px-4 py-2 text-left hover:bg-accent focus:bg-accent focus:outline-none"
-            >
-              {item}
-            </button>
-          ))}
-          {curInputValue.length === 0 && <LocalStatusBox />}
+        <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-10 max-h-60 overflow-y-auto">
+          {searchResults.length > 0 ? (
+            searchResults.map((item, idx) => (
+              <button
+                key={idx}
+                className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none"
+              >
+                {item}
+              </button>
+            ))
+          ) : curInputValue ? ( // 입력이 있을 때 검색 결과가 없다고 표시
+            <div className="px-4 py-2 text-gray-500 dark:text-gray-400">
+              검색 결과가 없습니다.
+            </div>
+          ) : (
+            <LocalStatusBox /> // 입력이 텅 비었을 때 LocalStatusBox 표시
+          )}
         </div>
       )}
-      {
-        /*{isPending && <Spinner />}*/
-        //TODO: 이거 너무 찰나라서 주석처리함 배포해보고 볼 것
-      }
     </div>
   );
 }
