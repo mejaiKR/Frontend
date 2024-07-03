@@ -17,9 +17,6 @@ export default function BookMarkBox() {
   return (
     <ScrollArea className="h-22 w-full rounded-md border">
       <div className="p-4">
-        <h4 className="mb-4 flex justify-center font-medium leading-none">
-          즐겨찾기
-        </h4>
         {bookmarkArr.map((bookmark, idx) => {
           const [id, key] = bookmark.split("#");
           return (

@@ -17,9 +17,6 @@ export default function SearchHistoryBox() {
   return (
     <ScrollArea className="h-29 w-full rounded-md border">
       <div className="p-4">
-        <h4 className="mb-4 flex justify-center font-medium leading-none">
-          검색기록
-        </h4>
         {searchHistoryArr.map((searchHistoryId, idx) => {
           const [id, key] = searchHistoryId.split("#");
           return (
