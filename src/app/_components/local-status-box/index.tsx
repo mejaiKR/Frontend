@@ -3,10 +3,15 @@
 import SearchHistoryBox from "@/app/_components/local-status-box/search-history-box";
 import BookMarkBox from "@/app/_components/local-status-box/book-mark-box";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import LeaderBoardUnit from "@/app/_components/leader-board-box/leader-board-unit";
-import { Search } from "lucide-react";
 
-export default function LocalStatusBox() {
+interface LocalStatusBoxProps {
+  setIsDropdownVisible: (value: boolean) => void;
+}
+
+export default function LocalStatusBox({
+  setIsDropdownVisible,
+}: LocalStatusBoxProps) {
+  //todo: 이거 북마크 변경됐을때 검색 하단 뷰 사라지게 해야함
   return (
     <Tabs defaultValue="SearchHistoryBox" className="w-full">
       <TabsList className="w-full">
@@ -18,10 +23,10 @@ export default function LocalStatusBox() {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="SearchHistoryBox">
-        <SearchHistoryBox />
+        <SearchHistoryBox setIsDropdownVisible={setIsDropdownVisible} />
       </TabsContent>
       <TabsContent value="bookMarkBox">
-        <BookMarkBox />
+        <BookMarkBox setIsDropdownVisible={setIsDropdownVisible} />
       </TabsContent>
     </Tabs>
   );

@@ -11,7 +11,13 @@ function getSearchHistories(): string[] {
   return searchHistoryString ? JSON.parse(searchHistoryString) : [];
 }
 
-export default function SearchHistoryBox() {
+interface SearchHistoryBoxProps {
+  setIsDropdownVisible: (value: boolean) => void;
+}
+
+export default function SearchHistoryBox({
+  setIsDropdownVisible,
+}: SearchHistoryBoxProps) {
   const [searchHistoryArr, setSearchHistoryArr] =
     useState(getSearchHistories());
   return (
@@ -21,9 +27,11 @@ export default function SearchHistoryBox() {
           const [id, key] = searchHistoryId.split("#");
           return (
             <div key={idx}>
-              <Separator className="my-1" />
               <div className="flex justify-between items-center w-full">
-                <Link href={`/summoner-page?id=${id}&tag=${key}`}>
+                <Link
+                  href={`/summoner-page?id=${id}&tag=${key}`}
+                  onClick={() => setIsDropdownVisible(false)}
+                >
                   <div className=" text-xs w-full h-10 flex justify-center items-center">
                     {searchHistoryId}
                   </div>
@@ -38,6 +46,7 @@ export default function SearchHistoryBox() {
                   x
                 </button>
               </div>
+              <Separator className="my-1" />
             </div>
           );
         })}
