@@ -10,15 +10,43 @@ import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
 
+const useClickOutside = (
+  ref: React.RefObject<HTMLElement>,
+  handler: () => void,
+) => {
+  useEffect(() => {
+    const listener = (event: MouseEvent | TouchEvent) => {
+      if (!ref.current || ref.current.contains(event.target as Node)) {
+        return;
+      }
+      handler();
+    };
+
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+};
+
 export default function SearchBar() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchBarRef = useRef<HTMLDivElement>(null);
   const [curInputValue, setCurInputValue] = useState("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
-  const [isFocused, setIsFocused] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const handleSubmit = createSubmitHandler(inputRef, router);
+
+  // 외부 클릭이 감지되면 드롭다운 닫기
+  useClickOutside(searchBarRef, () => {
+    setIsDropdownVisible(false);
+  });
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -47,8 +75,17 @@ export default function SearchBar() {
     return () => clearTimeout(delayDebounceFn);
   }, [curInputValue]);
 
+  const handleInputFocus = () => {
+    setIsDropdownVisible(true);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurInputValue(e.target.value);
+    setIsDropdownVisible(true);
+  };
+
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div className="relative w-full max-w-2xl mx-auto" ref={searchBarRef}>
       <form className="w-full" onSubmit={handleSubmit}>
         <div className="relative">
           <Input
@@ -60,9 +97,8 @@ export default function SearchBar() {
             placeholder="소환사명#태그"
             required
             value={curInputValue}
-            onChange={(e) => setCurInputValue(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
           />
           <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
             <ReadingGlassSvgIcon />
@@ -75,7 +111,7 @@ export default function SearchBar() {
           </Button>
         </div>
       </form>
-      {isFocused && (
+      {isDropdownVisible && (
         <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
             <RecommendedNicknameList searchResults={searchResults} />
