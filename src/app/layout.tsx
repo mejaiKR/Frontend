@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/themeProvider";
+import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
 import Footer from "@/app/_components/footer";
-import NavBar from "@/app/_components/navBar";
-import ReactQueryProvider from "@/components/reactQueryProvider";
-import GoogleAd from "@/components/googleAd";
+import NavBar from "@/app/_components/nav-bar";
+import ReactQueryProvider from "@/components/react-query-provider";
+import GoogleAd from "@/components/google-ad";
 import dynamic from "next/dynamic";
 import SearchBar from "@/app/_components/search-bar";
 const LeaderBoardBox = dynamic(

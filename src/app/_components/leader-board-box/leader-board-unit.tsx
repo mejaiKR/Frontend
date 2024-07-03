@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { fetchLeaderBoard } from "@/lib/fetchFunc";
+import { fetchLeaderBoard } from "@/lib/fetch-func";
 
 interface LeaderBoardProps {
   year: number;

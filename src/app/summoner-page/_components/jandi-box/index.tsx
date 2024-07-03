@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import LazyLoadedMonthMejaiCard from "@/app/summoner-page/_components/jandi-box/LazyLoadedMonthMejaiCard";
+import LazyLoadedMonthMejaiCard from "@/app/summoner-page/_components/jandi-box/lazy-loaded-month-mejai-card";
 
 export default function JandiBox() {
   const nowMonth = new Date().getMonth() + 1;

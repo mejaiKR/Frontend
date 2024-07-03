@@ -2,9 +2,9 @@
 
 import axios from "axios";
 import { SERVER_URL } from "@/lib/utils";
-import { DayGameData } from "@/app/summoner-page/_components/jandi-box/monthMejaiCard";
+import { DayGameData } from "@/app/summoner-page/_components/jandi-box/month-mejai-card";
 import { QueryFunctionContext, QueryKey } from "@tanstack/react-query";
-import { RankingData } from "@/app/_components/leader-board-box/leaderBoardUnit";
+import { RankingData } from "@/app/_components/leader-board-box/leader-board-unit";
 
 export const fetchUserInfo = async ({
   queryKey,
