@@ -1,6 +1,6 @@
 "use client";
 
-import MejaiBox from "@/app/summoner-page/_components/mejaiBox";
+import MejaiBox from "@/app/summoner-page/_components/jandi-box/mejaiBox";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchJandi } from "@/lib/fetchFunc";
