@@ -9,6 +9,28 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/readingGlassSvgIcon";
 
+interface RecommendedNicknameListProps {
+  searchResults: string[];
+}
+
+const RecommendedNicknameList = ({
+  searchResults,
+}: RecommendedNicknameListProps) => {
+  return (
+    <>
+      {searchResults.map((item, idx) => (
+        // TODO: 백엔드 완성되면 Link로 교체 필요
+        <button
+          key={idx}
+          className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none"
+        >
+          {item}
+        </button>
+      ))}
+    </>
+  );
+};
+
 export default function SearchBar() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +45,7 @@ export default function SearchBar() {
     const delayDebounceFn = setTimeout(() => {
       if (curInputValue) {
         startTransition(() => {
-          // TODO: 백엔드 완성되면 교체 필요
+          // TODO: 백엔드 완성되면 엔드포인트 교체 필요
           axios
             .get(`/api/search`, {
               params: {
@@ -77,20 +99,13 @@ export default function SearchBar() {
       {isFocused && (
         <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
-            searchResults.map((item, idx) => (
-              <button
-                key={idx}
-                className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none"
-              >
-                {item}
-              </button>
-            ))
-          ) : curInputValue ? ( // 입력이 있을 때 검색 결과가 없다고 표시
+            <RecommendedNicknameList searchResults={searchResults} />
+          ) : curInputValue ? (
             <div className="px-4 py-2 text-gray-500 dark:text-gray-400">
               검색 결과가 없습니다.
             </div>
           ) : (
-            <LocalStatusBox /> // 입력이 텅 비었을 때 LocalStatusBox 표시
+            <LocalStatusBox />
           )}
         </div>
       )}
