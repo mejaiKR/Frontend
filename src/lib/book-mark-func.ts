@@ -3,6 +3,7 @@ export function addBookmarkId(id: string) {
   const bookmarks: string[] = bookmarkString ? JSON.parse(bookmarkString) : [];
   if (!bookmarks.includes(id)) {
     bookmarks.unshift(id);
+    if (bookmarks.length > 10) bookmarks.pop();
     localStorage.setItem("bookmark", JSON.stringify(bookmarks));
   }
 }
