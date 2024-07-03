@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import ShareSvgIcon from "@/components/ui/shareSvgIcon";
+import ShareSvgIcon from "@/components/ui/share-svg-icon";
 import { useEffect, useState } from "react";
 
 const copyUrl = () => {

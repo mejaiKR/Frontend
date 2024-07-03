@@ -1,9 +1,9 @@
 "use client";
 
-import MejaiBox from "@/app/summoner-page/_components/mejaiBox";
+import MejaiBox from "@/app/summoner-page/_components/jandi-box/mejai-box";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { fetchJandi } from "@/lib/fetchFunc";
+import { fetchJandi } from "@/lib/fetch-func";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";

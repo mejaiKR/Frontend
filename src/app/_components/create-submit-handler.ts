@@ -1,5 +1,5 @@
 import React, { FormEvent } from "react";
-import { addSearchHistory } from "@/lib/searchHistoryFunc";
+import { addSearchHistory } from "@/lib/search-history-func";
 
 export default function createSubmitHandler(
   inputRef: React.RefObject<HTMLInputElement>,

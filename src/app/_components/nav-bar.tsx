@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { ModeToggle } from "@/app/_components/modeToggle";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 export default function NavBar() {
   return (

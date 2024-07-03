@@ -2,28 +2,37 @@
 
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState, useTransition } from "react";
-import createSubmitHandler from "@/app/_components/createSubmitHandler";
+import createSubmitHandler from "@/app/_components/create-submit-handler";
 import axios from "axios";
-import LocalStatusBox from "@/app/_components/localStatusBox";
+import LocalStatusBox from "@/app/_components/local-status-box";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import ReadingGlassSvgIcon from "@/components/ui/readingGlassSvgIcon";
+import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
+import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
+import useClickOutside from "@/hooks/useClickOutside";
+import { useDropdown } from "@/components/provider/dropdown-provider";
 
 export default function SearchBar() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchBarRef = useRef<HTMLDivElement>(null);
   const [curInputValue, setCurInputValue] = useState("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
-  const [isFocused, setIsFocused] = useState(false);
+  const { isDropdownVisible, setIsDropdownVisible } = useDropdown();
 
   const handleSubmit = createSubmitHandler(inputRef, router);
+
+  // 외부 클릭이 감지되면 드롭다운 닫기
+  useClickOutside(searchBarRef, () => {
+    setIsDropdownVisible(false);
+  });
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (curInputValue) {
         startTransition(() => {
-          // TODO: 백엔드 완성되면 교체 필요
+          // TODO: 백엔드 완성되면 엔드포인트 교체 필요
           axios
             .get(`/api/search`, {
               params: {
@@ -46,8 +55,17 @@ export default function SearchBar() {
     return () => clearTimeout(delayDebounceFn);
   }, [curInputValue]);
 
+  const handleInputFocus = () => {
+    setIsDropdownVisible(true);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurInputValue(e.target.value);
+    setIsDropdownVisible(true);
+  };
+
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div className="relative w-full max-w-2xl mx-auto" ref={searchBarRef}>
       <form className="w-full" onSubmit={handleSubmit}>
         <div className="relative">
           <Input
@@ -59,9 +77,8 @@ export default function SearchBar() {
             placeholder="소환사명#태그"
             required
             value={curInputValue}
-            onChange={(e) => setCurInputValue(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
           />
           <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
             <ReadingGlassSvgIcon />
@@ -74,23 +91,16 @@ export default function SearchBar() {
           </Button>
         </div>
       </form>
-      {isFocused && (
+      {isDropdownVisible && (
         <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
-            searchResults.map((item, idx) => (
-              <button
-                key={idx}
-                className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none"
-              >
-                {item}
-              </button>
-            ))
-          ) : curInputValue ? ( // 입력이 있을 때 검색 결과가 없다고 표시
+            <RecommendedNicknameList searchResults={searchResults} />
+          ) : curInputValue ? (
             <div className="px-4 py-2 text-gray-500 dark:text-gray-400">
               검색 결과가 없습니다.
             </div>
           ) : (
-            <LocalStatusBox /> // 입력이 텅 비었을 때 LocalStatusBox 표시
+            <LocalStatusBox />
           )}
         </div>
       )}

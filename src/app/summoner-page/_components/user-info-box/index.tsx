@@ -3,10 +3,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserInfo } from "@/lib/fetchFunc";
+import { fetchUserInfo } from "@/lib/fetch-func";
 import { AxiosError } from "axios";
-import ShareButton from "@/app/summoner-page/_components/shareButton";
-import BookMarkButton from "@/app/summoner-page/_components/bookMarkButton";
+import ShareButton from "@/components/ui/share-button";
+import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
 
 function ImageSkeleton() {
   return (

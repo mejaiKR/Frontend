@@ -1,12 +1,12 @@
 "use client";
 
-import BookMarkStar from "@/components/ui/bookMarkStar";
+import BookMarkStar from "@/components/ui/book-mark-star";
 import { useEffect, useState } from "react";
 import {
   addBookmarkId,
   isLocalStorageBookmarked,
   removeBookmarkId,
-} from "@/lib/bookMarkFunc";
+} from "@/lib/book-mark-func";
 
 interface BookMarkStarButtonProps {
   id: string;
