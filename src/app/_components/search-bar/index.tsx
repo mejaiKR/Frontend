@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
 import useClickOutside from "@/hooks/useClickOutside";
+import { useDropdown } from "@/components/dropdown-provider";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -18,8 +19,8 @@ export default function SearchBar() {
   const [curInputValue, setCurInputValue] = useState("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  // TODO: isDropdownVisible이거 전역상태관리로 바꿔야할거같은데
+  const { isDropdownVisible, setIsDropdownVisible } = useDropdown();
+
   const handleSubmit = createSubmitHandler(inputRef, router);
 
   // 외부 클릭이 감지되면 드롭다운 닫기
@@ -99,7 +100,7 @@ export default function SearchBar() {
               검색 결과가 없습니다.
             </div>
           ) : (
-            <LocalStatusBox setIsDropdownVisible={setIsDropdownVisible} />
+            <LocalStatusBox />
           )}
         </div>
       )}

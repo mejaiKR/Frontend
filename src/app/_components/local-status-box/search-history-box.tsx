@@ -1,25 +1,22 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { removeSearchHistory } from "@/lib/search-history-func";
+import { useDropdown } from "@/components/dropdown-provider";
 
 function getSearchHistories(): string[] {
   const searchHistoryString = localStorage.getItem("searchHistory");
   return searchHistoryString ? JSON.parse(searchHistoryString) : [];
 }
 
-interface SearchHistoryBoxProps {
-  setIsDropdownVisible: (value: boolean) => void;
-}
-
-export default function SearchHistoryBox({
-  setIsDropdownVisible,
-}: SearchHistoryBoxProps) {
+export default function SearchHistoryBox() {
   const [searchHistoryArr, setSearchHistoryArr] =
     useState(getSearchHistories());
+  const { setIsDropdownVisible } = useDropdown();
+
   return (
     <ScrollArea className="h-29 w-full rounded-md border">
       <div className="p-4">

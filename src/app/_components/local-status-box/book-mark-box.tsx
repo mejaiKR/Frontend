@@ -4,20 +4,16 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { removeBookmarkId } from "@/lib/book-mark-func";
 import { useState } from "react";
+import { useDropdown } from "@/components/dropdown-provider";
 
 function getBookmarks(): string[] {
   const bookmarkString = localStorage.getItem("bookmark");
   return bookmarkString ? JSON.parse(bookmarkString) : [];
 }
-interface BookMarkBoxProps {
-  setIsDropdownVisible: (value: boolean) => void;
-}
 
-export default function BookMarkBox({
-  setIsDropdownVisible,
-}: BookMarkBoxProps) {
+export default function BookMarkBox() {
   const [bookmarkArr, setBookmarkArr] = useState(getBookmarks());
-
+  const { setIsDropdownVisible } = useDropdown();
   return (
     <div className="h-22 w-full rounded-md border p-4">
       {bookmarkArr.map((bookmark, idx) => {
