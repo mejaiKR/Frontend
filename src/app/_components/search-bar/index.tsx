@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
 import useClickOutside from "@/hooks/useClickOutside";
-import { useDropdown } from "@/components/dropdown-provider";
+import { useDropdown } from "@/components/provider/dropdown-provider";
 
 export default function SearchBar() {
   const router = useRouter();

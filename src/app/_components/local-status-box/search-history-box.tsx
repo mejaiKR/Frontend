@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { removeSearchHistory } from "@/lib/search-history-func";
-import { useDropdown } from "@/components/dropdown-provider";
+import { useDropdown } from "@/components/provider/dropdown-provider";
 
 function getSearchHistories(): string[] {
   const searchHistoryString = localStorage.getItem("searchHistory");

@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { removeBookmarkId } from "@/lib/book-mark-func";
 import { useState } from "react";
-import { useDropdown } from "@/components/dropdown-provider";
+import { useDropdown } from "@/components/provider/dropdown-provider";
 
 function getBookmarks(): string[] {
   const bookmarkString = localStorage.getItem("bookmark");
