@@ -4,32 +4,11 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState, useTransition } from "react";
 import createSubmitHandler from "@/app/_components/createSubmitHandler";
 import axios from "axios";
-import LocalStatusBox from "@/app/_components/localStatusBox";
+import Index from "@/app/_components/local-status-box";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/readingGlassSvgIcon";
-
-interface RecommendedNicknameListProps {
-  searchResults: string[];
-}
-
-const RecommendedNicknameList = ({
-  searchResults,
-}: RecommendedNicknameListProps) => {
-  return (
-    <>
-      {searchResults.map((item, idx) => (
-        // TODO: 백엔드 완성되면 Link로 교체 필요
-        <button
-          key={idx}
-          className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none"
-        >
-          {item}
-        </button>
-      ))}
-    </>
-  );
-};
+import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -105,7 +84,7 @@ export default function SearchBar() {
               검색 결과가 없습니다.
             </div>
           ) : (
-            <LocalStatusBox />
+            <Index />
           )}
         </div>
       )}

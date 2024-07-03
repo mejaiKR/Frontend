@@ -7,9 +7,9 @@ import NavBar from "@/app/_components/navBar";
 import ReactQueryProvider from "@/components/reactQueryProvider";
 import GoogleAd from "@/components/googleAd";
 import dynamic from "next/dynamic";
-import SearchBar from "@/app/_components/searchBar";
+import SearchBar from "@/app/_components/search-bar";
 const LeaderBoardBox = dynamic(
-  () => import("@/app/_components/leaderBoardBox"),
+  () => import("./_components/leader-board-box/index"),
   {
     ssr: false,
   },
