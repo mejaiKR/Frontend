@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState, useTransition } from "react";
 import createSubmitHandler from "@/app/_components/create-submit-handler";
 import axios from "axios";
-import Index from "@/app/_components/local-status-box";
+import LocalStatusBox from "@/app/_components/local-status-box";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
@@ -84,7 +84,7 @@ export default function SearchBar() {
               검색 결과가 없습니다.
             </div>
           ) : (
-            <Index />
+            <LocalStatusBox />
           )}
         </div>
       )}
