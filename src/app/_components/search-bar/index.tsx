@@ -9,28 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
-
-const useClickOutside = (
-  ref: React.RefObject<HTMLElement>,
-  handler: () => void,
-) => {
-  useEffect(() => {
-    const listener = (event: MouseEvent | TouchEvent) => {
-      if (!ref.current || ref.current.contains(event.target as Node)) {
-        return;
-      }
-      handler();
-    };
-
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [ref, handler]);
-};
+import useClickOutside from "@/hooks/useClickOutside";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -40,7 +19,7 @@ export default function SearchBar() {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
+  // TODO: isDropdownVisible이거 전역상태관리로 바꿔야할거같은데
   const handleSubmit = createSubmitHandler(inputRef, router);
 
   // 외부 클릭이 감지되면 드롭다운 닫기
