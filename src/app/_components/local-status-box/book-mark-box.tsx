@@ -1,10 +1,10 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { removeBookmarkId } from "@/lib/book-mark-func";
 import { useState } from "react";
 import { useDropdown } from "@/components/provider/dropdown-provider";
+import CloseSvgIcon from "@/components/ui/close-svg-icon";
 
 function getBookmarks(): string[] {
   const bookmarkString = localStorage.getItem("bookmark");
@@ -15,7 +15,7 @@ export default function BookMarkBox() {
   const [bookmarkArr, setBookmarkArr] = useState(getBookmarks());
   const { setIsDropdownVisible } = useDropdown();
   return (
-    <div className="h-22 w-full rounded-md border p-4">
+    <div className=" w-full rounded-md border p-4">
       {bookmarkArr.map((bookmark, idx) => {
         const [id, key] = bookmark.split("#");
         return (
@@ -34,12 +34,10 @@ export default function BookMarkBox() {
                   removeBookmarkId(bookmark);
                   setBookmarkArr(getBookmarks());
                 }}
-                className="text-xs"
               >
-                x
+                <CloseSvgIcon />
               </button>
             </div>
-            <Separator className="my-1" />
           </div>
         );
       })}

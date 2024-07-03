@@ -1,11 +1,11 @@
 "use client";
 
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { removeSearchHistory } from "@/lib/search-history-func";
 import { useDropdown } from "@/components/provider/dropdown-provider";
+import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
+import CloseSvgIcon from "@/components/ui/close-svg-icon";
 
 function getSearchHistories(): string[] {
   const searchHistoryString = localStorage.getItem("searchHistory");
@@ -18,7 +18,7 @@ export default function SearchHistoryBox() {
   const { setIsDropdownVisible } = useDropdown();
 
   return (
-    <ScrollArea className="h-29 w-full rounded-md border">
+    <div className="w-full rounded-md border">
       <div className="p-4">
         {searchHistoryArr.map((searchHistoryId, idx) => {
           const [id, key] = searchHistoryId.split("#");
@@ -33,21 +33,23 @@ export default function SearchHistoryBox() {
                     {searchHistoryId}
                   </div>
                 </Link>
-                <button
-                  onClick={() => {
-                    removeSearchHistory(searchHistoryId);
-                    setSearchHistoryArr(getSearchHistories());
-                  }}
-                  className="text-xs"
-                >
-                  x
-                </button>
+                <div className="flex gap-4">
+                  <BookMarkButton id={id} tag={key} />
+
+                  <button
+                    onClick={() => {
+                      removeSearchHistory(searchHistoryId);
+                      setSearchHistoryArr(getSearchHistories());
+                    }}
+                  >
+                    <CloseSvgIcon />
+                  </button>
+                </div>
               </div>
-              <Separator className="my-1" />
             </div>
           );
         })}
       </div>
-    </ScrollArea>
+    </div>
   );
 }
