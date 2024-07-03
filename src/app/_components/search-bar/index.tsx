@@ -66,7 +66,7 @@ export default function SearchBar() {
 
   return (
     <div className="relative w-full max-w-2xl mx-auto" ref={searchBarRef}>
-      <form className="w-full" onSubmit={handleSubmit}>
+      <form className="mx-4" onSubmit={handleSubmit}>
         <div className="relative">
           <Input
             type="search"
@@ -92,7 +92,7 @@ export default function SearchBar() {
         </div>
       </form>
       {isDropdownVisible && (
-        <div className="absolute w-full mt-1 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
+        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
             <RecommendedNicknameList searchResults={searchResults} />
           ) : curInputValue ? (
