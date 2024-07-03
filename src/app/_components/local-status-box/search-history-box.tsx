@@ -1,7 +1,7 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { removeSearchHistory } from "@/lib/search-history-func";
