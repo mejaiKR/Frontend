@@ -27,7 +27,7 @@ function AwaitPage() {
   }
   if (isLoading) {
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-96 flex justify-center items-center">
         <Spinner />
       </div>
     );
