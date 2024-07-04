@@ -97,8 +97,10 @@ export default function SearchBar() {
             <RecommendedNicknameList searchResults={searchResults} />
           ) : curInputValue ? (
             <div className="px-4 py-2 text-gray-500 dark:text-gray-400">
-              {/*검색 결과가 없습니다.*/
-              //todo: 나중에 원래대로 돌리기}
+              {
+                /*검색 결과가 없습니다.*/
+                //todo: 나중에 원래대로 돌리기
+              }
               현재 목업 API로 운영중입니다. hide on bush로 테스트 해 보세요
             </div>
           ) : (
