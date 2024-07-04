@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { removeBookmarkId } from "@/lib/book-mark-func";
 import { useState } from "react";
-import { useDropdown } from "@/components/provider/dropdown-provider";
 import CloseSvgIcon from "@/components/ui/close-svg-icon";
+import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 
 function getBookmarks(): string[] {
   const bookmarkString = localStorage.getItem("bookmark");
@@ -13,22 +12,23 @@ function getBookmarks(): string[] {
 
 export default function BookMarkBox() {
   const [bookmarkArr, setBookmarkArr] = useState(getBookmarks());
-  const { setIsDropdownVisible } = useDropdown();
+  const { moveToSummonerPage } = useSummonerNavigation();
+
   return (
-    <div className="w-full rounded-md px-4 pb-2">
+    <div className="w-full rounded-md px-2 pb-2">
       {bookmarkArr.map((bookmark, idx) => {
         const [id, key] = bookmark.split("#");
         return (
-          <div key={idx}>
+          <div key={idx} className="LocalStatusBoxUnit">
             <div className="flex justify-between items-center w-full">
-              <Link
-                href={`/summoner-page?id=${id}&tag=${key}`}
-                onClick={() => setIsDropdownVisible(false)}
-              >
-                <div className=" text-xs w-full h-10 flex justify-center items-center">
+              <div>
+                <div
+                  className="cursor-pointer text-xs w-full h-10 flex justify-center items-center"
+                  onClick={() => moveToSummonerPage(id, key)}
+                >
                   {bookmark}
                 </div>
-              </Link>
+              </div>
               <button
                 onClick={() => {
                   removeBookmarkId(bookmark);

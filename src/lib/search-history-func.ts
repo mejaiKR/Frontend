@@ -7,6 +7,15 @@ export function addSearchHistory(id: string) {
     searchHistories.unshift(id);
     if (searchHistories.length > 10) searchHistories.pop();
     localStorage.setItem("searchHistory", JSON.stringify(searchHistories));
+  } else {
+    const filteredSearchHistories = searchHistories.filter(
+      (searchHistoryId) => searchHistoryId !== id,
+    );
+    filteredSearchHistories.unshift(id);
+    localStorage.setItem(
+      "searchHistory",
+      JSON.stringify(filteredSearchHistories),
+    );
   }
 }
 
