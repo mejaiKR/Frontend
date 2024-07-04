@@ -92,7 +92,7 @@ export default function SearchBar() {
         </div>
       </form>
       {isDropdownVisible && (
-        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
+        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
             <RecommendedNicknameList searchResults={searchResults} />
           ) : curInputValue ? (
