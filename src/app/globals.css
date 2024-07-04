@@ -58,11 +58,6 @@
   }
 
   @font-face {
-    font-family: 'BITBIT';
-    src: url('/fonts/DNFBitBitv2.otf') format('opentype');
-  }
-
-  @font-face {
     font-family: 'NETMARBLE-Bold';
     src: url('/fonts/netmarbleB.ttf') format('opentype');
     font-weight: bold;
@@ -108,5 +103,9 @@
 .HoverCardContent {
   width: var(--radix-popover-width);
   opacity: 0.8;
+}
+
+.LocalStatusBoxUnit {
+  @apply hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-100 rounded-md px-4
 }
 

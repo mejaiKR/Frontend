@@ -18,11 +18,11 @@ export default function SearchHistoryBox() {
   const { setIsDropdownVisible } = useDropdown();
 
   return (
-    <div className="w-full rounded-md px-4 pb-2">
+    <div className="w-full rounded-md px-2 pb-2">
       {searchHistoryArr.map((searchHistoryId, idx) => {
         const [id, key] = searchHistoryId.split("#");
         return (
-          <div key={idx}>
+          <div key={idx} className="LocalStatusBoxUnit">
             <div className="flex justify-between items-center w-full">
               <Link
                 href={`/summoner-page?id=${id}&tag=${key}`}
