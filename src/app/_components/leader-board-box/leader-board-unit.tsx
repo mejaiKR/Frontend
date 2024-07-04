@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLeaderBoard } from "@/lib/fetch-func";
+import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 
 interface LeaderBoardProps {
   year: number;
@@ -34,6 +34,7 @@ export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
     staleTime: 1000 * 60 * 15,
     gcTime: 1000 * 60 * 15,
   });
+  const { moveToSummonerPage } = useSummonerNavigation();
 
   if (isLoading) return <div>Loading...</div>;
   if (error || data === undefined) return <div>Error</div>;
@@ -53,11 +54,14 @@ export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
           <TableRow key={idx}>
             <TableCell className="font-medium">{idx + 1}</TableCell>
             <TableCell>
-              <Link
-                href={`/summoner-page?id=${userData.summonerName}&tag=${userData.tagLine}`}
+              <div
+                className="cursor-pointer"
+                onClick={() =>
+                  moveToSummonerPage(userData.summonerName, userData.tagLine)
+                }
               >
                 {userData.summonerName}#{userData.tagLine}
-              </Link>
+              </div>
             </TableCell>
             <TableCell className="text-right">
               {userData.totalGameCount}

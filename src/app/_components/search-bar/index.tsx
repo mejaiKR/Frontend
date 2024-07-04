@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import axios from "axios";
 import LocalStatusBox from "@/app/_components/local-status-box";
 import { Input } from "@/components/ui/input";
@@ -10,16 +9,15 @@ import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
 import useClickOutside from "@/hooks/useClickOutside";
 import { useDropdown } from "@/components/provider/dropdown-provider";
-import { addSearchHistory } from "@/lib/search-history-func";
+import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 
 export default function SearchBar() {
-  const router = useRouter();
   const searchBarRef = React.useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [curInputValue, setCurInputValue] = useState("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
   const { isDropdownVisible, setIsDropdownVisible } = useDropdown();
+  const { inputRef, curInputValue, setCurInputValue, handleSubmit } =
+    useSummonerNavigation();
 
   // 외부 클릭이 감지되면 드롭다운 닫기
   useClickOutside(searchBarRef, () => {
@@ -52,25 +50,6 @@ export default function SearchBar() {
 
     return () => clearTimeout(delayDebounceFn);
   }, [curInputValue]);
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    let id, tag;
-
-    if (!curInputValue) return;
-    if (curInputValue.includes("#")) {
-      [id, tag] = curInputValue.split("#");
-    } else {
-      id = curInputValue;
-      tag = "KR1";
-    }
-
-    router.push(`/summoner-page?id=${id}&tag=${tag}`);
-    addSearchHistory(`${id}#${tag}`);
-    setCurInputValue("");
-    setIsDropdownVisible(false);
-    inputRef.current?.blur();
-  };
 
   const handleInputFocus = () => {
     setIsDropdownVisible(true);
