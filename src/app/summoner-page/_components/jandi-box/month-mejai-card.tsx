@@ -52,6 +52,7 @@ function updateGameCountForMonth(
 
 interface MonthMejaiCardProps {
   month: number;
+  year: number;
 }
 
 const WeekDays = () => {
@@ -67,16 +68,15 @@ const WeekDays = () => {
   );
 };
 
-export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
+export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
   const [monthData, setMonthData] = useState<DayGameData[]>([]);
   const params = useSearchParams();
   const id = params?.get("id") || "";
   const tag = params?.get("tag") || "";
-  let year = 2024;
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
 
   const { data, error, isLoading } = useQuery<DayGameData[]>({
-    queryKey: ["jandi", { id, tag, year: 2024, month: month }],
+    queryKey: ["jandi", { id, tag, year, month }],
     queryFn: fetchJandi,
     staleTime: 1000 * 60 * 15,
     gcTime: 1000 * 60 * 15,
@@ -92,7 +92,7 @@ export default function MonthMejaiCard({ month }: MonthMejaiCardProps) {
       );
       setMonthData(updatedData);
     }
-  }, [data]);
+  }, [data, year, month]);
 
   // 빈 블록을 계산
   const emptyBlocks = [];

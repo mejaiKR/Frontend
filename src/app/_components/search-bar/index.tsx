@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState, useTransition } from "react";
-import createSubmitHandler from "@/app/_components/create-submit-handler";
 import axios from "axios";
 import LocalStatusBox from "@/app/_components/local-status-box";
 import { Input } from "@/components/ui/input";
@@ -11,17 +10,16 @@ import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
 import useClickOutside from "@/hooks/useClickOutside";
 import { useDropdown } from "@/components/provider/dropdown-provider";
+import { addSearchHistory } from "@/lib/search-history-func";
 
 export default function SearchBar() {
   const router = useRouter();
+  const searchBarRef = React.useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const searchBarRef = useRef<HTMLDivElement>(null);
   const [curInputValue, setCurInputValue] = useState("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
   const { isDropdownVisible, setIsDropdownVisible } = useDropdown();
-
-  const handleSubmit = createSubmitHandler(inputRef, router);
 
   // 외부 클릭이 감지되면 드롭다운 닫기
   useClickOutside(searchBarRef, () => {
@@ -54,6 +52,25 @@ export default function SearchBar() {
 
     return () => clearTimeout(delayDebounceFn);
   }, [curInputValue]);
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    let id, tag;
+
+    if (!curInputValue) return;
+    if (curInputValue.includes("#")) {
+      [id, tag] = curInputValue.split("#");
+    } else {
+      id = curInputValue;
+      tag = "KR1";
+    }
+
+    router.push(`/summoner-page?id=${id}&tag=${tag}`);
+    addSearchHistory(`${id}#${tag}`);
+    setCurInputValue("");
+    setIsDropdownVisible(false);
+    inputRef.current?.blur();
+  };
 
   const handleInputFocus = () => {
     setIsDropdownVisible(true);
@@ -92,12 +109,12 @@ export default function SearchBar() {
         </div>
       </form>
       {isDropdownVisible && (
-        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 border rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
+        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
             <RecommendedNicknameList searchResults={searchResults} />
           ) : curInputValue ? (
             <div className="px-4 py-2 text-gray-500 dark:text-gray-400">
-              검색 결과가 없습니다.
+              현재 목업 API로 운영중입니다. hide on bush로 테스트 해 보세요
             </div>
           ) : (
             <LocalStatusBox />

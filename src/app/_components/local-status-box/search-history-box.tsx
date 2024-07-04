@@ -18,38 +18,35 @@ export default function SearchHistoryBox() {
   const { setIsDropdownVisible } = useDropdown();
 
   return (
-    <div className="w-full rounded-md border">
-      <div className="p-4">
-        {searchHistoryArr.map((searchHistoryId, idx) => {
-          const [id, key] = searchHistoryId.split("#");
-          return (
-            <div key={idx}>
-              <div className="flex justify-between items-center w-full">
-                <Link
-                  href={`/summoner-page?id=${id}&tag=${key}`}
-                  onClick={() => setIsDropdownVisible(false)}
-                >
-                  <div className=" text-xs w-full h-10 flex justify-center items-center">
-                    {searchHistoryId}
-                  </div>
-                </Link>
-                <div className="flex gap-4">
-                  <BookMarkButton id={id} tag={key} />
-
-                  <button
-                    onClick={() => {
-                      removeSearchHistory(searchHistoryId);
-                      setSearchHistoryArr(getSearchHistories());
-                    }}
-                  >
-                    <CloseSvgIcon />
-                  </button>
+    <div className="w-full rounded-md px-4 pb-2">
+      {searchHistoryArr.map((searchHistoryId, idx) => {
+        const [id, key] = searchHistoryId.split("#");
+        return (
+          <div key={idx}>
+            <div className="flex justify-between items-center w-full">
+              <Link
+                href={`/summoner-page?id=${id}&tag=${key}`}
+                onClick={() => setIsDropdownVisible(false)}
+              >
+                <div className=" text-xs w-full h-10 flex justify-center items-center">
+                  {searchHistoryId}
                 </div>
+              </Link>
+              <div className="flex gap-4">
+                <BookMarkButton id={id} tag={key} />
+                <button
+                  onClick={() => {
+                    removeSearchHistory(searchHistoryId);
+                    setSearchHistoryArr(getSearchHistories());
+                  }}
+                >
+                  <CloseSvgIcon />
+                </button>
               </div>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
