@@ -18,7 +18,7 @@ export default function SearchHistoryBox() {
   const { setIsDropdownVisible } = useDropdown();
 
   return (
-    <div className="w-full rounded-md p-4">
+    <div className="w-full rounded-md px-4 pb-2">
       {searchHistoryArr.map((searchHistoryId, idx) => {
         const [id, key] = searchHistoryId.split("#");
         return (

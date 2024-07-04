@@ -15,7 +15,7 @@ export default function BookMarkBox() {
   const [bookmarkArr, setBookmarkArr] = useState(getBookmarks());
   const { setIsDropdownVisible } = useDropdown();
   return (
-    <div className="w-full rounded-md p-4">
+    <div className="w-full rounded-md px-4 pb-2">
       {bookmarkArr.map((bookmark, idx) => {
         const [id, key] = bookmark.split("#");
         return (
