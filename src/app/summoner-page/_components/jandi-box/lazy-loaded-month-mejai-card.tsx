@@ -6,9 +6,12 @@ import MonthMejaiCard from "@/app/summoner-page/_components/jandi-box/month-meja
 
 interface LazyLoadedMonthMejaiCardProps {
   month: number;
+  year: number;
 }
+
 export default function LazyLoadedMonthMejaiCard({
   month,
+  year,
 }: LazyLoadedMonthMejaiCardProps) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -38,7 +41,7 @@ export default function LazyLoadedMonthMejaiCard({
       {isVisible ? (
         <Card>
           <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
-            <MonthMejaiCard month={month} />
+            <MonthMejaiCard month={month} year={year} />
           </CardContent>
         </Card>
       ) : (

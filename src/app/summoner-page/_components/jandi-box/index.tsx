@@ -9,20 +9,22 @@ import {
 import LazyLoadedMonthMejaiCard from "@/app/summoner-page/_components/jandi-box/lazy-loaded-month-mejai-card";
 
 export default function JandiBox() {
-  const nowMonth = new Date().getMonth() + 1;
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1;
 
   return (
     <div className="flex justify-center flex-col items-center">
       <Carousel
-        opts={{ align: "center", loop: true, startIndex: nowMonth - 1 }}
-        className="w-full max-w-x flex flex-col "
+        opts={{ align: "center", loop: true, startIndex: currentMonth - 1 }}
+        className="w-full max-w-x flex flex-col"
       >
-        <CarouselPrevious className="absolute top-12  left-14 z-10" />
-        <CarouselNext className="absolute top-12  right-14 z-10" />
+        <CarouselPrevious className="absolute top-12 left-14 z-10" />
+        <CarouselNext className="absolute top-12 right-14 z-10" />
         <CarouselContent>
-          {Array.from({ length: nowMonth }).map((_, index) => (
+          {Array.from({ length: currentMonth }).map((_, index) => (
             <CarouselItem key={index}>
-              <LazyLoadedMonthMejaiCard month={index + 1} />
+              <LazyLoadedMonthMejaiCard month={index + 1} year={currentYear} />
             </CarouselItem>
           ))}
         </CarouselContent>
