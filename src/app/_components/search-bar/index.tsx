@@ -21,7 +21,11 @@ export default function SearchBar() {
   const [_, startTransition] = useTransition();
   const { isDropdownVisible, setIsDropdownVisible } = useDropdown();
 
-  const handleSubmit = createSubmitHandler(inputRef, router);
+  const handleSubmit = createSubmitHandler(
+    inputRef,
+    router,
+    setIsDropdownVisible,
+  );
 
   // 외부 클릭이 감지되면 드롭다운 닫기
   useClickOutside(searchBarRef, () => {

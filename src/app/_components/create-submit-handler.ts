@@ -4,6 +4,7 @@ import { addSearchHistory } from "@/lib/search-history-func";
 export default function createSubmitHandler(
   inputRef: React.RefObject<HTMLInputElement>,
   router: any, // router 타입이 업데이트시 변경 예정
+  setIsDropdownVisible: (value: boolean) => void,
 ) {
   // 실제 이벤트 핸들러 함수 반환
   return (event: FormEvent) => {
@@ -25,6 +26,7 @@ export default function createSubmitHandler(
       if (inputRef.current) {
         inputRef.current.value = "";
         inputRef.current.blur();
+        setIsDropdownVisible(false);
       }
     }
   };
