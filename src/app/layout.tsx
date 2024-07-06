@@ -8,7 +8,7 @@ import ReactQueryProvider from "@/components/provider/react-query-provider";
 import GoogleAd from "@/components/google-ad";
 import dynamic from "next/dynamic";
 import SearchBar from "@/app/_components/search-bar";
-import { DropdownProvider } from "@/components/provider/dropdown-provider";
+import RecoilWrapper from "@/lib/recoil/recoil-wrapper";
 const LeaderBoardBox = dynamic(
   () => import("./_components/leader-board-box/index"),
   {
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="flex justify-center">
-        <DropdownProvider>
+        <RecoilWrapper>
           <ReactQueryProvider>
             <ThemeProvider
               attribute="class"
@@ -50,7 +50,7 @@ export default function RootLayout({
               </div>
             </ThemeProvider>
           </ReactQueryProvider>
-        </DropdownProvider>
+        </RecoilWrapper>
       </body>
       <GoogleAd />
     </html>
