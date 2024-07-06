@@ -16,7 +16,7 @@ export default function SearchBar() {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
   const { isDropdownVisible, setIsDropdownVisible } = useDropdown();
-  const { inputRef, curInputValue, setCurInputValue, handleSubmit } =
+  const { inputRef, searchInputValue, setSearchInputValue, handleSubmit } =
     useSummonerNavigation();
 
   // 외부 클릭이 감지되면 드롭다운 닫기
@@ -26,13 +26,13 @@ export default function SearchBar() {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      if (curInputValue) {
+      if (searchInputValue) {
         startTransition(() => {
           // TODO: 백엔드 완성되면 엔드포인트 교체 필요
           axios
             .get(`/api/search`, {
               params: {
-                nickname: curInputValue,
+                nickname: searchInputValue,
               },
             })
             .then((res) => {
@@ -49,14 +49,14 @@ export default function SearchBar() {
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [curInputValue]);
+  }, [searchInputValue]);
 
   const handleInputFocus = () => {
     setIsDropdownVisible(true);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurInputValue(e.target.value);
+    setSearchInputValue(e.target.value);
     setIsDropdownVisible(true);
   };
 
@@ -72,7 +72,7 @@ export default function SearchBar() {
             className="w-full pl-10 pr-28 h-12 block p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="소환사명#태그"
             required
-            value={curInputValue}
+            value={searchInputValue}
             onChange={handleInputChange}
             onFocus={handleInputFocus}
           />
@@ -91,7 +91,7 @@ export default function SearchBar() {
         <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
             <RecommendedNicknameList searchResults={searchResults} />
-          ) : curInputValue ? (
+          ) : searchInputValue ? (
             <div className="px-4 py-2 text-gray-500 dark:text-gray-400">
               현재 목업 API로 운영중입니다. hide on bush로 테스트 해 보세요
             </div>

@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-const searchInputState = atom({
-  key: "searchInputState",
+export const searchInputValueState = atom({
+  key: "searchInputValueState",
   default: "",
 });
