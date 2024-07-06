@@ -12,7 +12,7 @@
 
 ## 기술 스택
 
-typescript, next.js, tailwindcss, react-query, shadcn
+typescript, next.js, tailwindcss, react-query, recoil, shadcn
 <br>
 
 ## 컨벤션
