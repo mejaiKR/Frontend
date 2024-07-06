@@ -15,7 +15,7 @@
 typescript, next.js, tailwindcss, react-query, shadcn
 <br>
 
-## 규칙
+## 컨벤션
 폴더/파일명 : kebab-case
 함수명 : PaskalCase
 변수명 : camelCase
