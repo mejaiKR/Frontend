@@ -8,20 +8,23 @@ import { Button } from "@/components/ui/button";
 import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
 import useClickOutside from "@/hooks/useClickOutside";
-import { useDropdown } from "@/components/provider/dropdown-provider";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
+import { useRecoilState } from "recoil";
+import { isVisibleDropdownState } from "@/lib/recoil/atoms";
 
 export default function SearchBar() {
   const searchBarRef = React.useRef<HTMLDivElement>(null);
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
-  const { isDropdownVisible, setIsDropdownVisible } = useDropdown();
+  const [isVisibleDropdown, setIsVisibleDropdown] = useRecoilState(
+    isVisibleDropdownState,
+  );
   const { inputRef, searchInputValue, setSearchInputValue, handleSubmit } =
     useSummonerNavigation();
 
   // 외부 클릭이 감지되면 드롭다운 닫기
   useClickOutside(searchBarRef, () => {
-    setIsDropdownVisible(false);
+    setIsVisibleDropdown(false);
   });
 
   useEffect(() => {
@@ -52,12 +55,12 @@ export default function SearchBar() {
   }, [searchInputValue]);
 
   const handleInputFocus = () => {
-    setIsDropdownVisible(true);
+    setIsVisibleDropdown(true);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInputValue(e.target.value);
-    setIsDropdownVisible(true);
+    setIsVisibleDropdown(true);
   };
 
   return (
@@ -87,7 +90,7 @@ export default function SearchBar() {
           </Button>
         </div>
       </form>
-      {isDropdownVisible && (
+      {isVisibleDropdown && (
         <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
           {searchResults.length > 0 ? (
             <RecommendedNicknameList searchResults={searchResults} />

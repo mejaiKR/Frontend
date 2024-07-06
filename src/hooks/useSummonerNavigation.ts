@@ -1,9 +1,11 @@
 import { useRouter } from "next/navigation";
 import { useRef, FormEvent, RefObject } from "react";
-import { useDropdown } from "@/components/provider/dropdown-provider";
 import { addSearchHistory } from "@/lib/search-history-func";
-import { useRecoilState } from "recoil";
-import { searchInputValueState } from "@/lib/recoil/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  isVisibleDropdownState,
+  searchInputValueState,
+} from "@/lib/recoil/atoms";
 
 interface UseSummonerNavigationReturn {
   inputRef: RefObject<HTMLInputElement>;
@@ -19,13 +21,13 @@ export function useSummonerNavigation(): UseSummonerNavigationReturn {
   const [searchInputValue, setSearchInputValue] = useRecoilState(
     searchInputValueState,
   );
-  const { setIsDropdownVisible } = useDropdown();
+  const setIsVisibleDropdown = useSetRecoilState(isVisibleDropdownState);
 
   const moveToSummonerPage = (id: string, tag: string): void => {
     router.push(`/summoner-page?id=${id}&tag=${tag}`);
     addSearchHistory(`${id}#${tag}`);
     setSearchInputValue("");
-    setIsDropdownVisible(false);
+    setIsVisibleDropdown(false);
     inputRef.current?.blur();
   };
 
