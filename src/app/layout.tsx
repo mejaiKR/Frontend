@@ -9,6 +9,7 @@ import GoogleAd from "@/components/google-ad";
 import dynamic from "next/dynamic";
 import SearchBar from "@/app/_components/search-bar";
 import { DropdownProvider } from "@/components/provider/dropdown-provider";
+import RecoilWrapper from "@/lib/recoil/recoil-wrapper";
 const LeaderBoardBox = dynamic(
   () => import("./_components/leader-board-box/index"),
   {
@@ -29,28 +30,30 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="flex justify-center">
-        <DropdownProvider>
-          <ReactQueryProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className="w-full max-w-[550px] min-w-[340px] flex flex-col min-h-screen">
-                <NavBar />
-                <SearchBar />
-                <div className="flex-grow">
-                  <div className="flex justify-center h-full">
-                    <div className="w-full ">{children}</div>
+        <RecoilWrapper>
+          <DropdownProvider>
+            <ReactQueryProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <div className="w-full max-w-[550px] min-w-[340px] flex flex-col min-h-screen">
+                  <NavBar />
+                  <SearchBar />
+                  <div className="flex-grow">
+                    <div className="flex justify-center h-full">
+                      <div className="w-full ">{children}</div>
+                    </div>
                   </div>
+                  <LeaderBoardBox />
+                  <Footer />
                 </div>
-                <LeaderBoardBox />
-                <Footer />
-              </div>
-            </ThemeProvider>
-          </ReactQueryProvider>
-        </DropdownProvider>
+              </ThemeProvider>
+            </ReactQueryProvider>
+          </DropdownProvider>
+        </RecoilWrapper>
       </body>
       <GoogleAd />
     </html>
