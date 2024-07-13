@@ -4,34 +4,29 @@ import React, { Suspense } from "react";
 import UserInfoBox from "@/app/summoner-page/_components/user-info-box";
 import TierBox from "@/app/summoner-page/_components/tier-box";
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/lib/fetch-func";
 import ErrorPage from "@/app/summoner-page/_components/error-page";
 import JandiBox from "@/app/summoner-page/_components/jandi-box";
 import Spinner from "@/components/ui/spinner";
-import { AxiosError } from "axios";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 
 function AwaitPage() {
   const params = useSearchParams();
   const id = params?.get("id") || "";
   const tag = params?.get("tag") || "";
-  const { error, isLoading } = useQuery({
+
+  const { error, isFetching } = useSuspenseQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
-    staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
+    staleTime: 1000 * 60 * 15,
     gcTime: 1000 * 60 * 15,
   });
 
-  if (error) {
-    return <ErrorPage error={error as AxiosError} />;
+  if (error && !isFetching) {
+    throw error;
   }
-  if (isLoading) {
-    return (
-      <div className="w-full h-96 flex justify-center items-center">
-        <Spinner />
-      </div>
-    );
-  }
+
   return (
     <>
       <UserInfoBox id={id} tag={tag} />
@@ -40,10 +35,17 @@ function AwaitPage() {
     </>
   );
 }
+
+function ErrorFallback({ error }: FallbackProps) {
+  return <ErrorPage error={error} />;
+}
+
 export default function SummonerPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AwaitPage />
-    </Suspense>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Suspense fallback={<Spinner />}>
+        <AwaitPage />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
