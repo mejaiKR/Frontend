@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/ec2-user/your-app
+cd /home/ec2-user/build
 
 # 패키지 설치 및 빌드
 npm install
