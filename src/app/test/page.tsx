@@ -4,7 +4,7 @@ import React, { Suspense } from "react";
 export default function SummonerPage() {
   return (
     <div>
-      hello hello
+      hello hello hello
     </div>
   );
 }
