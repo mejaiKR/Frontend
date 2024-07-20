@@ -6,3 +6,4 @@ export NVM_DIR="$HOME/.nvm"
 
 pm2 stop mejai
 pm2 delete mejai
+pm2 save
