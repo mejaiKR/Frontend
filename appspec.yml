@@ -4,17 +4,12 @@ files:
   - source: /
     destination: /home/ec2-user/build
     overwrite: yes
-file_exists_behavior: OVERWRITE
 permissions:
   - object: /
     pattern: "**"
     owner: ec2-user
     group: ec2-user
 hooks:
-  ApplicationStop:
-    - location: scripts/stop_server.sh
-      timeout: 300
-      runas: ec2-user
   ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 300
