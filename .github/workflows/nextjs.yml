@@ -28,6 +28,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Make .env.local
+        run: |
+          echo "${{ secrets.NEXT_ENV }}" > .env.local
       - name: Detect package manager
         id: detect-package-manager
         run: |
