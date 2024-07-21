@@ -4,6 +4,8 @@ files:
   - source: /
     destination: /home/ec2-user/build
     overwrite: yes
+file_exists_behavior: OVERWRITE
+
 permissions:
   - object: /
     pattern: "**"
@@ -12,6 +14,10 @@ permissions:
 hooks:
   ApplicationStop:
     - location: scripts/stop_server.sh
+      timeout: 300
+      runas: ec2-user
+  BeforeInstall:
+    - location: scripts/remove_files.sh
       timeout: 300
       runas: ec2-user
   ApplicationStart:
