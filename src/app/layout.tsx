@@ -51,8 +51,8 @@ export default function RootLayout({
             </ThemeProvider>
           </ReactQueryProvider>
         </RecoilWrapper>
+        <GoogleAd />
       </body>
-      <GoogleAd />
     </html>
   );
 }
