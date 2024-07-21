@@ -77,10 +77,8 @@ jobs:
       # (5) 빌드 결과물을 S3 버킷에 업로드
       - name: Upload to AWS S3
         run: |
-          aws deploy push \
-            --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
-            --s3-location s3://$S3_BUCKET_NAME/version/$GITHUB_SHA.zip \
-            --source .
+          zip -r $GITHUB_SHA.zip . -x ".git/*" -x ".github/*" -x "node_modules/*" -x ".next/*"
+          aws s3 cp $GITHUB_SHA.zip s3://$S3_BUCKET_NAME/version/$GITHUB_SHA.zip
         # (6) S3 버킷에 있는 파일을 대상으로 CodeDeploy 실행
       - name: Deploy to AWS EC2 from S3
         run: |
