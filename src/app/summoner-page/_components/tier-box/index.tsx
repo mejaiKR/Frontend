@@ -81,7 +81,7 @@ export default function TierBox({ id, tag }: TierBoxProps) {
   if (error) {
     return (
       <div className="h-32 flex justify-center items-center m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <span className="text-lg font-[NETMARBLE-Bold]">error</span>
+        <span className="text-lg font-netmarbleBold">error</span>
       </div>
     );
   }

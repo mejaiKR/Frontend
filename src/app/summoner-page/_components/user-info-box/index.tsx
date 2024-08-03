@@ -42,7 +42,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
   if (error instanceof AxiosError) {
     return (
       <div className="h-32 flex justify-center items-center m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <span className="text-xl font-[NETMARBLE-Bold] text-blue-600">
+        <span className="text-xl font-netmarbleBold text-blue-600">
           {error.response?.status === 404
             ? "소환사를 찾을 수 없습니다"
             : error.message}
