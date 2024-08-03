@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { gmarketMedium, gmarketBold, netmarbleBold } from "./fonts";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import React from "react";
 import Footer from "@/app/_components/footer";
@@ -27,7 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html
+      lang="ko"
+      className={`${gmarketMedium.variable} ${gmarketBold.variable} ${netmarbleBold.variable}`}
+      suppressHydrationWarning
+    >
       <body className="flex justify-center">
         <RecoilWrapper>
           <ReactQueryProvider>

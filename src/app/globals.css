@@ -32,7 +32,6 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'GMARKET-Medium', sans-serif;
   }
 
   .dark {
@@ -57,48 +56,7 @@
     --ring: 224.3 76.3% 48%;
   }
 
-  @font-face {
-    font-family: 'NETMARBLE-Bold';
-    src: url('/fonts/netmarbleB.ttf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
 
-  @font-face {
-    font-family: 'NETMARBLE-Light';
-    src: url('/fonts/netmarbleL.ttf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'NETMARBLE-Medium';
-    src: url('/fonts/netmarbleM.ttf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'GMARKET-Bold';
-    src: url('/fonts/GmarketSansTTFBold.ttf') format('opentype');
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'GMARKET-Light';
-    src: url('/fonts/GmarketSansTTFLight.ttf') format('opentype');
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'GMARKET-Medium';
-    src: url('/fonts/GmarketSansTTFMedium.ttf') format('opentype');
-    font-style: normal;
-    font-display: swap;
-  }
 }
 .HoverCardContent {
   width: var(--radix-popover-width);
