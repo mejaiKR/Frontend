@@ -6,7 +6,6 @@ import CloseSvgIcon from "@/components/ui/close-svg-icon";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 
 function getBookmarks(): string[] {
-  if (typeof localStorage === "undefined") return [];
   const bookmarkString = localStorage.getItem("bookmark");
   return bookmarkString ? JSON.parse(bookmarkString) : [];
 }

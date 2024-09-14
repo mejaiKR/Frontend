@@ -16,7 +16,6 @@ export function removeBookmarkId(id: string) {
 }
 
 export function isLocalStorageBookmarked(id: string): boolean {
-  if (typeof localStorage === "undefined") return false;
   const bookmarkString = localStorage.getItem("bookmark");
   const bookmarks: string[] = bookmarkString ? JSON.parse(bookmarkString) : [];
   return bookmarks.includes(id);

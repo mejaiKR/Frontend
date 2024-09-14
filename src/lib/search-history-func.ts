@@ -34,7 +34,6 @@ export function removeSearchHistory(id: string) {
 }
 
 export function isSearchHistory(id: string): boolean {
-  if (typeof localStorage === "undefined") return false;
   const searchHistoryString = localStorage.getItem("searchHistory");
   const searchHistories: string[] = searchHistoryString
     ? JSON.parse(searchHistoryString)

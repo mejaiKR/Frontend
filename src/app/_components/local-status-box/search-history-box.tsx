@@ -7,7 +7,6 @@ import CloseSvgIcon from "@/components/ui/close-svg-icon";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 
 function getSearchHistories(): string[] {
-  if (typeof localStorage === "undefined") return [];
   const searchHistoryString = localStorage.getItem("searchHistory");
   return searchHistoryString ? JSON.parse(searchHistoryString) : [];
 }
