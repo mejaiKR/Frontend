@@ -52,7 +52,7 @@ export default function BookMarkButton({ id, tag }: BookMarkStarButtonProps) {
       onClick={() => {
         toggleBookMark(isBookMarked, setIsBookMarked, id, tag);
       }}
-      className="w-fit h-fit ml-2"
+      className="w-fit h-fit"
     >
       <BookMarkStar isFilled={isBookMarked} />
     </button>

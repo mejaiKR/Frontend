@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/lib/fetch-func";
+import { nanoid } from "nanoid";
 
 function ImageSkeleton() {
   return (
@@ -87,9 +88,8 @@ export default function TierBox({ id, tag }: TierBoxProps) {
   }
   return (
     <div className=" flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      {data.rank.map((rankInfo: RankInfo, index: number) => (
-        <TierUnit key={index} rankInfo={rankInfo} />
-      ))}
+      <TierUnit key={nanoid()} rankInfo={data.soloRank} />
+      <TierUnit key={nanoid()} rankInfo={data.flexRank} />
     </div>
   );
 }

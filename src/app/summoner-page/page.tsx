@@ -43,7 +43,13 @@ function ErrorFallback({ error }: FallbackProps) {
 export default function SummonerPage() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Suspense fallback={<Spinner />}>
+      <Suspense
+        fallback={
+          <div className="w-full h-96 flex justify-center items-center">
+            <Spinner />
+          </div>
+        }
+      >
         <AwaitPage />
       </Suspense>
     </ErrorBoundary>

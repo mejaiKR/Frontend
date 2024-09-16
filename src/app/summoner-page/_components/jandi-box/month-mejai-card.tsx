@@ -5,49 +5,30 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchJandi } from "@/lib/fetch-func";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
+import { useCallback, useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
 import Spinner from "@/components/ui/spinner";
 import Image from "next/image";
+import { LoadingButton } from "@/components/loadingButton";
+import { RefreshButton } from "@/components/refreshButton";
+import { SERVER_URL } from "@/lib/utils";
+import EmptyBlocks from "@/app/summoner-page/_components/jandi-box/emptyBlocks";
+import WeekDayBar from "@/app/summoner-page/_components/jandi-box/weekDayBar";
+import updateGameCountForMonth from "@/app/summoner-page/_components/jandi-box/utils/updateGameCountForMonth";
+
 export interface DayGameData {
   date: string;
   gameCount: number;
   imageUrl: string;
 }
 
-function updateGameCountForMonth(
-  inputData: DayGameData[],
-  year: number,
-  month: number,
-  setSumOfGameCount: (value: number) => void,
-) {
-  const startOfMonth = dayjs(new Date(year, month - 1, 1));
-  const endOfMonth = dayjs(new Date(year, month, 0));
-  let sumOfGameCount = 0;
+export interface JandiData {
+  userGameCount: DayGameData[];
+  lastUpdatedAt: string;
+}
 
-  let daysArray: DayGameData[] = [];
-  let day = startOfMonth;
-
-  while (day.isBefore(endOfMonth) || day.isSame(endOfMonth, "day")) {
-    daysArray.push({
-      date: day.format("YYYY-MM-DD"),
-      gameCount: 0,
-      imageUrl: "",
-    });
-    day = day.add(1, "day");
-  }
-
-  // 입력 데이터로 gameCount 업데이트
-  inputData.forEach((data: DayGameData) => {
-    const index = daysArray.findIndex((day) => day.date === data.date);
-    if (index !== -1) {
-      daysArray[index].gameCount = data.gameCount;
-      sumOfGameCount += data.gameCount;
-      daysArray[index].imageUrl = data.imageUrl;
-    }
-  });
-  setSumOfGameCount(sumOfGameCount);
-  return daysArray;
+interface UpdateStatus {
+  lastUpdateAt: string;
 }
 
 interface MonthMejaiCardProps {
@@ -55,27 +36,16 @@ interface MonthMejaiCardProps {
   year: number;
 }
 
-const WeekDays = () => {
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
-  return (
-    <div className="w-full grid grid-cols-7 gap-1 text-xl">
-      {days.map((day) => (
-        <div key={day} className="flex justify-center">
-          {day}
-        </div>
-      ))}
-    </div>
-  );
-};
-
 export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
   const [monthData, setMonthData] = useState<DayGameData[]>([]);
   const params = useSearchParams();
   const id = params?.get("id") || "";
   const tag = params?.get("tag") || "";
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
 
-  const { data, error, isLoading } = useQuery<DayGameData[]>({
+  const { data, error, isLoading, refetch } = useQuery<JandiData>({
     queryKey: ["jandi", { id, tag, year, month }],
     queryFn: fetchJandi,
     staleTime: 1000 * 60 * 15,
@@ -85,7 +55,7 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
   useEffect(() => {
     if (data) {
       const updatedData = updateGameCountForMonth(
-        data,
+        data.userGameCount,
         year,
         month,
         setSumOfGameCount,
@@ -94,14 +64,54 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
     }
   }, [data, year, month]);
 
-  // 빈 블록을 계산
-  const emptyBlocks = [];
-  const startOfMonth = dayjs(new Date(year, month - 1, 1));
-  const dayOfWeek = startOfMonth.day(); // 일요일은 0, 토요일은 6
+  const checkUpdateStatus = useCallback(async () => {
+    try {
+      const response = await axios.get<UpdateStatus>(
+        `${SERVER_URL}/renewal-status/streak?id=${id}&tag=${tag}&year=${year}&month=${month}`,
+      );
+      const lastUpdateAt = dayjs(response.data.lastUpdateAt);
+      const lastUpdatedAt = dayjs(data?.lastUpdatedAt);
+      console.log(
+        "lastUpdateAt:",
+        lastUpdateAt,
+        "lastUpdatedAt:",
+        lastUpdatedAt,
+      );
 
-  for (let i = 0; i < dayOfWeek; i++) {
-    emptyBlocks.push(<div key={`empty-${i}`} className="w-full"></div>);
-  }
+      if (lastUpdateAt.isAfter(lastUpdatedAt)) {
+        await refetch();
+        setIsRefreshing(false);
+        setUpdateMessage("업데이트가 완료되었습니다.");
+        setTimeout(() => setUpdateMessage(null), 5000);
+      } else {
+        setTimeout(checkUpdateStatus, 5000); // 5초 후 다시 확인
+      }
+    } catch (error) {
+      console.error("Failed to check update status:", error);
+      setIsRefreshing(false);
+      setUpdateMessage(
+        "renewal-status 업데이트 상태 확인에 실패했습니다. 다시 시도해주세요.",
+      );
+    }
+  }, [id, tag, data, refetch]);
+
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    setUpdateMessage("업데이트 중...");
+    try {
+      await axios.post(`${SERVER_URL}/users/renewal/streak`, {
+        id,
+        tag,
+        year,
+        month,
+      });
+      checkUpdateStatus();
+    } catch (error) {
+      console.error("Failed to refresh data:", error);
+      setIsRefreshing(false);
+      setUpdateMessage("업데이트 요청에 실패했습니다. 다시 시도해주세요.");
+    }
+  }, [id, tag, year, month, checkUpdateStatus]);
 
   if (isLoading)
     return (
@@ -111,25 +121,44 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
     );
   if (error instanceof AxiosError)
     return (
-      <div className="text-red-500 text-center mx-auto">
+      <div className="flex flex-col items-center justify-between w-full">
+        {isRefreshing ? (
+          <LoadingButton title="스트릭 갱신 중..." />
+        ) : (
+          <RefreshButton title="스트릭 갱신" onClick={handleRefresh} />
+        )}
+        {updateMessage && (
+          <div className="mt-2 text-sm text-blue-500">{updateMessage}</div>
+        )}
+        <span className="text-2xl font-semibold mt-4 mb-4">
+          {year}년 {month}월
+        </span>
         <Image
-          src={"https://" + process.env.NEXT_PUBLIC_S3_URL + "/poppyError.png"}
+          src={process.env.NEXT_PUBLIC_S3_URL + "/poppyError.png"}
           alt="Error.."
           width={1000}
           height={1000}
         />
-        현재 서버에 너무 많은 요청이 있어요... 잠시 후 다시 시도해주세요.
+        전적 최신화 필요
       </div>
     );
   return (
     <div className="flex flex-col items-center justify-between w-full">
+      {isRefreshing ? (
+        <LoadingButton title="스트릭 갱신 중..." />
+      ) : (
+        <RefreshButton title="스트릭 갱신" onClick={handleRefresh} />
+      )}
+      {updateMessage && (
+        <div className="mt-2 text-sm text-blue-500">{updateMessage}</div>
+      )}
       <span className="text-2xl font-semibold mt-4 mb-4">
         {year}년 {month}월
       </span>
       <span className="mb-2">총 {sumOfGameCount}게임</span>
-      <WeekDays />
+      <WeekDayBar />
       <div className="grid grid-cols-7 gap-1 w-full">
-        {emptyBlocks}
+        <EmptyBlocks year={year} month={month} />
         {monthData.map((day, index) => (
           <div key={index} className="aspect-w-1 aspect-h-1">
             <MejaiBox

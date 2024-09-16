@@ -17,7 +17,7 @@ interface LeaderBoardProps {
   year: number;
   month: number;
 }
-interface UserData {
+export interface UserData {
   summonerName: string;
   tagLine: string;
   totalGameCount: number;
@@ -28,7 +28,7 @@ export interface RankingData {
 }
 
 export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
-  const { data, error, isLoading } = useQuery<RankingData>({
+  const { data, error, isLoading } = useQuery<UserData[]>({
     queryKey: ["leaderboard", { year: year, month: month }],
     queryFn: fetchLeaderBoard,
     staleTime: 1000 * 60 * 15,
@@ -50,7 +50,7 @@ export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.topRanking.map((userData: UserData, idx: number) => (
+        {data?.map((userData: UserData, idx: number) => (
           <TableRow key={idx}>
             <TableCell className="font-medium">{idx + 1}</TableCell>
             <TableCell>

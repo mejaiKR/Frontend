@@ -84,7 +84,7 @@ export default function SearchBar() {
           </div>
           <Button
             type="submit"
-            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-10 text-white end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-10 text-white end-2.5 bottom-2.5  focus:ring-4 focus:outline-none  font-medium rounded-lg px-4 py-2"
           >
             Search
           </Button>
