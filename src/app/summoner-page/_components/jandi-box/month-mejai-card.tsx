@@ -1,20 +1,19 @@
 "use client";
 
+import EmptyBlocks from "@/app/summoner-page/_components/jandi-box/emptyBlocks";
 import MejaiBox from "@/app/summoner-page/_components/jandi-box/mejai-box";
-import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { fetchJandi } from "@/lib/fetch-func";
-import dayjs from "dayjs";
-import { useCallback, useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
-import Spinner from "@/components/ui/spinner";
-import Image from "next/image";
+import updateGameCountForMonth from "@/app/summoner-page/_components/jandi-box/utils/updateGameCountForMonth";
+import WeekDayBar from "@/app/summoner-page/_components/jandi-box/weekDayBar";
 import { LoadingButton } from "@/components/loadingButton";
 import { RefreshButton } from "@/components/refreshButton";
+import Spinner from "@/components/ui/spinner";
+import { fetchJandi } from "@/lib/fetch-func";
 import { SERVER_URL } from "@/lib/utils";
-import EmptyBlocks from "@/app/summoner-page/_components/jandi-box/emptyBlocks";
-import WeekDayBar from "@/app/summoner-page/_components/jandi-box/weekDayBar";
-import updateGameCountForMonth from "@/app/summoner-page/_components/jandi-box/utils/updateGameCountForMonth";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import dayjs from "dayjs";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 export interface DayGameData {
   date: string;
@@ -28,7 +27,7 @@ export interface JandiData {
 }
 
 interface UpdateStatus {
-  lastUpdateAt: string;
+  lastUpdatedAt: string;
 }
 
 interface MonthMejaiCardProps {
@@ -45,7 +44,7 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [updateMessage, setUpdateMessage] = useState<string | null>(null);
 
-  const { data, error, isLoading, refetch } = useQuery<JandiData>({
+  const { data, error, isLoading, refetch, isFetching } = useQuery<JandiData>({
     queryKey: ["jandi", { id, tag, year, month }],
     queryFn: fetchJandi,
     staleTime: 1000 * 60 * 15,
@@ -58,44 +57,45 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
         data.userGameCount,
         year,
         month,
-        setSumOfGameCount,
+        setSumOfGameCount
       );
       setMonthData(updatedData);
     }
-  }, [data, year, month]);
+  }, [data, year, month, isFetching]);
 
   const checkUpdateStatus = useCallback(async () => {
     try {
       const response = await axios.get<UpdateStatus>(
-        `${SERVER_URL}/renewal-status/streak?id=${id}&tag=${tag}&year=${year}&month=${month}`,
+        `${SERVER_URL}/renewal-status/streak?id=${id}&tag=${tag}&year=${year}&month=${month}`
       );
-      const lastUpdateAt = dayjs(response.data.lastUpdateAt);
+      const lastUpdateAt = dayjs(response.data.lastUpdatedAt);
       const lastUpdatedAt = dayjs(data?.lastUpdatedAt);
       console.log(
-        "lastUpdateAt:",
-        lastUpdateAt,
-        "lastUpdatedAt:",
-        lastUpdatedAt,
+        "lastUpdateAt",
+        lastUpdateAt.format("YYYY-MM-DD"),
+        "lastUpdatedAt",
+        lastUpdatedAt.format("YYYY-MM-DD")
       );
 
       if (lastUpdateAt.isAfter(lastUpdatedAt)) {
+        console.log("dddd");
         await refetch();
         setIsRefreshing(false);
         setUpdateMessage("업데이트가 완료되었습니다.");
         setTimeout(() => setUpdateMessage(null), 5000);
       } else {
-        setTimeout(checkUpdateStatus, 5000); // 5초 후 다시 확인
+        setTimeout(checkUpdateStatus, 2000); // 2초 후 다시 확인
       }
     } catch (error) {
       console.error("Failed to check update status:", error);
       setIsRefreshing(false);
       setUpdateMessage(
-        "renewal-status 업데이트 상태 확인에 실패했습니다. 다시 시도해주세요.",
+        "renewal-status 업데이트 상태 확인에 실패했습니다. 다시 시도해주세요."
       );
     }
   }, [id, tag, data, refetch]);
 
-  const handleRefresh = useCallback(async () => {
+  const handleRefresh = async () => {
     setIsRefreshing(true);
     setUpdateMessage("업데이트 중...");
     try {
@@ -111,7 +111,7 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
       setIsRefreshing(false);
       setUpdateMessage("업데이트 요청에 실패했습니다. 다시 시도해주세요.");
     }
-  }, [id, tag, year, month, checkUpdateStatus]);
+  };
 
   if (isLoading)
     return (
@@ -119,29 +119,29 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
         <Spinner />
       </div>
     );
-  if (error instanceof AxiosError)
-    return (
-      <div className="flex flex-col items-center justify-between w-full">
-        {isRefreshing ? (
-          <LoadingButton title="스트릭 갱신 중..." />
-        ) : (
-          <RefreshButton title="스트릭 갱신" onClick={handleRefresh} />
-        )}
-        {updateMessage && (
-          <div className="mt-2 text-sm text-blue-500">{updateMessage}</div>
-        )}
-        <span className="text-2xl font-semibold mt-4 mb-4">
-          {year}년 {month}월
-        </span>
-        <Image
-          src={process.env.NEXT_PUBLIC_S3_URL + "/poppyError.png"}
-          alt="Error.."
-          width={1000}
-          height={1000}
-        />
-        전적 최신화 필요
-      </div>
-    );
+  // if (error instanceof AxiosError)
+  //   return (
+  //     <div className="flex flex-col items-center justify-between w-full">
+  //       {isRefreshing ? (
+  //         <LoadingButton title="스트릭 갱신 중..." />
+  //       ) : (
+  //         <RefreshButton title="스트릭 갱신" onClick={handleRefresh} />
+  //       )}
+  //       {updateMessage && (
+  //         <div className="mt-2 text-sm text-blue-500">{updateMessage}</div>
+  //       )}
+  //       <span className="text-2xl font-semibold mt-4 mb-4">
+  //         {year}년 {month}월
+  //       </span>
+  //       <Image
+  //         src={process.env.NEXT_PUBLIC_S3_URL + "/poppyError.png"}
+  //         alt="Error.."
+  //         width={1000}
+  //         height={1000}
+  //       />
+  //       전적 최신화 필요
+  //     </div>
+  //   );
   return (
     <div className="flex flex-col items-center justify-between w-full">
       {isRefreshing ? (
