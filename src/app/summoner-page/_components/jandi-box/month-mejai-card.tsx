@@ -44,7 +44,7 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [updateMessage, setUpdateMessage] = useState<string | null>(null);
 
-  const { data, error, isLoading, refetch, isFetching } = useQuery<JandiData>({
+  const { data, isLoading, refetch, isFetching } = useQuery<JandiData>({
     queryKey: ["jandi", { id, tag, year, month }],
     queryFn: fetchJandi,
     staleTime: 1000 * 60 * 15,
@@ -70,15 +70,8 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
       );
       const lastUpdateAt = dayjs(response.data.lastUpdatedAt);
       const lastUpdatedAt = dayjs(data?.lastUpdatedAt);
-      console.log(
-        "lastUpdateAt",
-        lastUpdateAt.format("YYYY-MM-DD"),
-        "lastUpdatedAt",
-        lastUpdatedAt.format("YYYY-MM-DD")
-      );
 
       if (lastUpdateAt.isAfter(lastUpdatedAt)) {
-        console.log("dddd");
         await refetch();
         setIsRefreshing(false);
         setUpdateMessage("업데이트가 완료되었습니다.");
@@ -119,29 +112,6 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
         <Spinner />
       </div>
     );
-  // if (error instanceof AxiosError)
-  //   return (
-  //     <div className="flex flex-col items-center justify-between w-full">
-  //       {isRefreshing ? (
-  //         <LoadingButton title="스트릭 갱신 중..." />
-  //       ) : (
-  //         <RefreshButton title="스트릭 갱신" onClick={handleRefresh} />
-  //       )}
-  //       {updateMessage && (
-  //         <div className="mt-2 text-sm text-blue-500">{updateMessage}</div>
-  //       )}
-  //       <span className="text-2xl font-semibold mt-4 mb-4">
-  //         {year}년 {month}월
-  //       </span>
-  //       <Image
-  //         src={process.env.NEXT_PUBLIC_S3_URL + "/poppyError.png"}
-  //         alt="Error.."
-  //         width={1000}
-  //         height={1000}
-  //       />
-  //       전적 최신화 필요
-  //     </div>
-  //   );
   return (
     <div className="flex flex-col items-center justify-between w-full">
       {isRefreshing ? (
