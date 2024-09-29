@@ -1,23 +1,24 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
-import axios from "axios";
 import LocalStatusBox from "@/app/_components/local-status-box";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
 import useClickOutside from "@/hooks/useClickOutside";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
-import { useRecoilState } from "recoil";
 import { isVisibleDropdownState } from "@/lib/recoil/atoms";
+import { SERVER_URL } from "@/lib/utils";
+import axios from "axios";
+import React, { useEffect, useState, useTransition } from "react";
+import { useRecoilState } from "recoil";
 
 export default function SearchBar() {
   const searchBarRef = React.useRef<HTMLDivElement>(null);
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
   const [isVisibleDropdown, setIsVisibleDropdown] = useRecoilState(
-    isVisibleDropdownState,
+    isVisibleDropdownState
   );
   const { inputRef, searchInputValue, setSearchInputValue, handleSubmit } =
     useSummonerNavigation();
@@ -31,15 +32,17 @@ export default function SearchBar() {
     const delayDebounceFn = setTimeout(() => {
       if (searchInputValue) {
         startTransition(() => {
-          // TODO: 백엔드 완성되면 엔드포인트 교체 필요
           axios
-            .get(`/api/search`, {
+            .get(`${SERVER_URL}/users/search`, {
               params: {
-                nickname: searchInputValue,
+                id: searchInputValue,
+                count: 5,
               },
             })
             .then((res) => {
-              setSearchResults(res.data);
+              setSearchResults(
+                res.data.map((user: any) => `${user.id}#${user.tag}`)
+              );
             })
             .catch((err) => {
               console.error(err.response?.data || err);
@@ -49,7 +52,7 @@ export default function SearchBar() {
       } else {
         setSearchResults([]);
       }
-    }, 300);
+    }, 200);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchInputValue]);
@@ -91,12 +94,15 @@ export default function SearchBar() {
         </div>
       </form>
       {isVisibleDropdown && (
-        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto">
+        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto flex flex-col">
           {searchResults.length > 0 ? (
-            <RecommendedNicknameList searchResults={searchResults} />
+            <RecommendedNicknameList
+              searchResults={searchResults}
+              setIsVisibleDropdown={setIsVisibleDropdown}
+            />
           ) : searchInputValue ? (
             <div className="px-4 py-2 text-gray-500 dark:text-gray-400">
-              현재 목업 API로 운영중입니다. hide on bush로 테스트 해 보세요
+              소환사를 찾을 수 없습니다.
             </div>
           ) : (
             <LocalStatusBox />
