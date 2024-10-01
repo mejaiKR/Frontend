@@ -1,13 +1,17 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
-import { fetchUserInfo } from "@/lib/fetch-func";
-import { AxiosError } from "axios";
-import ShareButton from "@/components/ui/share-button";
 import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
+import { LoadingButton } from "@/components/loadingButton";
 import { RefreshButton } from "@/components/refreshButton";
+import ShareButton from "@/components/ui/share-button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { fetchUserInfo } from "@/lib/fetch-func";
+import { SERVER_URL } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import dayjs from "dayjs";
+import Image from "next/image";
+import { useCallback, useState } from "react";
 
 function ImageSkeleton() {
   return (
@@ -26,12 +30,55 @@ interface TierBoxProps {
 }
 
 export default function UserInfoBox({ id, tag }: TierBoxProps) {
-  const { data, isLoading, error } = useQuery({
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
+
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
     staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
     gcTime: 1000 * 60 * 15,
   });
+
+  const checkUpdateStatus = useCallback(async () => {
+    try {
+      const response = await axios.get<{ lastUpdatedAt: string }>(
+        `${SERVER_URL}/renewal-status/profile?id=${id}&tag=${tag}`
+      );
+      const lastUpdateAt = dayjs(response.data.lastUpdatedAt);
+      const lastUpdatedAt = dayjs(data?.lastUpdatedAt);
+
+      if (lastUpdateAt.isAfter(lastUpdatedAt)) {
+        await refetch();
+        setIsRefreshing(false);
+        setUpdateMessage("프로필이 업데이트되었습니다.");
+        setTimeout(() => setUpdateMessage(null), 5000);
+      } else {
+        setTimeout(checkUpdateStatus, 2000);
+      }
+    } catch (error) {
+      console.error("프로필 업데이트 상태 확인 실패:", error);
+      setIsRefreshing(false);
+      setUpdateMessage(
+        "프로필 업데이트 상태 확인에 실패했습니다. 다시 시도해주세요."
+      );
+    }
+  }, [id, tag, data, refetch]);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    setUpdateMessage("프로필 업데이트 중...");
+    try {
+      await axios.post(`${SERVER_URL}/users/renewal/profile`, { id, tag });
+      checkUpdateStatus();
+    } catch (error) {
+      console.error("프로필 새로고침 실패:", error);
+      setIsRefreshing(false);
+      setUpdateMessage(
+        "프로필 업데이트 요청에 실패했습니다. 다시 시도해주세요."
+      );
+    }
+  };
 
   if (isLoading)
     return (
@@ -79,8 +126,15 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
             <BookMarkButton id={id} tag={tag} />
             <ShareButton />
           </div>
-          <div className="w-8">
-            <RefreshButton title="전적 갱신" />
+          <div className="w-full flex gap-4 items-center">
+            {isRefreshing ? (
+              <LoadingButton title="프로필 갱신 중..." />
+            ) : (
+              <RefreshButton title="프로필 갱신" onClick={handleRefresh} />
+            )}
+            {updateMessage && (
+              <div className="text-sm text-blue-500">{updateMessage}</div>
+            )}
           </div>
         </div>
       </div>
