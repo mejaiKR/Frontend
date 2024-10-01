@@ -8,12 +8,9 @@ import { LoadingButton } from "@/components/loadingButton";
 import { RefreshButton } from "@/components/refreshButton";
 import Spinner from "@/components/ui/spinner";
 import { fetchJandi } from "@/lib/fetch-func";
-import { SERVER_URL } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface DayGameData {
   date: string;
@@ -35,20 +32,30 @@ interface MonthMejaiCardProps {
   year: number;
 }
 
+import { useRefreshData } from "@/hooks/useRefreshData";
+
 export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
   const [monthData, setMonthData] = useState<DayGameData[]>([]);
   const params = useSearchParams();
   const id = params?.get("id") || "";
   const tag = params?.get("tag") || "";
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
 
   const { data, isLoading, refetch, isFetching } = useQuery<JandiData>({
     queryKey: ["jandi", { id, tag, year, month }],
     queryFn: fetchJandi,
     staleTime: 1000 * 60 * 15,
     gcTime: 1000 * 60 * 15,
+  });
+
+  const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
+    id,
+    tag,
+    endpoint: "/users/renewal/streak",
+    checkEndpoint: "/renewal-status/streak",
+    additionalParams: { year, month },
+    refetchFn: () => refetch(),
+    lastUpdatedAt: data?.lastUpdatedAt,
   });
 
   useEffect(() => {
@@ -62,49 +69,6 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
       setMonthData(updatedData);
     }
   }, [data, year, month, isFetching]);
-
-  const checkUpdateStatus = useCallback(async () => {
-    try {
-      const response = await axios.get<UpdateStatus>(
-        `${SERVER_URL}/renewal-status/streak?id=${id}&tag=${tag}&year=${year}&month=${month}`
-      );
-      const lastUpdateAt = dayjs(response.data.lastUpdatedAt);
-      const lastUpdatedAt = dayjs(data?.lastUpdatedAt);
-
-      if (lastUpdateAt.isAfter(lastUpdatedAt)) {
-        await refetch();
-        setIsRefreshing(false);
-        setUpdateMessage("업데이트가 완료되었습니다.");
-        setTimeout(() => setUpdateMessage(null), 5000);
-      } else {
-        setTimeout(checkUpdateStatus, 2000); // 2초 후 다시 확인
-      }
-    } catch (error) {
-      console.error("Failed to check update status:", error);
-      setIsRefreshing(false);
-      setUpdateMessage(
-        "renewal-status 업데이트 상태 확인에 실패했습니다. 다시 시도해주세요."
-      );
-    }
-  }, [id, tag, data, refetch]);
-
-  const handleRefresh = async () => {
-    setIsRefreshing(true);
-    setUpdateMessage("업데이트 중...");
-    try {
-      await axios.post(`${SERVER_URL}/users/renewal/streak`, {
-        id,
-        tag,
-        year,
-        month,
-      });
-      checkUpdateStatus();
-    } catch (error) {
-      console.error("Failed to refresh data:", error);
-      setIsRefreshing(false);
-      setUpdateMessage("업데이트 요청에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
 
   if (isLoading)
     return (

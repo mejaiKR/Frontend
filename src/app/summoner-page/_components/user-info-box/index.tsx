@@ -6,12 +6,9 @@ import { RefreshButton } from "@/components/refreshButton";
 import ShareButton from "@/components/ui/share-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchUserInfo } from "@/lib/fetch-func";
-import { SERVER_URL } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import dayjs from "dayjs";
+import { AxiosError } from "axios";
 import Image from "next/image";
-import { useCallback, useState } from "react";
 
 function ImageSkeleton() {
   return (
@@ -29,10 +26,9 @@ interface TierBoxProps {
   tag: string;
 }
 
-export default function UserInfoBox({ id, tag }: TierBoxProps) {
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
+import { useRefreshData } from "@/hooks/useRefreshData";
 
+export default function UserInfoBox({ id, tag }: TierBoxProps) {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
@@ -40,45 +36,14 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     gcTime: 1000 * 60 * 15,
   });
 
-  const checkUpdateStatus = useCallback(async () => {
-    try {
-      const response = await axios.get<{ lastUpdatedAt: string }>(
-        `${SERVER_URL}/renewal-status/profile?id=${id}&tag=${tag}`
-      );
-      const lastUpdateAt = dayjs(response.data.lastUpdatedAt);
-      const lastUpdatedAt = dayjs(data?.lastUpdatedAt);
-
-      if (lastUpdateAt.isAfter(lastUpdatedAt)) {
-        await refetch();
-        setIsRefreshing(false);
-        setUpdateMessage("프로필이 업데이트되었습니다.");
-        setTimeout(() => setUpdateMessage(null), 5000);
-      } else {
-        setTimeout(checkUpdateStatus, 2000);
-      }
-    } catch (error) {
-      console.error("프로필 업데이트 상태 확인 실패:", error);
-      setIsRefreshing(false);
-      setUpdateMessage(
-        "프로필 업데이트 상태 확인에 실패했습니다. 다시 시도해주세요."
-      );
-    }
-  }, [id, tag, data, refetch]);
-
-  const handleRefresh = async () => {
-    setIsRefreshing(true);
-    setUpdateMessage("프로필 업데이트 중...");
-    try {
-      await axios.post(`${SERVER_URL}/users/renewal/profile`, { id, tag });
-      checkUpdateStatus();
-    } catch (error) {
-      console.error("프로필 새로고침 실패:", error);
-      setIsRefreshing(false);
-      setUpdateMessage(
-        "프로필 업데이트 요청에 실패했습니다. 다시 시도해주세요."
-      );
-    }
-  };
+  const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
+    id,
+    tag,
+    endpoint: "/users/renewal/profile",
+    checkEndpoint: "/renewal-status/profile",
+    refetchFn: () => refetch(),
+    lastUpdatedAt: data?.lastUpdatedAt,
+  });
 
   if (isLoading)
     return (
