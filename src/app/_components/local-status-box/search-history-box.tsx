@@ -15,8 +15,7 @@ function getSearchHistories(): string[] {
 }
 
 export default function SearchHistoryBox() {
-  const [searchHistoryArr, setSearchHistoryArr] =
-    useState(getSearchHistories());
+  const [searchHistoryArr, setSearchHistoryArr] = useState<string[] | null>(null);
   const { moveToSummonerPage } = useSummonerNavigation();
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export default function SearchHistoryBox() {
 
   return (
     <div className="w-full rounded-md px-2 pb-2">
-      {searchHistoryArr.map((searchHistoryId, idx) => {
+      {searchHistoryArr?.map((searchHistoryId, idx) => {
         const [id, key] = searchHistoryId.split("#");
         return (
           <div key={idx} className="LocalStatusBoxUnit">
