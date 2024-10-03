@@ -6,8 +6,11 @@ import { removeBookmarkId } from "@/lib/book-mark-func";
 import { useEffect, useState } from "react";
 
 function getBookmarks(): string[] {
-  const bookmarkString = localStorage.getItem("bookmark");
-  return bookmarkString ? JSON.parse(bookmarkString) : [];
+  if (typeof window !== "undefined") {
+    const bookmarkString = localStorage.getItem("bookmark");
+    return bookmarkString ? JSON.parse(bookmarkString) : [];
+  }
+  return [];
 }
 
 export default function BookMarkBox() {

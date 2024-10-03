@@ -1,12 +1,12 @@
 "use client";
 
 import BookMarkStar from "@/components/ui/book-mark-star";
-import { useEffect, useState } from "react";
 import {
   addBookmarkId,
   isLocalStorageBookmarked,
   removeBookmarkId,
 } from "@/lib/book-mark-func";
+import { useEffect, useState } from "react";
 
 interface BookMarkStarButtonProps {
   id: string;
@@ -17,7 +17,7 @@ export function toggleBookMark(
   isBookMarked: boolean,
   setIsBookMarked: Function,
   id: string,
-  tag: string,
+  tag: string
 ) {
   // 북마크 상태를 토글하는 함수
 
@@ -32,9 +32,7 @@ export function toggleBookMark(
 }
 
 export default function BookMarkButton({ id, tag }: BookMarkStarButtonProps) {
-  const [isBookMarked, setIsBookMarked] = useState(
-    isLocalStorageBookmarked(`${id}#${tag}`),
-  );
+  const [isBookMarked, setIsBookMarked] = useState<boolean>(false);
 
   useEffect(() => {
     // 다른 탭에서 북마크를 추가하거나 삭제한 경우 북마크 상태를 업데이트
@@ -46,6 +44,10 @@ export default function BookMarkButton({ id, tag }: BookMarkStarButtonProps) {
       window.removeEventListener("storage", updateBookmarkStatus);
     };
   }, [id, tag]);
+
+  useEffect(() => {
+    setIsBookMarked(isLocalStorageBookmarked(`${id}#${tag}`));
+  }, []);
 
   return (
     <button
