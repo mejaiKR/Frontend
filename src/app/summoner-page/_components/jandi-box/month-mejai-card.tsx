@@ -10,7 +10,8 @@ import Spinner from "@/components/ui/spinner";
 import { fetchJandi } from "@/lib/fetch-func";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import dayjs from "dayjs";
 
 export interface DayGameData {
   date: string;
@@ -48,6 +49,13 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
     gcTime: 1000 * 60 * 15,
   });
 
+  const isRefreshDisabled = useMemo(() => {
+    if (!data?.lastUpdatedAt) return false;
+    const lastUpdated = dayjs(data.lastUpdatedAt);
+    const now = dayjs();
+    return now.diff(lastUpdated, 'hour') < 2;
+  }, [data?.lastUpdatedAt]);
+
   const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
     id,
     tag,
@@ -81,10 +89,17 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
       {isRefreshing ? (
         <LoadingButton title="스트릭 갱신 중..." />
       ) : (
-        <RefreshButton title="스트릭 갱신" onClick={handleRefresh} />
+        <RefreshButton
+          title="스트릭 갱신"
+          onClick={handleRefresh}
+          disabled={isRefreshDisabled}
+        />
       )}
       {updateMessage && (
         <div className="mt-2 text-sm text-blue-500">{updateMessage}</div>
+      )}
+      {isRefreshDisabled && (
+        <div className="mt-2 text-sm text-gray-500">2시간 후에 다시 갱신할 수 있습니다.</div>
       )}
       <span className="text-2xl font-semibold mt-4 mb-4">
         {year}년 {month}월

@@ -8,7 +8,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { fetchUserInfo } from "@/lib/fetch-func";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import dayjs from "dayjs";
 import Image from "next/image";
+import { useMemo } from "react";
 
 function ImageSkeleton() {
   return (
@@ -35,6 +37,13 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
     gcTime: 1000 * 60 * 15,
   });
+
+  const isRefreshDisabled = useMemo(() => {
+    if (!data?.lastUpdatedAt) return false;
+    const lastUpdated = dayjs(data.lastUpdatedAt);
+    const now = dayjs();
+    return now.diff(lastUpdated, "hour") < 2;
+  }, [data?.lastUpdatedAt]);
 
   const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
     id,
@@ -95,10 +104,19 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
             {isRefreshing ? (
               <LoadingButton title="프로필 갱신 중..." />
             ) : (
-              <RefreshButton title="프로필 갱신" onClick={handleRefresh} />
+              <RefreshButton
+                title="프로필 갱신"
+                onClick={handleRefresh}
+                disabled={isRefreshDisabled}
+              />
             )}
             {updateMessage && (
               <div className="text-sm text-blue-500">{updateMessage}</div>
+            )}
+            {isRefreshDisabled && (
+              <div className="text-sm text-gray-500">
+                2시간 후에 다시 갱신할 수 있습니다.
+              </div>
             )}
           </div>
         </div>
