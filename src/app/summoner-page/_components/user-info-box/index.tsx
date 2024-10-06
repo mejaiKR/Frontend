@@ -100,7 +100,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
             <BookMarkButton id={id} tag={tag} />
             <ShareButton />
           </div>
-          <div className="w-full flex gap-4 items-center">
+          <div className="w-full flex gap-4">
             {isRefreshing ? (
               <LoadingButton title="프로필 갱신 중..." />
             ) : (
@@ -110,14 +110,16 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
                 disabled={isRefreshDisabled}
               />
             )}
-            {updateMessage && (
-              <div className="text-sm text-blue-500">{updateMessage}</div>
-            )}
-            {isRefreshDisabled && (
-              <div className="text-sm text-gray-500">
-                2시간 후에 다시 갱신할 수 있습니다.
-              </div>
-            )}
+            <div className="flex gap-2 flex-col justify-center">
+              {updateMessage && (
+                <div className="text-xs text-blue-500">{updateMessage}</div>
+              )}
+              {isRefreshDisabled && (
+                <div className="text-xs text-gray-500">
+                  2시간 후에 다시 갱신할 수 있습니다.
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

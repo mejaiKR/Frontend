@@ -96,10 +96,10 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
         />
       )}
       {updateMessage && (
-        <div className="mt-2 text-sm text-blue-500">{updateMessage}</div>
+        <div className="mt-2 text-xs text-blue-500">{updateMessage}</div>
       )}
       {isRefreshDisabled && (
-        <div className="mt-2 text-sm text-gray-500">2시간 후에 다시 갱신할 수 있습니다.</div>
+        <div className="mt-2 text-xs text-gray-500">2시간 후에 다시 갱신할 수 있습니다.</div>
       )}
       <span className="text-2xl font-semibold mt-4 mb-4">
         {year}년 {month}월
