@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/lib/fetch-func";
+import { useQuery } from "@tanstack/react-query";
+import { nanoid } from "nanoid";
+import Image from "next/image";
 
 function ImageSkeleton() {
   return (
@@ -28,16 +28,17 @@ interface RankInfo {
   wins: number;
 }
 
-interface TierUnitProps {
+type RankType = "soloRank" | "flexRank";
+
+interface Props {
   rankInfo: RankInfo;
+  rankType: RankType;
 }
 
-const TierUnit = ({ rankInfo }: TierUnitProps) => {
+const TierUnit = ({ rankInfo, rankType }: Props) => {
   return (
     <div className="w-1/2 flex flex-col justify-center items-center">
-      <span>
-        {rankInfo.queueType === "RANKED_SOLO_5x5" ? "솔로랭크" : "자유랭크"}
-      </span>
+      <span>{rankType === "soloRank" ? "솔로랭크" : "자유랭크"}</span>
       <Image
         src={rankInfo.tierIcon}
         alt="Profile Icon"
@@ -87,9 +88,8 @@ export default function TierBox({ id, tag }: TierBoxProps) {
   }
   return (
     <div className=" flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      {data.rank.map((rankInfo: RankInfo, index: number) => (
-        <TierUnit key={index} rankInfo={rankInfo} />
-      ))}
+      <TierUnit key={nanoid()} rankInfo={data.soloRank} rankType="soloRank" />
+      <TierUnit key={nanoid()} rankInfo={data.flexRank} rankType="flexRank" />
     </div>
   );
 }

@@ -1,22 +1,29 @@
 "use client";
 
-import { removeBookmarkId } from "@/lib/book-mark-func";
-import { useState } from "react";
 import CloseSvgIcon from "@/components/ui/close-svg-icon";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
+import { removeBookmarkId } from "@/lib/book-mark-func";
+import { useEffect, useState } from "react";
 
 function getBookmarks(): string[] {
-  const bookmarkString = localStorage.getItem("bookmark");
-  return bookmarkString ? JSON.parse(bookmarkString) : [];
+  if (typeof window !== "undefined") {
+    const bookmarkString = localStorage.getItem("bookmark");
+    return bookmarkString ? JSON.parse(bookmarkString) : [];
+  }
+  return [];
 }
 
 export default function BookMarkBox() {
-  const [bookmarkArr, setBookmarkArr] = useState(getBookmarks());
+  const [bookmarkArr, setBookmarkArr] = useState<string[] | null>(null);
   const { moveToSummonerPage } = useSummonerNavigation();
+
+  useEffect(() => {
+    setBookmarkArr(getBookmarks());
+  }, []);
 
   return (
     <div className="w-full rounded-md px-2 pb-2">
-      {bookmarkArr.map((bookmark, idx) => {
+      {bookmarkArr?.map((bookmark, idx) => {
         const [id, key] = bookmark.split("#");
         return (
           <div key={idx} className="LocalStatusBoxUnit">

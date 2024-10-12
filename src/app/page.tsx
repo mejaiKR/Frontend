@@ -1,5 +1,7 @@
 import React from "react";
 
 export default function Home() {
-  return <></>;
+  return (
+    <div className="h-36 w-full flex justify-center items-center">배너 넣을 자리</div>
+  );
 }

@@ -2,9 +2,9 @@
 
 import axios from "axios";
 import { SERVER_URL } from "@/lib/utils";
-import { DayGameData } from "@/app/summoner-page/_components/jandi-box/month-mejai-card";
+import { JandiData } from "@/app/summoner-page/_components/jandi-box/month-mejai-card";
 import { QueryFunctionContext, QueryKey } from "@tanstack/react-query";
-import { RankingData } from "@/app/_components/leader-board-box/leader-board-unit";
+import { UserData } from "@/app/_components/leader-board-box/leader-board-unit";
 
 export const fetchUserInfo = async ({
   queryKey,
@@ -33,7 +33,7 @@ export const fetchJandi = async ({
 }: QueryFunctionContext<QueryKey>) => {
   const [_key, { id, tag, year, month }] = queryKey as JandiQueryKey;
 
-  const response = await axios.get<DayGameData[]>(
+  const response = await axios.get<JandiData>(
     `${SERVER_URL}/users/streak?id=${id}&tag=${tag}&year=${year}&month=${month}`,
   );
   return response.data || undefined;
@@ -52,7 +52,7 @@ export const fetchLeaderBoard = async ({
 }: QueryFunctionContext<QueryKey>) => {
   const [_key, { year, month }] = queryKey as LeaderBoardQueryKey;
 
-  const response = await axios.get<RankingData>(
+  const response = await axios.get<UserData[]>(
     `${SERVER_URL}/ranking?year=${year}&month=${month}`,
   );
   return response.data;

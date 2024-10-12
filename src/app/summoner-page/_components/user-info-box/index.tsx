@@ -1,12 +1,16 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
-import { fetchUserInfo } from "@/lib/fetch-func";
-import { AxiosError } from "axios";
-import ShareButton from "@/components/ui/share-button";
 import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
+import { LoadingButton } from "@/components/loadingButton";
+import { RefreshButton } from "@/components/refreshButton";
+import ShareButton from "@/components/ui/share-button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { fetchUserInfo } from "@/lib/fetch-func";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import dayjs from "dayjs";
+import Image from "next/image";
+import { useMemo } from "react";
 
 function ImageSkeleton() {
   return (
@@ -24,12 +28,30 @@ interface TierBoxProps {
   tag: string;
 }
 
+import { useRefreshData } from "@/hooks/useRefreshData";
+
 export default function UserInfoBox({ id, tag }: TierBoxProps) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
     staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
     gcTime: 1000 * 60 * 15,
+  });
+
+  const isRefreshDisabled = useMemo(() => {
+    if (!data?.lastUpdatedAt) return false;
+    const lastUpdated = dayjs(data.lastUpdatedAt);
+    const now = dayjs();
+    return now.diff(lastUpdated, "hour") < 2;
+  }, [data?.lastUpdatedAt]);
+
+  const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
+    id,
+    tag,
+    endpoint: "/users/renewal/profile",
+    checkEndpoint: "/renewal-status/profile",
+    refetchFn: () => refetch(),
+    lastUpdatedAt: data?.lastUpdatedAt,
   });
 
   if (isLoading)
@@ -51,28 +73,54 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     );
   }
   return (
-    <div className=" h-32 flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className=" h-40 flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className=" flex flex-col justify-center items-center relative">
         <Image
           src={data.profileIcon}
           alt="Profile Icon"
           draggable={false}
-          width={90}
-          height={90}
+          width={140}
+          height={140}
           className="rounded-2xl"
         />
-        <span className="transform -translate-x-1/2 -translate-y-2 bg-gray-900 text-white px-2 rounded-full text-xs absolute top-full left-1/2">
+        <span className="transform -translate-x-1/2 -translate-y-5 bg-gray-900 text-white px-2 rounded-full text-xs absolute top-full left-1/2">
           {data.level}
         </span>
       </div>
-      <div className="w-60 h-full flex flex-col justify-center ml-4">
-        <h1 className="font-bold text-xl">
-          {data.userName}
-          <span className="font-medium text-gray-500"> #{data.tagLine}</span>
-        </h1>
-        <div className="flex items-center mt-2">
-          <ShareButton />
-          <BookMarkButton id={id} tag={tag} />
+      <div className="w-full h-full flex flex-col justify-center ml-4">
+        <div className="font-bold text-xl w-full flex flex-col gap-2">
+          <div>
+            {data.summonerName}
+            <span className="font-medium text-gray-500 mb-2">
+              {" "}
+              #{data.tagLine}
+            </span>
+          </div>
+          <div className="flex gap-2">
+            <BookMarkButton id={id} tag={tag} />
+            <ShareButton />
+          </div>
+          <div className="w-full flex gap-4">
+            {isRefreshing ? (
+              <LoadingButton title="프로필 갱신 중..." />
+            ) : (
+              <RefreshButton
+                title="프로필 갱신"
+                onClick={handleRefresh}
+                disabled={isRefreshDisabled}
+              />
+            )}
+            <div className="flex gap-2 flex-col justify-center">
+              {updateMessage && (
+                <div className="text-xs text-blue-500">{updateMessage}</div>
+              )}
+              {isRefreshDisabled && (
+                <div className="text-xs text-gray-500">
+                  2시간 후에 다시 갱신할 수 있습니다.
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
