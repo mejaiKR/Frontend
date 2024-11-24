@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import { CloseSvgIcon } from "@/components/ui";
+import CloseIcon from "@/../public/close.svg";
+
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 import { removeBookmarkId } from "@/lib/book-mark-func";
 
@@ -43,7 +44,7 @@ export default function BookMarkBox() {
                   setBookmarkArr(getBookmarks());
                 }}
               >
-                <CloseSvgIcon />
+                <CloseIcon />
               </button>
             </div>
           </div>
