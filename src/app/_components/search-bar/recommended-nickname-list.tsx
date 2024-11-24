@@ -20,7 +20,7 @@ export default function RecommendedNicknameList({
         <Link
           key={idx}
           href={`/summoner-page?id=${item.split("#")[0]}&tag=${item.split("#")[1]}`}
-          className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none"
+          className="w-full px-4 py-2 text-left hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:hover:bg-gray-600 dark:focus:bg-gray-600"
           onClick={handleClick}
         >
           {item}

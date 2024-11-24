@@ -1,24 +1,24 @@
 "use client";
 
-import LocalStatusBox from "@/app/_components/local-status-box";
-import RecommendedNicknameList from "@/app/_components/search-bar/recommended-nickname-list";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import ReadingGlassSvgIcon from "@/components/ui/reading-glass-svg-icon";
-import useClickOutside from "@/hooks/useClickOutside";
-import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
-import { isVisibleDropdownState } from "@/lib/recoil/atoms";
-import { SERVER_URL } from "@/lib/utils";
+import React, { useEffect, useRef, useState, useTransition } from "react";
+
 import axios from "axios";
-import React, { useEffect, useState, useTransition } from "react";
 import { useRecoilState } from "recoil";
 
+import SearchIcon from "@/../public/search.svg";
+
+import { LocalStatusBox, RecommendedNicknameList } from "@/app/_components";
+import { Button, Input } from "@/components/ui";
+import { useClickOutside, useSummonerNavigation } from "@/hooks";
+import { isVisibleDropdownState } from "@/lib/recoil/atoms";
+import { SERVER_URL } from "@/lib/utils";
+
 export default function SearchBar() {
-  const searchBarRef = React.useRef<HTMLDivElement>(null);
+  const searchBarRef = useRef<HTMLDivElement>(null);
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
   const [isVisibleDropdown, setIsVisibleDropdown] = useRecoilState(
-    isVisibleDropdownState
+    isVisibleDropdownState,
   );
   const { inputRef, searchInputValue, setSearchInputValue, handleSubmit } =
     useSummonerNavigation();
@@ -41,7 +41,7 @@ export default function SearchBar() {
             })
             .then((res) => {
               setSearchResults(
-                res.data.map((user: any) => `${user.id}#${user.tag}`)
+                res.data.map((user: any) => `${user.id}#${user.tag}`),
               );
             })
             .catch((err) => {
@@ -67,7 +67,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto" ref={searchBarRef}>
+    <div className="relative mx-auto w-full max-w-2xl" ref={searchBarRef}>
       <form className="mx-4" onSubmit={handleSubmit}>
         <div className="relative">
           <Input
@@ -75,26 +75,26 @@ export default function SearchBar() {
             id="default-search"
             maxLength={22}
             ref={inputRef}
-            className="w-full pl-10 pr-28 h-12 block p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block h-12 w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 pr-28 ps-10 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             placeholder="소환사명#태그"
             required
             value={searchInputValue}
             onChange={handleInputChange}
             onFocus={handleInputFocus}
           />
-          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-            <ReadingGlassSvgIcon />
+          <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+            <SearchIcon className="dark:text-gray-400 text-gray-500" />
           </div>
           <Button
             type="submit"
-            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-10 text-white end-2.5 bottom-2.5  focus:ring-4 focus:outline-none  font-medium rounded-lg px-4 py-2"
+            className="absolute bottom-2.5 end-2.5 right-1 top-1/2 h-10 -translate-y-1/2 transform rounded-lg px-4 py-2 font-medium text-white focus:outline-none focus:ring-4"
           >
             Search
           </Button>
         </div>
       </form>
       {isVisibleDropdown && (
-        <div className="absolute w-full mt-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-xl z-20 max-h-120 overflow-y-auto flex flex-col">
+        <div className="max-h-120 absolute z-20 mt-2 flex w-full flex-col overflow-y-auto rounded-lg bg-gray-50 shadow-xl dark:bg-gray-700">
           {searchResults.length > 0 ? (
             <RecommendedNicknameList
               searchResults={searchResults}

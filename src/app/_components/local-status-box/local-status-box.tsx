@@ -1,7 +1,7 @@
 "use client";
 
-import SearchHistoryBox from "@/app/_components/local-status-box/search-history-box";
-import BookMarkBox from "@/app/_components/local-status-box/book-mark-box";
+
+import { BookMarkBox, SearchHistoryBox } from "@/app/_components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function LocalStatusBox() {

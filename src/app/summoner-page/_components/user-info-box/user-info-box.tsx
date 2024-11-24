@@ -1,21 +1,24 @@
 "use client";
 
-import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
-import { LoadingButton } from "@/components/loadingButton";
-import { RefreshButton } from "@/components/refreshButton";
-import ShareButton from "@/components/ui/share-button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { fetchUserInfo } from "@/lib/fetch-func";
+import { useMemo } from "react";
+
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import Image from "next/image";
-import { useMemo } from "react";
+
+import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
+import { ShareButton } from "@/components";
+import { LoadingButton } from "@/components/loadingButton";
+import { RefreshButton } from "@/components/refreshButton";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useRefreshData } from "@/hooks/useRefreshData";
+import { fetchUserInfo } from "@/lib/fetch-func";
 
 function ImageSkeleton() {
   return (
     <div className="flex items-center space-x-4">
-      <Skeleton className="h-24 w-24 full" />
+      <Skeleton className="full h-24 w-24" />
       <div className="space-y-2">
         <Skeleton className="h-4 w-[250px]" />
         <Skeleton className="h-4 w-[200px]" />
@@ -27,8 +30,6 @@ interface TierBoxProps {
   id: string;
   tag: string;
 }
-
-import { useRefreshData } from "@/hooks/useRefreshData";
 
 export default function UserInfoBox({ id, tag }: TierBoxProps) {
   const { data, isLoading, error, refetch } = useQuery({
@@ -56,15 +57,15 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
 
   if (isLoading)
     return (
-      <div className="h-32 flex m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="m-6 flex h-32 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
         <ImageSkeleton />
-        <div className="w-60 h-full flex flex-col justify-center ml-4"></div>
+        <div className="ml-4 flex h-full w-60 flex-col justify-center"></div>
       </div>
     );
   if (error instanceof AxiosError) {
     return (
-      <div className="h-32 flex justify-center items-center m-6 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <span className="text-xl font-netmarbleBold text-blue-600">
+      <div className="m-6 flex h-32 items-center justify-center rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+        <span className="font-netmarbleBold text-xl text-blue-600">
           {error.response?.status === 404
             ? "소환사를 찾을 수 없습니다"
             : error.message}
@@ -73,8 +74,8 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
     );
   }
   return (
-    <div className=" h-40 flex m-4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className=" flex flex-col justify-center items-center relative">
+    <div className="m-4 flex h-40 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+      <div className="relative flex flex-col items-center justify-center">
         <Image
           src={data.profileIcon}
           alt="Profile Icon"
@@ -83,15 +84,15 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
           height={140}
           className="rounded-2xl"
         />
-        <span className="transform -translate-x-1/2 -translate-y-5 bg-gray-900 text-white px-2 rounded-full text-xs absolute top-full left-1/2">
+        <span className="absolute left-1/2 top-full -translate-x-1/2 -translate-y-5 transform rounded-full bg-gray-900 px-2 text-xs text-white">
           {data.level}
         </span>
       </div>
-      <div className="w-full h-full flex flex-col justify-center ml-4">
-        <div className="font-bold text-xl w-full flex flex-col gap-2">
+      <div className="ml-4 flex h-full w-full flex-col justify-center">
+        <div className="flex w-full flex-col gap-2 text-xl font-bold">
           <div>
             {data.summonerName}
-            <span className="font-medium text-gray-500 mb-2">
+            <span className="mb-2 font-medium text-gray-500">
               {" "}
               #{data.tagLine}
             </span>
@@ -100,7 +101,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
             <BookMarkButton id={id} tag={tag} />
             <ShareButton />
           </div>
-          <div className="w-full flex gap-4">
+          <div className="flex w-full gap-4">
             {isRefreshing ? (
               <LoadingButton title="프로필 갱신 중..." />
             ) : (
@@ -110,7 +111,7 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
                 disabled={isRefreshDisabled}
               />
             )}
-            <div className="flex gap-2 flex-col justify-center">
+            <div className="flex flex-col justify-center gap-2">
               {updateMessage && (
                 <div className="text-xs text-blue-500">{updateMessage}</div>
               )}

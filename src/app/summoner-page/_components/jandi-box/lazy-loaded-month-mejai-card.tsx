@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { MonthMejaiCard } from "@/app/summoner-page/_components";
 import { Card, CardContent } from "@/components/ui/card";
-import MonthMejaiCard from "@/app/summoner-page/_components/jandi-box/month-mejai-card";
 
 interface LazyLoadedMonthMejaiCardProps {
   month: number;
@@ -40,12 +41,12 @@ export default function LazyLoadedMonthMejaiCard({
     <div ref={ref} style={{ minHeight: "100px" }}>
       {isVisible ? (
         <Card>
-          <CardContent className="flex flex-col aspect-square items-center justify-center p-6">
+          <CardContent className="flex aspect-square flex-col items-center justify-center p-6">
             <MonthMejaiCard month={month} year={year} />
           </CardContent>
         </Card>
       ) : (
-        <div className="flex justify-center items-center w-[320px] h-[320px]">
+        <div className="flex h-[320px] w-[320px] items-center justify-center">
           Loading...
         </div>
       )}

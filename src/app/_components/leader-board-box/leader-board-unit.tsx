@@ -1,5 +1,7 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+
 import {
   Table,
   TableBody,
@@ -9,9 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
-import { fetchLeaderBoard } from "@/lib/fetch-func";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
+import { fetchLeaderBoard } from "@/lib/fetch-func";
 
 interface LeaderBoardProps {
   year: number;

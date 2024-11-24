@@ -1,7 +1,7 @@
-export default function CloseSvgIcon() {
+export const CloseSvgIcon = () => {
   return (
     <svg
-      className="w-6 h-6 mt-0.5 text-gray-800 dark:text-white"
+      className="mt-0.5 h-6 w-6 text-gray-800 dark:text-white"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -18,4 +18,4 @@ export default function CloseSvgIcon() {
       />
     </svg>
   );
-}
+};

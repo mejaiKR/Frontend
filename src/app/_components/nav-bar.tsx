@@ -1,12 +1,14 @@
-import Image from "next/image";
 import React from "react";
+
+import Image from "next/image";
 import Link from "next/link";
+
 import { ModeToggle } from "@/components/ui/mode-toggle";
 
 export default function NavBar() {
   return (
-    <nav className="border-gray-200 ">
-      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+    <nav className="border-gray-200">
+      <div className="mx-auto flex max-w-screen-xl items-center justify-between p-4">
         <Link
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -18,7 +20,7 @@ export default function NavBar() {
             width={40}
             height={40}
           />
-          <span className="font-gmarketBold self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center whitespace-nowrap font-gmarketBold text-2xl font-semibold dark:text-white">
             mejai.kr
           </span>
         </Link>

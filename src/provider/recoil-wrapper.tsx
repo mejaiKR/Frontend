@@ -1,6 +1,7 @@
 "use client";
-import { RecoilRoot } from "recoil";
 import React from "react";
+
+import { RecoilRoot } from "recoil";
 
 interface RecoilWrapperProps {
   children: React.ReactNode;

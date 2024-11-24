@@ -1,8 +1,10 @@
-import { useState, useCallback } from 'react';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import { SERVER_URL } from '@/lib/utils';
-import { QueryObserverResult } from '@tanstack/react-query';
+import { useCallback, useState } from "react";
+
+import { QueryObserverResult } from "@tanstack/react-query";
+import axios from "axios";
+import dayjs from "dayjs";
+
+import { SERVER_URL } from "@/lib/utils";
 
 interface RefreshDataParams {
   id: string;
@@ -14,7 +16,7 @@ interface RefreshDataParams {
   lastUpdatedAt?: string;
 }
 
-export function useRefreshData({
+export const useRefreshData = ({
   id,
   tag,
   endpoint,
@@ -22,7 +24,7 @@ export function useRefreshData({
   additionalParams = {},
   refetchFn,
   lastUpdatedAt,
-}: RefreshDataParams) {
+}: RefreshDataParams) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [updateMessage, setUpdateMessage] = useState<string | null>(null);
 
@@ -30,7 +32,7 @@ export function useRefreshData({
     try {
       const params = new URLSearchParams({ id, tag, ...additionalParams });
       const response = await axios.get<{ lastUpdatedAt: string }>(
-        `${SERVER_URL}${checkEndpoint}?${params}`
+        `${SERVER_URL}${checkEndpoint}?${params}`,
       );
       const lastUpdateAt = dayjs(response.data.lastUpdatedAt);
       const lastUpdatedAtDate = dayjs(lastUpdatedAt);
@@ -68,4 +70,4 @@ export function useRefreshData({
   };
 
   return { isRefreshing, updateMessage, handleRefresh };
-}
+};

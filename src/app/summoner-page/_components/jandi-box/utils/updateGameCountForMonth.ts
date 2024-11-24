@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+
 import { DayGameData } from "@/app/summoner-page/_components/jandi-box/month-mejai-card";
 
 export default function updateGameCountForMonth(
