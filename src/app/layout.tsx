@@ -1,21 +1,14 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { gmarketMedium, gmarketBold, netmarbleBold } from "./fonts";
-import { ThemeProvider } from "@/components/provider/theme-provider";
 import React from "react";
-import Footer from "@/app/_components/footer";
-import NavBar from "@/app/_components/nav-bar";
-import ReactQueryProvider from "@/components/provider/react-query-provider";
-import GoogleAd from "@/components/google-ad";
-import dynamic from "next/dynamic";
-import SearchBar from "@/app/_components/search-bar";
-import RecoilWrapper from "@/lib/recoil/recoil-wrapper";
-const LeaderBoardBox = dynamic(
-  () => import("./_components/leader-board-box/index"),
-  {
-    ssr: false,
-  },
-);
+
+import { Footer, LeaderBoardBox, NavBar, SearchBar } from "@/app/_components";
+import { ClientRoot, GoogleAd } from "@/components";
+
+import { gmarketBold, gmarketMedium, netmarbleBold } from "./fonts";
+
+import type { Metadata } from "next";
+
+import "./globals.css";
+
 export const metadata: Metadata = {
   title: "mejai.kr",
   description: "mejai.kr",
@@ -34,28 +27,19 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="flex justify-center">
-        <RecoilWrapper>
-          <ReactQueryProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className="w-full max-w-[550px] min-w-[340px] flex flex-col min-h-screen">
-                <NavBar />
-                <SearchBar />
-                <div className="flex-grow">
-                  <div className="flex justify-center h-full">
-                    <div className="w-full ">{children}</div>
-                  </div>
-                </div>
-                <LeaderBoardBox />
-                <Footer />
+        <ClientRoot>
+          <div className="flex min-h-screen w-full min-w-[340px] max-w-[550px] flex-col">
+            <NavBar />
+            <SearchBar />
+            <div className="flex-grow">
+              <div className="flex h-full justify-center">
+                <div className="w-full">{children}</div>
               </div>
-            </ThemeProvider>
-          </ReactQueryProvider>
-        </RecoilWrapper>
+            </div>
+            <LeaderBoardBox />
+            <Footer />
+          </div>
+        </ClientRoot>
         <GoogleAd />
       </body>
     </html>

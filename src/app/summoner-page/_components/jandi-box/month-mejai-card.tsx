@@ -1,17 +1,20 @@
 "use client";
 
-import EmptyBlocks from "@/app/summoner-page/_components/jandi-box/emptyBlocks";
-import MejaiBox from "@/app/summoner-page/_components/jandi-box/mejai-box";
-import updateGameCountForMonth from "@/app/summoner-page/_components/jandi-box/utils/updateGameCountForMonth";
-import WeekDayBar from "@/app/summoner-page/_components/jandi-box/weekDayBar";
+import { useEffect, useMemo, useState } from "react";
+
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import { useSearchParams } from "next/navigation";
+
 import { LoadingButton } from "@/components/loadingButton";
 import { RefreshButton } from "@/components/refreshButton";
-import Spinner from "@/components/ui/spinner";
+import { Spinner } from "@/components/ui";
+import { useRefreshData } from "@/hooks/useRefreshData";
 import { fetchJandi } from "@/lib/fetch-func";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import dayjs from "dayjs";
+
+import updateGameCountForMonth from "./utils/updateGameCountForMonth";
+
+import { EmptyBlocks, MejaiBox, WeekDayBar } from ".";
 
 export interface DayGameData {
   date: string;
@@ -33,8 +36,6 @@ interface MonthMejaiCardProps {
   year: number;
 }
 
-import { useRefreshData } from "@/hooks/useRefreshData";
-
 export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
   const [monthData, setMonthData] = useState<DayGameData[]>([]);
   const params = useSearchParams();
@@ -53,7 +54,7 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
     if (!data?.lastUpdatedAt) return false;
     const lastUpdated = dayjs(data.lastUpdatedAt);
     const now = dayjs();
-    return now.diff(lastUpdated, 'hour') < 2;
+    return now.diff(lastUpdated, "hour") < 2;
   }, [data?.lastUpdatedAt]);
 
   const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
@@ -72,7 +73,7 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
         data.userGameCount,
         year,
         month,
-        setSumOfGameCount
+        setSumOfGameCount,
       );
       setMonthData(updatedData);
     }
@@ -80,12 +81,12 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center h-48 w-48">
+      <div className="flex h-48 w-48 items-center justify-center">
         <Spinner />
       </div>
     );
   return (
-    <div className="flex flex-col items-center justify-between w-full">
+    <div className="flex w-full flex-col items-center justify-between">
       {isRefreshing ? (
         <LoadingButton title="스트릭 갱신 중..." />
       ) : (
@@ -99,14 +100,16 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
         <div className="mt-2 text-xs text-blue-500">{updateMessage}</div>
       )}
       {isRefreshDisabled && (
-        <div className="mt-2 text-xs text-gray-500">2시간 후에 다시 갱신할 수 있습니다.</div>
+        <div className="mt-2 text-xs text-gray-500">
+          2시간 후에 다시 갱신할 수 있습니다.
+        </div>
       )}
-      <span className="text-2xl font-semibold mt-4 mb-4">
+      <span className="mb-4 mt-4 text-2xl font-semibold">
         {year}년 {month}월
       </span>
       <span className="mb-2">총 {sumOfGameCount}게임</span>
       <WeekDayBar />
-      <div className="grid grid-cols-7 gap-1 w-full">
+      <div className="grid w-full grid-cols-7 gap-1">
         <EmptyBlocks year={year} month={month} />
         {monthData.map((day, index) => (
           <div key={index} className="aspect-w-1 aspect-h-1">

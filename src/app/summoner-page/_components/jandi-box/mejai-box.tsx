@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+
+import Image from "next/image";
+
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
-import Image from "next/image";
 
 interface MejaiBoxProps {
   date: string;
@@ -32,14 +33,14 @@ export default function MejaiBox({ date, gameCount, imageUrl }: MejaiBoxProps) {
           closeDelay={0}
         >
           <HoverCardTrigger asChild onClick={handleToggle}>
-            <div className=" m-0.5">
+            <div className="m-0.5">
               <Image
                 draggable={false}
                 src={imageUrl}
                 alt="Mejai's Soulstealer"
                 width={90}
                 height={90}
-                className="w-full h-full"
+                className="h-full w-full"
               />
             </div>
           </HoverCardTrigger>
@@ -56,7 +57,7 @@ export default function MejaiBox({ date, gameCount, imageUrl }: MejaiBoxProps) {
             alt="Mejai's Soulstealer"
             width={90}
             height={90}
-            className="w-full h-full"
+            className="h-full w-full"
           />
         </div>
       )}

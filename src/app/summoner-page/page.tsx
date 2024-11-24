@@ -1,15 +1,19 @@
 "use client";
 
-import React, { Suspense } from "react";
-import UserInfoBox from "@/app/summoner-page/_components/user-info-box";
-import TierBox from "@/app/summoner-page/_components/tier-box";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { fetchUserInfo } from "@/lib/fetch-func";
-import ErrorPage from "@/app/summoner-page/_components/error-page";
-import JandiBox from "@/app/summoner-page/_components/jandi-box";
-import Spinner from "@/components/ui/spinner";
+import { useSearchParams } from "next/navigation";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+
+import {
+  ErrorPage,
+  JandiBox,
+  TierBox,
+  UserInfoBox,
+} from "@/app/summoner-page/_components";
+import { Spinner } from "@/components/ui";
+import { fetchUserInfo } from "@/lib/fetch-func";
 
 function AwaitPage() {
   const params = useSearchParams();
@@ -45,7 +49,7 @@ export default function SummonerPage() {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <Suspense
         fallback={
-          <div className="w-full h-96 flex justify-center items-center">
+          <div className="flex h-96 w-full items-center justify-center">
             <Spinner />
           </div>
         }

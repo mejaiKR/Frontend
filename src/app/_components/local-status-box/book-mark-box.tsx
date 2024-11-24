@@ -1,9 +1,10 @@
 "use client";
 
-import CloseSvgIcon from "@/components/ui/close-svg-icon";
+import { useEffect, useState } from "react";
+
+import { CloseSvgIcon } from "@/components/ui";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 import { removeBookmarkId } from "@/lib/book-mark-func";
-import { useEffect, useState } from "react";
 
 function getBookmarks(): string[] {
   if (typeof window !== "undefined") {
@@ -27,10 +28,10 @@ export default function BookMarkBox() {
         const [id, key] = bookmark.split("#");
         return (
           <div key={idx} className="LocalStatusBoxUnit">
-            <div className="flex justify-between items-center w-full">
+            <div className="flex w-full items-center justify-between">
               <div>
                 <div
-                  className="cursor-pointer text-xs w-full h-10 flex justify-center items-center"
+                  className="flex h-10 w-full cursor-pointer items-center justify-center text-xs"
                   onClick={() => moveToSummonerPage(id, key)}
                 >
                   {bookmark}

@@ -1,0 +1,23 @@
+{
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "semi": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "tabWidth": 2,
+  "overrides": [
+    {
+      "files": "./tailwind/**/*.ts",
+      "options": {
+        "semi": true
+      }
+    },
+    {
+      "files": ["*.js", "*.mjs", "*.json", ".eslintrc", ".prettierrc"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ],
+  "plugins": ["prettier-plugin-tailwindcss"]
+}

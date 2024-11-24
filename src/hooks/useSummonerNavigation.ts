@@ -1,11 +1,13 @@
+import { FormEvent, RefObject, useRef } from "react";
+
 import { useRouter } from "next/navigation";
-import { useRef, FormEvent, RefObject } from "react";
-import { addSearchHistory } from "@/lib/search-history-func";
 import { useRecoilState, useSetRecoilState } from "recoil";
+
 import {
   isVisibleDropdownState,
   searchInputValueState,
 } from "@/lib/recoil/atoms";
+import { addSearchHistory } from "@/lib/search-history-func";
 
 interface UseSummonerNavigationReturn {
   inputRef: RefObject<HTMLInputElement>;
@@ -15,7 +17,7 @@ interface UseSummonerNavigationReturn {
   moveToSummonerPage: (id: string, tag: string) => void;
 }
 
-export function useSummonerNavigation(): UseSummonerNavigationReturn {
+export const useSummonerNavigation = (): UseSummonerNavigationReturn => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchInputValue, setSearchInputValue] = useRecoilState(
@@ -53,4 +55,4 @@ export function useSummonerNavigation(): UseSummonerNavigationReturn {
     handleSubmit,
     moveToSummonerPage,
   };
-}
+};

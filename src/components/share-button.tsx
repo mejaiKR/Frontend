@@ -1,18 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
+import ShareIcon from "@/../public/share.svg";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import ShareSvgIcon from "@/components/ui/share-svg-icon";
-import { useEffect, useState } from "react";
 
 const copyUrl = () => {
   navigator.clipboard.writeText(window.location.href);
 };
 
-export default function ShareButton() {
+export const ShareButton = () => {
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   useEffect(() => {
@@ -28,15 +30,15 @@ export default function ShareButton() {
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
-        <button onClick={copyUrl} className="w-fit h-fit">
-          <ShareSvgIcon />
+        <button onClick={copyUrl} className="h-fit w-fit">
+          <ShareIcon  />
         </button>
       </PopoverTrigger>
       <PopoverContent>
-        <div className="font-medium flex justify-center items-center">
+        <div className="flex items-center justify-center font-medium">
           클립보드에 url이 복사되었습니다
         </div>
       </PopoverContent>
     </Popover>
   );
-}
+};

@@ -1,12 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import BookMarkStar from "@/components/ui/book-mark-star";
 import {
   addBookmarkId,
   isLocalStorageBookmarked,
   removeBookmarkId,
 } from "@/lib/book-mark-func";
-import { useEffect, useState } from "react";
 
 interface BookMarkStarButtonProps {
   id: string;
@@ -17,7 +18,7 @@ export function toggleBookMark(
   isBookMarked: boolean,
   setIsBookMarked: Function,
   id: string,
-  tag: string
+  tag: string,
 ) {
   // 북마크 상태를 토글하는 함수
 
@@ -54,7 +55,7 @@ export default function BookMarkButton({ id, tag }: BookMarkStarButtonProps) {
       onClick={() => {
         toggleBookMark(isBookMarked, setIsBookMarked, id, tag);
       }}
-      className="w-fit h-fit"
+      className="h-fit w-fit"
     >
       <BookMarkStar isFilled={isBookMarked} />
     </button>
