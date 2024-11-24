@@ -45,6 +45,7 @@
     "vaul": "^0.9.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/node": "20.12.7",
     "@types/react": "18.2.79",
     "@types/react-dom": "^18",
