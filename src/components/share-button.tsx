@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import { ShareSvgIcon } from "@/components/ui";
+import ShareIcon from "@/../public/share.svg";
+
 import {
   Popover,
   PopoverContent,
@@ -30,7 +31,7 @@ export const ShareButton = () => {
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
         <button onClick={copyUrl} className="h-fit w-fit">
-          <ShareSvgIcon />
+          <ShareIcon  />
         </button>
       </PopoverTrigger>
       <PopoverContent>

@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
+import CloseIcon from "@/../public/close.svg";
+
 import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
-import { CloseSvgIcon } from "@/components/ui";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 import { removeSearchHistory } from "@/lib/search-history-func";
 
@@ -48,7 +49,7 @@ export default function SearchHistoryBox() {
                     setSearchHistoryArr(getSearchHistories());
                   }}
                 >
-                  <CloseSvgIcon />
+                  <CloseIcon />
                 </button>
               </div>
             </div>
