@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import BookMarkStar from "@/components/ui/book-mark-star";
+import { BookMarkStar } from "@/components";
 import {
   addBookmarkId,
   isLocalStorageBookmarked,
@@ -48,7 +48,7 @@ export default function BookMarkButton({ id, tag }: BookMarkStarButtonProps) {
 
   useEffect(() => {
     setIsBookMarked(isLocalStorageBookmarked(`${id}#${tag}`));
-  }, []);
+  }, [id, tag]);
 
   return (
     <button

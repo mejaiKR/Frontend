@@ -5,10 +5,10 @@ interface BookMarkStarProps {
   isFilled: boolean;
 }
 
-export default function BookMarkStar({ isFilled }: BookMarkStarProps) {
+export const BookMarkStar = ({ isFilled }: BookMarkStarProps) => {
   if (isFilled) {
     return <StarFilledIcon />;
   } else {
     return <StarOutlineIcon />;
   }
-}
+};
