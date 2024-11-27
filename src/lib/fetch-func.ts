@@ -3,9 +3,8 @@
 import { QueryFunctionContext, QueryKey } from "@tanstack/react-query";
 import axios from "axios";
 
-import { UserData } from "@/app/_components/leader-board-box/leader-board-unit";
-import { JandiData } from "@/app/summoner-page/_components/jandi-box/month-mejai-card";
 import { SERVER_URL } from "@/lib/utils";
+import { JandiData, UserData } from "@/types";
 
 export const fetchUserInfo = async ({
   queryKey,

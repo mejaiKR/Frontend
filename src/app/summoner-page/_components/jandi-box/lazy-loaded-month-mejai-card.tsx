@@ -3,17 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 
 import { MonthMejaiCard } from "@/app/summoner-page/_components";
+import { Skeleton } from "@/components";
 import { Card, CardContent } from "@/components/ui/card";
 
-interface LazyLoadedMonthMejaiCardProps {
+type Props = Readonly<{
   month: number;
   year: number;
-}
+}>;
 
-export default function LazyLoadedMonthMejaiCard({
-  month,
-  year,
-}: LazyLoadedMonthMejaiCardProps) {
+export const LazyLoadedMonthMejaiCard = ({ month, year }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -48,10 +46,10 @@ export default function LazyLoadedMonthMejaiCard({
           </CardContent>
         </Card>
       ) : (
-        <div className="flex h-[320px] w-[320px] items-center justify-center">
-          Loading...
+        <div className="flex size-full items-center justify-center">
+          <Skeleton className="h-full w-full" />
         </div>
       )}
     </div>
   );
-}
+};

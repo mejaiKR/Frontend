@@ -1,4 +1,4 @@
-import React from "react";
+import { PropsWithChildren } from "react";
 
 import { Footer, LeaderBoardBox, NavBar, SearchBar } from "@/app/_components";
 import { ClientRoot, GoogleAd } from "@/components";
@@ -15,11 +15,7 @@ export const metadata: Metadata = {
   keywords: "mejai.kr",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <html
       lang="ko"

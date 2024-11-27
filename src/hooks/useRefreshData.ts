@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 
 import { SERVER_URL } from "@/lib/utils";
 
-interface RefreshDataParams {
+type RefreshDataParams = {
   id: string;
   tag: string;
   endpoint: string;
@@ -14,7 +14,7 @@ interface RefreshDataParams {
   additionalParams?: Record<string, string | number>;
   refetchFn: () => Promise<QueryObserverResult>;
   lastUpdatedAt?: string;
-}
+};
 
 export const useRefreshData = ({
   id,

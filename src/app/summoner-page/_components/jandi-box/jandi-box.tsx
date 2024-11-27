@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import LazyLoadedMonthMejaiCard from "@/app/summoner-page/_components/jandi-box/lazy-loaded-month-mejai-card";
+import { LazyLoadedMonthMejaiCard } from "@/app/summoner-page/_components";
 import {
   Carousel,
   CarouselContent,
@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function JandiBox() {
+export const JandiBox = () => {
   const [currentDate] = useState(() => dayjs());
   const [selectedYear, setSelectedYear] = useState(() => currentDate.year());
   const [selectedMonth, setSelectedMonth] = useState(
@@ -78,4 +78,4 @@ export default function JandiBox() {
       </Carousel>
     </div>
   );
-}
+};

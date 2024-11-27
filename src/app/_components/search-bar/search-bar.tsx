@@ -13,7 +13,7 @@ import { useClickOutside, useSummonerNavigation } from "@/hooks";
 import { isVisibleDropdownState } from "@/lib/recoil/atoms";
 import { SERVER_URL } from "@/lib/utils";
 
-export default function SearchBar() {
+export const SearchBar = () => {
   const searchBarRef = useRef<HTMLDivElement>(null);
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [_, startTransition] = useTransition();
@@ -83,7 +83,7 @@ export default function SearchBar() {
             onFocus={handleInputFocus}
           />
           <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-            <SearchIcon className="dark:text-gray-400 text-gray-500" />
+            <SearchIcon className="text-gray-500 dark:text-gray-400" />
           </div>
           <Button
             type="submit"
@@ -111,4 +111,4 @@ export default function SearchBar() {
       )}
     </div>
   );
-}
+};

@@ -15,7 +15,7 @@ function getBookmarks(): string[] {
   return [];
 }
 
-export default function BookMarkBox() {
+export const BookMarkBox = () => {
   const [bookmarkArr, setBookmarkArr] = useState<string[] | null>(null);
   const { moveToSummonerPage } = useSummonerNavigation();
 
@@ -28,15 +28,16 @@ export default function BookMarkBox() {
       {bookmarkArr?.map((bookmark, idx) => {
         const [id, key] = bookmark.split("#");
         return (
-          <div key={idx} className="LocalStatusBoxUnit">
+          <div key={`${id}${key}`} className="LocalStatusBoxUnit">
             <div className="flex w-full items-center justify-between">
               <div>
-                <div
+                <button
+                  type="button"
                   className="flex h-10 w-full cursor-pointer items-center justify-center text-xs"
                   onClick={() => moveToSummonerPage(id, key)}
                 >
                   {bookmark}
-                </div>
+                </button>
               </div>
               <button
                 onClick={() => {
@@ -52,4 +53,4 @@ export default function BookMarkBox() {
       })}
     </div>
   );
-}
+};

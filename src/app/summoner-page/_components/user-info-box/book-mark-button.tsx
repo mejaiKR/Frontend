@@ -2,24 +2,26 @@
 
 import { useEffect, useState } from "react";
 
-import { BookMarkStar } from "@/components";
+import StarFilledIcon from "@/../public/star-filled.svg";
+import StarOutlineIcon from "@/../public/star-outline.svg";
+
 import {
   addBookmarkId,
   isLocalStorageBookmarked,
   removeBookmarkId,
 } from "@/lib/book-mark-func";
 
-interface BookMarkStarButtonProps {
+type Props = Readonly<{
   id: string;
   tag: string;
-}
+}>;
 
-export function toggleBookMark(
+export const toggleBookMark = (
   isBookMarked: boolean,
   setIsBookMarked: Function,
   id: string,
   tag: string,
-) {
+) => {
   // 북마크 상태를 토글하는 함수
 
   if (isBookMarked) {
@@ -30,9 +32,9 @@ export function toggleBookMark(
     addBookmarkId(`${id}#${tag}`);
   }
   setIsBookMarked(!isBookMarked);
-}
+};
 
-export default function BookMarkButton({ id, tag }: BookMarkStarButtonProps) {
+export const BookMarkButton = ({ id, tag }: Props) => {
   const [isBookMarked, setIsBookMarked] = useState<boolean>(false);
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export default function BookMarkButton({ id, tag }: BookMarkStarButtonProps) {
       }}
       className="h-fit w-fit"
     >
-      <BookMarkStar isFilled={isBookMarked} />
+      {isBookMarked ? <StarFilledIcon /> : <StarOutlineIcon />}
     </button>
   );
-}
+};

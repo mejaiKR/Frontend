@@ -11,36 +11,22 @@ import { RefreshButton } from "@/components/refreshButton";
 import { Spinner } from "@/components/ui";
 import { useRefreshData } from "@/hooks/useRefreshData";
 import { fetchJandi } from "@/lib/fetch-func";
+import { DayGameData, JandiData } from "@/types";
 
-import updateGameCountForMonth from "./utils/updateGameCountForMonth";
+import { updateGameCountForMonth } from "./utils/updateGameCountForMonth";
 
 import { EmptyBlocks, MejaiBox, WeekDayBar } from ".";
 
-export interface DayGameData {
-  date: string;
-  gameCount: number;
-  imageUrl: string;
-}
-
-export interface JandiData {
-  userGameCount: DayGameData[];
-  lastUpdatedAt: string;
-}
-
-interface UpdateStatus {
-  lastUpdatedAt: string;
-}
-
-interface MonthMejaiCardProps {
+type Props = Readonly<{
   month: number;
   year: number;
-}
+}>;
 
-export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
+export const MonthMejaiCard = ({ month, year }: Props) => {
   const [monthData, setMonthData] = useState<DayGameData[]>([]);
   const params = useSearchParams();
-  const id = params?.get("id") || "";
-  const tag = params?.get("tag") || "";
+  const id = params?.get("id") ?? "";
+  const tag = params?.get("tag") ?? "";
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
 
   const { data, isLoading, refetch, isFetching } = useQuery<JandiData>({
@@ -123,4 +109,4 @@ export default function MonthMejaiCard({ month, year }: MonthMejaiCardProps) {
       </div>
     </div>
   );
-}
+};

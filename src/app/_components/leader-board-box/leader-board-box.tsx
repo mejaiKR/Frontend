@@ -1,9 +1,9 @@
 "use client";
 
-import LeaderBoardUnit from "@/app/_components/leader-board-box/leader-board-unit";
+import { LeaderBoardUnit } from "@/app/_components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function LeaderBoardBox() {
+export const LeaderBoardBox = () => {
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
 
@@ -21,4 +21,4 @@ export default function LeaderBoardBox() {
       </TabsContent>
     </Tabs>
   );
-}
+};

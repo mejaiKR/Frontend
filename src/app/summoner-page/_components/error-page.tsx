@@ -3,11 +3,11 @@ import Image from "next/image";
 
 import { S3_URL } from "@/lib/utils";
 
-interface ErrorPageProps {
+type Props = Readonly<{
   error: AxiosError;
-}
+}>;
 
-export default function ErrorPage({ error }: ErrorPageProps) {
+export const ErrorPage = ({ error }: Props) => {
   if (error.response?.status === 500) {
     return (
       <div>
@@ -28,4 +28,4 @@ export default function ErrorPage({ error }: ErrorPageProps) {
       <span className="text-xl text-gray-600">소환사를 찾을 수 없습니다</span>
     </div>
   );
-}
+};

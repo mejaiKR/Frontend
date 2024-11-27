@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import ShareIcon from "@/../public/share.svg";
 
@@ -10,12 +10,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const copyUrl = () => {
-  navigator.clipboard.writeText(window.location.href);
-};
-
 export const ShareButton = () => {
   const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const copyUrl = useCallback(() => {
+    navigator.clipboard.writeText(window.location.href);
+  }, []);
 
   useEffect(() => {
     // 팝오버 닫기 타임아웃 이벤트
@@ -31,7 +31,7 @@ export const ShareButton = () => {
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
         <button onClick={copyUrl} className="h-fit w-fit">
-          <ShareIcon  />
+          <ShareIcon />
         </button>
       </PopoverTrigger>
       <PopoverContent>
