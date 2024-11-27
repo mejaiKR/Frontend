@@ -17,8 +17,8 @@ import { fetchUserInfo } from "@/lib/fetch-func";
 
 function AwaitPage() {
   const params = useSearchParams();
-  const id = params?.get("id") || "";
-  const tag = params?.get("tag") || "";
+  const id = params?.get("id") ?? "";
+  const tag = params?.get("tag") ?? "";
 
   const { error, isFetching } = useSuspenseQuery({
     queryKey: ["userInfo", { id, tag }],
@@ -40,7 +40,7 @@ function AwaitPage() {
   );
 }
 
-function ErrorFallback({ error }: FallbackProps) {
+function ErrorFallback({ error }: Readonly<FallbackProps>) {
   return <ErrorPage error={error} />;
 }
 

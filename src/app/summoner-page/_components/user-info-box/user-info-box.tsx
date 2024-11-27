@@ -7,31 +7,22 @@ import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import Image from "next/image";
 
-import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
-import { ShareButton } from "@/components";
-import { LoadingButton } from "@/components/loadingButton";
-import { RefreshButton } from "@/components/refreshButton";
-import { Skeleton } from "@/components/ui/skeleton";
+import { BookMarkButton } from "@/app/summoner-page/_components";
+import {
+  ImageSkeleton,
+  LoadingButton,
+  RefreshButton,
+  ShareButton,
+} from "@/components";
 import { useRefreshData } from "@/hooks/useRefreshData";
 import { fetchUserInfo } from "@/lib/fetch-func";
 
-function ImageSkeleton() {
-  return (
-    <div className="flex items-center space-x-4">
-      <Skeleton className="full h-24 w-24" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
-      </div>
-    </div>
-  );
-}
-interface TierBoxProps {
+type Props = Readonly<{
   id: string;
   tag: string;
-}
+}>;
 
-export default function UserInfoBox({ id, tag }: TierBoxProps) {
+export const UserInfoBox = ({ id, tag }: Props) => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["userInfo", { id, tag }],
     queryFn: fetchUserInfo,
@@ -126,4 +117,4 @@ export default function UserInfoBox({ id, tag }: TierBoxProps) {
       </div>
     </div>
   );
-}
+};

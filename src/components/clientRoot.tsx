@@ -1,8 +1,10 @@
 "use client";
 
+import { PropsWithChildren } from "react";
+
 import { ReactQueryProvider, RecoilWrapper, ThemeProvider } from "@/provider";
 
-export const ClientRoot = ({ children }: { children: React.ReactNode }) => {
+export const ClientRoot = ({ children }: PropsWithChildren) => {
   return (
     <RecoilWrapper>
       <ReactQueryProvider>

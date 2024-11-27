@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import CloseIcon from "@/../public/close.svg";
 
-import BookMarkButton from "@/app/summoner-page/_components/user-info-box/book-mark-button";
+import { BookMarkButton } from "@/app/summoner-page/_components";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 import { removeSearchHistory } from "@/lib/search-history-func";
 
@@ -16,7 +16,7 @@ function getSearchHistories(): string[] {
   return [];
 }
 
-export default function SearchHistoryBox() {
+export const SearchHistoryBox = () => {
   const [searchHistoryArr, setSearchHistoryArr] = useState<string[] | null>(
     null,
   );
@@ -31,15 +31,15 @@ export default function SearchHistoryBox() {
       {searchHistoryArr?.map((searchHistoryId, idx) => {
         const [id, key] = searchHistoryId.split("#");
         return (
-          <div key={idx} className="LocalStatusBoxUnit">
+          <div key={`${id}${key}`} className="LocalStatusBoxUnit">
             <div className="flex w-full items-center justify-between">
               <div>
-                <div
+                <button
                   className="flex h-10 w-full cursor-pointer items-center justify-center text-xs"
                   onClick={() => moveToSummonerPage(id, key)}
                 >
                   {searchHistoryId}
-                </div>
+                </button>
               </div>
               <div className="flex gap-4">
                 <BookMarkButton id={id} tag={key} />
@@ -58,4 +58,4 @@ export default function SearchHistoryBox() {
       })}
     </div>
   );
-}
+};

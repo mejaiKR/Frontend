@@ -10,13 +10,13 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-interface MejaiBoxProps {
+type Props = Readonly<{
   date: string;
   gameCount: number;
   imageUrl: string;
-}
+}>;
 
-export default function MejaiBox({ date, gameCount, imageUrl }: MejaiBoxProps) {
+export const MejaiBox = ({ date, gameCount, imageUrl }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -63,4 +63,4 @@ export default function MejaiBox({ date, gameCount, imageUrl }: MejaiBoxProps) {
       )}
     </>
   );
-}
+};

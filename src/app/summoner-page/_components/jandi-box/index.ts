@@ -1,5 +1,5 @@
-export { default as EmptyBlocks } from "./emptyBlocks";
-export { default as MejaiBox } from "./mejai-box";
-export { default as MonthMejaiCard } from "./month-mejai-card";
-export { default as updateGameCountForMonth } from "./utils/updateGameCountForMonth";
-export { default as WeekDayBar } from "./weekDayBar";
+export * from "./emptyBlocks";
+export * from "./mejai-box";
+export * from "./month-mejai-card";
+export * from "./utils/updateGameCountForMonth";
+export * from "./weekDayBar";

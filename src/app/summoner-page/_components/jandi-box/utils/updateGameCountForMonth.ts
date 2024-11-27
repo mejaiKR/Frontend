@@ -1,17 +1,17 @@
 import dayjs from "dayjs";
 
-import { DayGameData } from "@/app/summoner-page/_components/jandi-box/month-mejai-card";
+import { DayGameData } from "@/types";
 
-export default function updateGameCountForMonth(
+export const updateGameCountForMonth = (
   inputData: DayGameData[],
   year: number,
   month: number,
   setSumOfGameCount: (value: number) => void,
-) {
+) => {
   const startOfMonth = dayjs(new Date(year, month - 1, 1));
   const endOfMonth = dayjs(new Date(year, month, 0));
-  let sumOfGameCount = 0;
 
+  let sumOfGameCount = 0;
   let daysArray: DayGameData[] = [];
   let day = startOfMonth;
 
@@ -35,4 +35,4 @@ export default function updateGameCountForMonth(
   });
   setSumOfGameCount(sumOfGameCount);
   return daysArray;
-}
+};

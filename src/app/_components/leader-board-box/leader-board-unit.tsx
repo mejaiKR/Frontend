@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
+import { Spinner } from "@/components";
 import {
   Table,
   TableBody,
@@ -13,22 +14,14 @@ import {
 } from "@/components/ui/table";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
 import { fetchLeaderBoard } from "@/lib/fetch-func";
+import { UserData } from "@/types";
 
-interface LeaderBoardProps {
+type Props = Readonly<{
   year: number;
   month: number;
-}
-export interface UserData {
-  summonerName: string;
-  tagLine: string;
-  totalGameCount: number;
-}
+}>;
 
-export interface RankingData {
-  topRanking: UserData[];
-}
-
-export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
+export const LeaderBoardUnit = ({ year, month }: Props) => {
   const { data, error, isLoading } = useQuery<UserData[]>({
     queryKey: ["leaderboard", { year: year, month: month }],
     queryFn: fetchLeaderBoard,
@@ -37,12 +30,17 @@ export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
   });
   const { moveToSummonerPage } = useSummonerNavigation();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center">
+        <Spinner />
+      </div>
+    );
   if (error || data === undefined) return <div>Error</div>;
 
   return (
     <Table className="mt-4">
-      <TableCaption>{month}월 탑 컨트리뷰터</TableCaption>
+      <TableCaption>{month}월 탑 게이머</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">순위</TableHead>
@@ -52,17 +50,18 @@ export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
       </TableHeader>
       <TableBody>
         {data?.map((userData: UserData, idx: number) => (
-          <TableRow key={idx}>
+          <TableRow key={`${userData.summonerName}${userData.tagLine}`}>
             <TableCell className="font-medium">{idx + 1}</TableCell>
             <TableCell>
-              <div
+              <button
+                type="button"
                 className="cursor-pointer"
                 onClick={() =>
                   moveToSummonerPage(userData.summonerName, userData.tagLine)
                 }
               >
                 {userData.summonerName}#{userData.tagLine}
-              </div>
+              </button>
             </TableCell>
             <TableCell className="text-right">
               {userData.totalGameCount}
@@ -72,4 +71,4 @@ export default function LeaderBoardUnit({ year, month }: LeaderBoardProps) {
       </TableBody>
     </Table>
   );
-}
+};

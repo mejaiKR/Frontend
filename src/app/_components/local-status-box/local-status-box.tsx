@@ -1,10 +1,9 @@
 "use client";
 
-
 import { BookMarkBox, SearchHistoryBox } from "@/app/_components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function LocalStatusBox() {
+export const LocalStatusBox = () => {
   return (
     <Tabs defaultValue="SearchHistoryBox" className="w-full">
       <TabsList className="w-full">
@@ -23,4 +22,4 @@ export default function LocalStatusBox() {
       </TabsContent>
     </Tabs>
   );
-}
+};

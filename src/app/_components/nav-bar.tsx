@@ -1,11 +1,9 @@
-import React from "react";
-
 import Image from "next/image";
 import Link from "next/link";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
 
-export default function NavBar() {
+export const NavBar = () => {
   return (
     <nav className="border-gray-200">
       <div className="mx-auto flex max-w-screen-xl items-center justify-between p-4">
@@ -28,4 +26,4 @@ export default function NavBar() {
       </div>
     </nav>
   );
-}
+};
