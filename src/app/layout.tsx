@@ -22,6 +22,7 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
       className={`${gmarketMedium.variable} ${gmarketBold.variable} ${netmarbleBold.variable}`}
       suppressHydrationWarning
     >
+      <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
       <body className="flex justify-center">
         <ClientRoot>
           <div className="flex min-h-screen w-full min-w-[340px] max-w-[550px] flex-col">
