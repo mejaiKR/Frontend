@@ -14,6 +14,7 @@ import {
 } from "@/app/summoner-page/_components";
 import { Spinner } from "@/components/ui";
 import { fetchUserInfo } from "@/lib/fetch-func";
+import { QUERY_KEY } from "@/lib/queryKey";
 
 function AwaitPage() {
   const params = useSearchParams();
@@ -21,10 +22,8 @@ function AwaitPage() {
   const tag = params?.get("tag") ?? "";
 
   const { error, isFetching } = useSuspenseQuery({
-    queryKey: ["userInfo", { id, tag }],
+    queryKey: [QUERY_KEY.userInfo, { id, tag }],
     queryFn: fetchUserInfo,
-    staleTime: 1000 * 60 * 15,
-    gcTime: 1000 * 60 * 15,
   });
 
   if (error && !isFetching) {

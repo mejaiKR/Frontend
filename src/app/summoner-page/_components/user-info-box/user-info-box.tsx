@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 
-import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -15,7 +14,7 @@ import {
   ShareButton,
 } from "@/components";
 import { useRefreshData } from "@/hooks/useRefreshData";
-import { fetchUserInfo } from "@/lib/fetch-func";
+import { useUserInfoQuery } from "@/queries";
 
 type Props = Readonly<{
   id: string;
@@ -23,12 +22,7 @@ type Props = Readonly<{
 }>;
 
 export const UserInfoBox = ({ id, tag }: Props) => {
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["userInfo", { id, tag }],
-    queryFn: fetchUserInfo,
-    staleTime: 1000 * 60 * 15, // 15분으로 staletime 설정
-    gcTime: 1000 * 60 * 15,
-  });
+  const { data, isLoading, error, refetch } = useUserInfoQuery(id, tag);
 
   const isRefreshDisabled = useMemo(() => {
     if (!data?.lastUpdatedAt) return false;
@@ -46,7 +40,7 @@ export const UserInfoBox = ({ id, tag }: Props) => {
     lastUpdatedAt: data?.lastUpdatedAt,
   });
 
-  if (isLoading)
+  if (isLoading || data === undefined)
     return (
       <div className="m-6 flex h-32 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
         <ImageSkeleton />

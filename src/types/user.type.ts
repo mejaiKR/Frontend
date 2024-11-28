@@ -1,9 +1,17 @@
-export type UserData = {
+import { RankInfo } from "@/types";
+
+export type RankingUserData = {
+  totalGameCount: string;
   summonerName: string;
   tagLine: string;
-  totalGameCount: number;
 };
 
-export type RankingData = {
-  topRanking: UserData[];
+export type UserData = {
+  flexRank: RankInfo;
+  lastUpdatedAt: string;
+  level: string;
+  profileIcon: string;
+  soloRank: RankInfo;
+  summonerName: string;
+  tagLine: string;
 };
