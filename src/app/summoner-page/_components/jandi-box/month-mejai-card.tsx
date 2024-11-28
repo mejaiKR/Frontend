@@ -45,8 +45,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
   const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
     id,
     tag,
-    endpoint: "/users/renewal/streak",
-    checkEndpoint: "/renewal-status/streak",
+    refreshTarget: "streak",
     additionalParams: { year, month },
     refetchFn: () => refetch(),
     lastUpdatedAt: data?.lastUpdatedAt,

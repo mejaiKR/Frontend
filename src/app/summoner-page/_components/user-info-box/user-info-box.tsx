@@ -13,7 +13,7 @@ import {
   RefreshButton,
   ShareButton,
 } from "@/components";
-import { useRefreshData } from "@/hooks/useRefreshData";
+import { useRefreshData } from "@/hooks";
 import { useUserInfoQuery } from "@/queries";
 
 type Props = Readonly<{
@@ -34,8 +34,7 @@ export const UserInfoBox = ({ id, tag }: Props) => {
   const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
     id,
     tag,
-    endpoint: "/users/renewal/profile",
-    checkEndpoint: "/renewal-status/profile",
+    refreshTarget: "profile",
     refetchFn: () => refetch(),
     lastUpdatedAt: data?.lastUpdatedAt,
   });
