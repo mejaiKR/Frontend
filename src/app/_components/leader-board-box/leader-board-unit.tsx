@@ -1,7 +1,5 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-
 import { Spinner } from "@/components";
 import {
   Table,
@@ -13,8 +11,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
-import { fetchLeaderBoard } from "@/lib/fetch-func";
-import { UserData } from "@/types";
+import { useLeaderBoardQuery } from "@/queries";
+import { RankingUserData } from "@/types";
 
 type Props = Readonly<{
   year: number;
@@ -22,12 +20,7 @@ type Props = Readonly<{
 }>;
 
 export const LeaderBoardUnit = ({ year, month }: Props) => {
-  const { data, error, isLoading } = useQuery<UserData[]>({
-    queryKey: ["leaderboard", { year: year, month: month }],
-    queryFn: fetchLeaderBoard,
-    staleTime: 1000 * 60 * 15,
-    gcTime: 1000 * 60 * 15,
-  });
+  const { data, error, isLoading } = useLeaderBoardQuery(year, month);
   const { moveToSummonerPage } = useSummonerNavigation();
 
   if (isLoading)
@@ -49,7 +42,7 @@ export const LeaderBoardUnit = ({ year, month }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((userData: UserData, idx: number) => (
+        {data?.map((userData: RankingUserData, idx: number) => (
           <TableRow key={`${userData.summonerName}${userData.tagLine}`}>
             <TableCell className="font-medium">{idx + 1}</TableCell>
             <TableCell>

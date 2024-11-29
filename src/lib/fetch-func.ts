@@ -3,7 +3,7 @@
 import { QueryFunctionContext, QueryKey } from "@tanstack/react-query";
 import axios from "axios";
 
-import { SERVER_URL } from "@/lib/utils";
+import { API_ENDPOINTS } from "@/lib/endpoint";
 import { JandiData, UserData } from "@/types";
 
 export const fetchUserInfo = async ({
@@ -11,11 +11,15 @@ export const fetchUserInfo = async ({
 }: {
   queryKey: [string, { id: string; tag: string }];
 }) => {
-  const [_key, { id, tag }] = queryKey;
-  const response = await axios.get(
-    `${SERVER_URL}/users/profile?id=${id}&tag=${tag}`,
-  );
-  return response.data;
+  try {
+    const [_key, { id, tag }] = queryKey;
+    const response = await axios.get<UserData>(`${API_ENDPOINTS.PROFILE}`, {
+      params: { id, tag },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("사용자 정보를 가져오는데 실패했습니다.");
+  }
 };
 
 type JandiQueryKey = [
@@ -31,12 +35,15 @@ type JandiQueryKey = [
 export const fetchJandi = async ({
   queryKey,
 }: QueryFunctionContext<QueryKey>) => {
-  const [_key, { id, tag, year, month }] = queryKey as JandiQueryKey;
-
-  const response = await axios.get<JandiData>(
-    `${SERVER_URL}/users/streak?id=${id}&tag=${tag}&year=${year}&month=${month}`,
-  );
-  return response.data || undefined;
+  try {
+    const [_key, { id, tag, year, month }] = queryKey as JandiQueryKey;
+    const response = await axios.get<JandiData>(`${API_ENDPOINTS.STREAK}`, {
+      params: { id, tag, year, month },
+    });
+    return response.data ?? undefined;
+  } catch (error) {
+    throw new Error("잔디 데이터를 가져오는데 실패했습니다.");
+  }
 };
 
 type LeaderBoardQueryKey = [
@@ -50,10 +57,13 @@ type LeaderBoardQueryKey = [
 export const fetchLeaderBoard = async ({
   queryKey,
 }: QueryFunctionContext<QueryKey>) => {
-  const [_key, { year, month }] = queryKey as LeaderBoardQueryKey;
-
-  const response = await axios.get<UserData[]>(
-    `${SERVER_URL}/ranking?year=${year}&month=${month}`,
-  );
-  return response.data;
+  try {
+    const [_key, { year, month }] = queryKey as LeaderBoardQueryKey;
+    const response = await axios.get<UserData[]>(`${API_ENDPOINTS.RANKING}`, {
+      params: { year, month },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("리더보드 데이터를 가져오는데 실패했습니다.");
+  }
 };

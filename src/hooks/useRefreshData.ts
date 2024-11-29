@@ -1,16 +1,19 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
-import { QueryObserverResult } from "@tanstack/react-query";
+import {
+  QueryObserverResult,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import axios from "axios";
 import dayjs from "dayjs";
 
-import { SERVER_URL } from "@/lib/utils";
+import { API_ENDPOINTS } from "@/lib/endpoint";
 
 type RefreshDataParams = {
   id: string;
   tag: string;
-  endpoint: string;
-  checkEndpoint: string;
+  refreshTarget: "profile" | "streak";
   additionalParams?: Record<string, string | number>;
   refetchFn: () => Promise<QueryObserverResult>;
   lastUpdatedAt?: string;
@@ -19,55 +22,83 @@ type RefreshDataParams = {
 export const useRefreshData = ({
   id,
   tag,
-  endpoint,
-  checkEndpoint,
+  refreshTarget,
   additionalParams = {},
   refetchFn,
   lastUpdatedAt,
 }: RefreshDataParams) => {
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
+  const checkEndpoint = API_ENDPOINTS.UPDATE_STATUS + refreshTarget;
+  const endpoint = API_ENDPOINTS.PROFILE_UPDATE + refreshTarget;
 
-  const checkUpdateStatus = useCallback(async () => {
-    try {
+  // 업데이트 상태 확인을 위한 쿼리
+  const { data: statusData, refetch: refetchStatus } = useQuery({
+    queryKey: ["updateStatus", { id, tag, refreshTarget }],
+    queryFn: async () => {
       const params = new URLSearchParams({ id, tag, ...additionalParams });
       const response = await axios.get<{ lastUpdatedAt: string }>(
-        `${SERVER_URL}${checkEndpoint}?${params}`,
+        `${checkEndpoint}?${params}`,
       );
-      const lastUpdateAt = dayjs(response.data.lastUpdatedAt);
-      const lastUpdatedAtDate = dayjs(lastUpdatedAt);
+      return response.data;
+    },
+    enabled: false, // 수동으로 실행하기 위해 비활성화
+    retry: 3,
+    retryDelay: 2000,
+  });
 
-      if (lastUpdateAt.isAfter(lastUpdatedAtDate)) {
-        await refetchFn();
-        setIsRefreshing(false);
-        setUpdateMessage("업데이트가 완료되었습니다.");
-        setTimeout(() => setUpdateMessage(null), 5000);
-      } else {
-        setTimeout(checkUpdateStatus, 2000);
-      }
-    } catch (error) {
-      console.error("업데이트 상태 확인 실패:", error);
-      setIsRefreshing(false);
-      setUpdateMessage("업데이트 상태 확인에 실패했습니다. 다시 시도해주세요.");
+  // 업데이트 상태 확인 함수
+  const checkUpdateStatus = useCallback(async () => {
+    const result = await refetchStatus();
+    if (!result.data) return false;
+
+    const lastUpdateAt = dayjs(result.data.lastUpdatedAt);
+    const lastUpdatedAtDate = dayjs(lastUpdatedAt);
+
+    if (lastUpdateAt.isAfter(lastUpdatedAtDate)) {
+      await refetchFn();
+      return true;
     }
-  }, [id, tag, checkEndpoint, additionalParams, refetchFn, lastUpdatedAt]);
+    return false;
+  }, [refetchStatus, refetchFn, lastUpdatedAt]);
 
-  const handleRefresh = async () => {
-    setIsRefreshing(true);
-    setUpdateMessage("업데이트 중...");
-    try {
-      await axios.post(`${SERVER_URL}${endpoint}`, {
+  // 데이터 갱신을 위한 mutation
+  const { mutate: handleRefresh, isPending: isRefreshing } = useMutation({
+    mutationFn: async () => {
+      await axios.post(endpoint, {
         id,
         tag,
         ...additionalParams,
       });
-      checkUpdateStatus();
-    } catch (error) {
-      console.error("데이터 새로고침 실패:", error);
-      setIsRefreshing(false);
-      setUpdateMessage("업데이트 요청에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
+    },
+    onSuccess: async () => {
+      const poll = async (retries = 30, interval = 2000): Promise<void> => {
+        if (retries === 0) {
+          throw new Error("업데이트 시간 초과");
+        }
 
-  return { isRefreshing, updateMessage, handleRefresh };
+        const isUpdated = await checkUpdateStatus();
+        if (!isUpdated) {
+          await new Promise((resolve) => setTimeout(resolve, interval));
+          return poll(retries - 1, interval);
+        }
+      };
+
+      try {
+        await poll();
+      } catch (error) {
+        console.error("업데이트 실패:", error);
+      }
+    },
+  });
+
+  const updateMessage = (() => {
+    if (isRefreshing) return "업데이트 중...";
+    if (statusData?.lastUpdatedAt) return "업데이트가 완료되었습니다.";
+    return null;
+  })();
+
+  return {
+    isRefreshing,
+    updateMessage,
+    handleRefresh,
+  };
 };

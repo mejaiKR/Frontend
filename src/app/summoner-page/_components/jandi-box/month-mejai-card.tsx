@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
 
@@ -10,8 +9,8 @@ import { LoadingButton } from "@/components/loadingButton";
 import { RefreshButton } from "@/components/refreshButton";
 import { Spinner } from "@/components/ui";
 import { useRefreshData } from "@/hooks/useRefreshData";
-import { fetchJandi } from "@/lib/fetch-func";
-import { DayGameData, JandiData } from "@/types";
+import { useJandiQuery } from "@/queries";
+import { DayGameData } from "@/types";
 
 import { updateGameCountForMonth } from "./utils/updateGameCountForMonth";
 
@@ -29,12 +28,12 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
   const tag = params?.get("tag") ?? "";
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
 
-  const { data, isLoading, refetch, isFetching } = useQuery<JandiData>({
-    queryKey: ["jandi", { id, tag, year, month }],
-    queryFn: fetchJandi,
-    staleTime: 1000 * 60 * 15,
-    gcTime: 1000 * 60 * 15,
-  });
+  const { data, isLoading, refetch, isFetching } = useJandiQuery(
+    id,
+    tag,
+    year,
+    month,
+  );
 
   const isRefreshDisabled = useMemo(() => {
     if (!data?.lastUpdatedAt) return false;
@@ -46,8 +45,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
   const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
     id,
     tag,
-    endpoint: "/users/renewal/streak",
-    checkEndpoint: "/renewal-status/streak",
+    refreshTarget: "streak",
     additionalParams: { year, month },
     refetchFn: () => refetch(),
     lastUpdatedAt: data?.lastUpdatedAt,
