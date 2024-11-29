@@ -70,7 +70,7 @@ export const useRefreshData = ({
       });
     },
     onSuccess: async () => {
-      const poll = async (retries = 30, interval = 2000) => {
+      const poll = async (retries = 30, interval = 2000): Promise<void> => {
         if (retries === 0) {
           throw new Error("업데이트 시간 초과");
         }
