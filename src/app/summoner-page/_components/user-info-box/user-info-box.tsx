@@ -31,7 +31,7 @@ export const UserInfoBox = ({ id, tag }: Props) => {
     return now.diff(lastUpdated, "hour") < 2;
   }, [data?.lastUpdatedAt]);
 
-  const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
+  const { isRefreshing, handleRefresh } = useRefreshData({
     id,
     tag,
     refreshTarget: "profile",
@@ -100,9 +100,6 @@ export const UserInfoBox = ({ id, tag }: Props) => {
               />
             )}
             <div className="flex flex-col justify-center gap-2">
-              {updateMessage && (
-                <div className="text-xs text-blue-500">{updateMessage}</div>
-              )}
               {isRefreshDisabled && (
                 <div className="text-xs text-gray-500">
                   2시간 후에 다시 갱신할 수 있습니다.

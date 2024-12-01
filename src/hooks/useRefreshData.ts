@@ -13,6 +13,8 @@ import { API_ENDPOINTS } from "@/lib/endpoint";
 type RefreshDataParams = {
   id: string;
   tag: string;
+  month?: number;
+  year?: number;
   refreshTarget: "profile" | "streak";
   additionalParams?: Record<string, string | number>;
   refetchFn: () => Promise<QueryObserverResult>;
@@ -22,6 +24,8 @@ type RefreshDataParams = {
 export const useRefreshData = ({
   id,
   tag,
+  month,
+  year,
   refreshTarget,
   additionalParams = {},
   refetchFn,
@@ -32,7 +36,8 @@ export const useRefreshData = ({
 
   // 업데이트 상태 확인을 위한 쿼리
   const { data: statusData, refetch: refetchStatus } = useQuery({
-    queryKey: ["updateStatus", { id, tag, refreshTarget }],
+    // 쿼리 키에 year, month를 추가하여 캐시 키를 구분(userInfo의 경우 undefined)
+    queryKey: ["updateStatus", { id, tag, refreshTarget, month, year }],
     queryFn: async () => {
       const params = new URLSearchParams({ id, tag, ...additionalParams });
       const response = await axios.get<{ lastUpdatedAt: string }>(
@@ -90,15 +95,8 @@ export const useRefreshData = ({
     },
   });
 
-  const updateMessage = (() => {
-    if (isRefreshing) return "업데이트 중...";
-    if (statusData?.lastUpdatedAt) return "업데이트가 완료되었습니다.";
-    return null;
-  })();
-
   return {
     isRefreshing,
-    updateMessage,
     handleRefresh,
   };
 };

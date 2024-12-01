@@ -42,9 +42,11 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
     return now.diff(lastUpdated, "hour") < 2;
   }, [data?.lastUpdatedAt]);
 
-  const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
+  const { isRefreshing, handleRefresh } = useRefreshData({
     id,
     tag,
+    month,
+    year,
     refreshTarget: "streak",
     additionalParams: { year, month },
     refetchFn: () => refetch(),
@@ -70,7 +72,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
       </div>
     );
   return (
-    <div className="flex w-full flex-col items-center justify-between">
+    <div className="mt-1 flex w-full flex-col items-center justify-between">
       {isRefreshing ? (
         <LoadingButton title="스트릭 갱신 중..." />
       ) : (
@@ -80,14 +82,13 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
           disabled={isRefreshDisabled}
         />
       )}
-      {updateMessage && (
-        <div className="mt-2 text-xs text-blue-500">{updateMessage}</div>
-      )}
-      {isRefreshDisabled && (
-        <div className="mt-2 text-xs text-gray-500">
-          2시간 후에 다시 갱신할 수 있습니다.
-        </div>
-      )}
+      <div className="mt-2 flex h-1 w-full justify-center">
+        {isRefreshDisabled && (
+          <div className="text-xs text-gray-500">
+            2시간 후에 다시 갱신할 수 있습니다.
+          </div>
+        )}
+      </div>
       <span className="mb-4 mt-4 text-2xl font-semibold">
         {year}년 {month}월
       </span>
