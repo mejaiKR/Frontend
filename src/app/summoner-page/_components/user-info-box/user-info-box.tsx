@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import { AxiosError } from "axios";
 import dayjs from "dayjs";
@@ -38,6 +38,10 @@ export const UserInfoBox = ({ id, tag }: Props) => {
     refetchFn: () => refetch(),
     lastUpdatedAt: data?.lastUpdatedAt,
   });
+
+  useEffect(() => {
+    document.title = `${id}#${tag} - mejai.kr`;
+  }, [id, tag]);
 
   if (isLoading || data === undefined)
     return (
