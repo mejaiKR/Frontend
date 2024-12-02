@@ -2,9 +2,10 @@
 
 import { nanoid } from "nanoid";
 
-import { TierUnit } from "@/app/summoner-page/_components";
 import { ImageSkeleton } from "@/components/ui";
 import { useUserInfoQuery } from "@/queries";
+
+import { TierUnit } from "./tier-unit";
 
 type Props = {
   id: string;
