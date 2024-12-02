@@ -8,14 +8,7 @@ import { Spinner } from "@/components/ui";
 
 import { ErrorPage, SummonerContent } from "./_components";
 
-export default function SummonerPage({
-  searchParams,
-}: {
-  searchParams: { id?: string; tag?: string };
-}) {
-  const id = searchParams.id ?? "";
-  const tag = searchParams.tag ?? "";
-
+export default function SummonerPage({}: {}) {
   return (
     <ErrorBoundary FallbackComponent={ErrorPage}>
       <Suspense
@@ -25,7 +18,7 @@ export default function SummonerPage({
           </div>
         }
       >
-        <SummonerContent id={id} tag={tag} />
+        <SummonerContent />
       </Suspense>
     </ErrorBoundary>
   );
