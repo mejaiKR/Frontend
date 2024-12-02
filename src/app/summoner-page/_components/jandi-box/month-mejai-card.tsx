@@ -5,10 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
 
-import { LoadingButton } from "@/components/loadingButton";
-import { RefreshButton } from "@/components/refreshButton";
-import { Spinner } from "@/components/ui";
-import { useRefreshData } from "@/hooks/useRefreshData";
+import { LoadingButton, RefreshButton, Spinner } from "@/components";
+import { useRefreshData, useTimeAgo } from "@/hooks";
 import { useJandiQuery } from "@/queries";
 import { DayGameData } from "@/types";
 
@@ -53,6 +51,8 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
     lastUpdatedAt: data?.lastUpdatedAt,
   });
 
+  const timeAgo = useTimeAgo(data?.lastUpdatedAt);
+
   useEffect(() => {
     if (data) {
       const updatedData = updateGameCountForMonth(
@@ -83,11 +83,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
         />
       )}
       <div className="mt-2 flex h-1 w-full justify-center">
-        {isRefreshDisabled && (
-          <div className="text-xs text-gray-500">
-            2시간 후에 다시 갱신할 수 있습니다.
-          </div>
-        )}
+        <div className="text-xs text-gray-500">최근 업데이트: {timeAgo}</div>
       </div>
       <span className="mb-4 mt-4 text-2xl font-semibold">
         {year}년 {month}월
