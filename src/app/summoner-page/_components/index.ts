@@ -3,6 +3,7 @@ export * from "./jandi-box/jandi-box";
 export * from "./jandi-box/lazy-loaded-month-mejai-card";
 export * from "./jandi-box/mejai-box";
 export * from "./jandi-box/month-mejai-card";
+export * from "./summoner-content";
 export * from "./tier-box";
 export * from "./tier-unit";
 export * from "./user-info-box/book-mark-button";
