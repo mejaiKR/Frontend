@@ -8,7 +8,7 @@ import { QUERY_KEY } from "@/lib/queryKey";
 
 import { JandiBox, TierBox, UserInfoBox } from "./";
 
-export function SummonerContent() {
+export const SummonerContent = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id") ?? "";
   const tag = searchParams.get("tag") ?? "";
@@ -28,4 +28,4 @@ export function SummonerContent() {
       <JandiBox />
     </>
   );
-}
+};

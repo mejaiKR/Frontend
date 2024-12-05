@@ -8,7 +8,7 @@ import { Spinner } from "@/components/ui";
 
 import { ErrorPage, SummonerContent } from "./_components";
 
-export default function SummonerPage({}: {}) {
+export default function SummonerPage() {
   return (
     <ErrorBoundary FallbackComponent={ErrorPage}>
       <Suspense
