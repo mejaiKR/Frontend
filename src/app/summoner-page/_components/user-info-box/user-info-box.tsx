@@ -13,7 +13,7 @@ import {
   RefreshButton,
   ShareButton,
 } from "@/components";
-import { useRefreshData } from "@/hooks";
+import { useRefreshData, useTimeAgo } from "@/hooks";
 import { useUserInfoQuery } from "@/queries";
 
 type Props = Readonly<{
@@ -31,13 +31,15 @@ export const UserInfoBox = ({ id, tag }: Props) => {
     return now.diff(lastUpdated, "hour") < 2;
   }, [data?.lastUpdatedAt]);
 
-  const { isRefreshing, updateMessage, handleRefresh } = useRefreshData({
+  const { isRefreshing, handleRefresh } = useRefreshData({
     id,
     tag,
     refreshTarget: "profile",
     refetchFn: () => refetch(),
     lastUpdatedAt: data?.lastUpdatedAt,
   });
+
+  const timeAgo = useTimeAgo(data?.lastUpdatedAt);
 
   useEffect(() => {
     document.title = `${id}#${tag} - mejai.kr`;
@@ -100,14 +102,9 @@ export const UserInfoBox = ({ id, tag }: Props) => {
               />
             )}
             <div className="flex flex-col justify-center gap-2">
-              {updateMessage && (
-                <div className="text-xs text-blue-500">{updateMessage}</div>
-              )}
-              {isRefreshDisabled && (
-                <div className="text-xs text-gray-500">
-                  2시간 후에 다시 갱신할 수 있습니다.
-                </div>
-              )}
+              <div className="text-xs text-gray-500">
+                최근 업데이트: {timeAgo}
+              </div>
             </div>
           </div>
         </div>

@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import { LazyLoadedMonthMejaiCard } from "@/app/summoner-page/_components";
 import {
   Carousel,
   CarouselContent,
@@ -19,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { LazyLoadedMonthMejaiCard } from "./lazy-loaded-month-mejai-card";
 
 export const JandiBox = () => {
   const [currentDate] = useState(() => dayjs());
