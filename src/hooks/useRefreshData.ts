@@ -35,7 +35,7 @@ export const useRefreshData = ({
   const endpoint = API_ENDPOINTS.PROFILE_UPDATE + refreshTarget;
 
   // 업데이트 상태 확인을 위한 쿼리
-  const { data: statusData, refetch: refetchStatus } = useQuery({
+  const { refetch: refetchStatus } = useQuery({
     // 쿼리 키에 year, month를 추가하여 캐시 키를 구분(userInfo의 경우 undefined)
     queryKey: ["updateStatus", { id, tag, refreshTarget, month, year }],
     queryFn: async () => {
