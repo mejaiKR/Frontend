@@ -102,9 +102,7 @@ export const UserInfoBox = ({ id, tag }: Props) => {
               />
             )}
             <div className="flex flex-col justify-center gap-2">
-              <div className="text-xs text-gray-500">
-                최근 업데이트: {timeAgo}
-              </div>
+              <div className="text-xs text-gray-500">{timeAgo}</div>
             </div>
           </div>
         </div>
