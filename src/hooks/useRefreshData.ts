@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import {
   QueryObserverResult,
@@ -95,8 +95,18 @@ export const useRefreshData = ({
     },
   });
 
+  const isRefreshDisabled = useMemo(() => {
+    if (!lastUpdatedAt) return false;
+    const now = dayjs().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    const diffMinutes = dayjs(now).diff(dayjs(lastUpdatedAt), "minute");
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    return diffHours < 2;
+  }, [lastUpdatedAt]);
+
   return {
     isRefreshing,
     handleRefresh,
+    isRefreshDisabled,
   };
 };
