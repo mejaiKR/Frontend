@@ -74,6 +74,7 @@ export const useRefreshData = ({
         ...additionalParams,
       });
     },
+    mutationKey: ["refreshData", { id, tag, refreshTarget, month, year }],
     onSuccess: async () => {
       const poll = async (retries = 30, interval = 2000): Promise<void> => {
         if (retries === 0) {
