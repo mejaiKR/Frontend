@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
 
 import { LoadingButton, RefreshButton, Spinner } from "@/components";
@@ -33,14 +32,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
     month,
   );
 
-  const isRefreshDisabled = useMemo(() => {
-    if (!data?.lastUpdatedAt) return false;
-    const lastUpdated = dayjs(data.lastUpdatedAt);
-    const now = dayjs();
-    return now.diff(lastUpdated, "hour") < 2;
-  }, [data?.lastUpdatedAt]);
-
-  const { isRefreshing, handleRefresh } = useRefreshData({
+  const { isRefreshing, handleRefresh, isRefreshDisabled } = useRefreshData({
     id,
     tag,
     month,
@@ -92,8 +84,11 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
       <WeekDayBar />
       <div className="grid w-full grid-cols-7 gap-1">
         <EmptyBlocks year={year} month={month} />
-        {monthData.map((day, index) => (
-          <div key={index} className="aspect-w-1 aspect-h-1">
+        {monthData.map((day) => (
+          <div
+            key={`${day.date}-${day.gameCount}`}
+            className="aspect-w-1 aspect-h-1"
+          >
             <MejaiBox
               date={day.date}
               gameCount={day.gameCount}

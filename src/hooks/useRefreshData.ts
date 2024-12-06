@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import {
   QueryObserverResult,
@@ -35,7 +35,7 @@ export const useRefreshData = ({
   const endpoint = API_ENDPOINTS.PROFILE_UPDATE + refreshTarget;
 
   // 업데이트 상태 확인을 위한 쿼리
-  const { data: statusData, refetch: refetchStatus } = useQuery({
+  const { refetch: refetchStatus } = useQuery({
     // 쿼리 키에 year, month를 추가하여 캐시 키를 구분(userInfo의 경우 undefined)
     queryKey: ["updateStatus", { id, tag, refreshTarget, month, year }],
     queryFn: async () => {
@@ -74,6 +74,7 @@ export const useRefreshData = ({
         ...additionalParams,
       });
     },
+    mutationKey: ["refreshData", { id, tag, refreshTarget, month, year }],
     onSuccess: async () => {
       const poll = async (retries = 30, interval = 2000): Promise<void> => {
         if (retries === 0) {
@@ -95,8 +96,18 @@ export const useRefreshData = ({
     },
   });
 
+  const isRefreshDisabled = useMemo(() => {
+    if (!lastUpdatedAt) return false;
+    const now = dayjs().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    const diffMinutes = dayjs(now).diff(dayjs(lastUpdatedAt), "minute");
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    return diffHours < 2;
+  }, [lastUpdatedAt]);
+
   return {
     isRefreshing,
     handleRefresh,
+    isRefreshDisabled,
   };
 };

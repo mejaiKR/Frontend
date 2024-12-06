@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 import { AxiosError } from "axios";
-import dayjs from "dayjs";
 import Image from "next/image";
 
 import { BookMarkButton } from "@/app/summoner-page/_components";
@@ -24,14 +23,7 @@ type Props = Readonly<{
 export const UserInfoBox = ({ id, tag }: Props) => {
   const { data, isLoading, error, refetch } = useUserInfoQuery(id, tag);
 
-  const isRefreshDisabled = useMemo(() => {
-    if (!data?.lastUpdatedAt) return false;
-    const lastUpdated = dayjs(data.lastUpdatedAt);
-    const now = dayjs();
-    return now.diff(lastUpdated, "hour") < 2;
-  }, [data?.lastUpdatedAt]);
-
-  const { isRefreshing, handleRefresh } = useRefreshData({
+  const { isRefreshing, handleRefresh, isRefreshDisabled } = useRefreshData({
     id,
     tag,
     refreshTarget: "profile",
