@@ -83,7 +83,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
         />
       )}
       <div className="mt-2 flex h-1 w-full justify-center">
-        <div className="text-xs text-gray-500">최근 업데이트: {timeAgo}</div>
+        <div className="text-xs text-gray-500">{timeAgo}</div>
       </div>
       <span className="mb-4 mt-4 text-2xl font-semibold">
         {year}년 {month}월
