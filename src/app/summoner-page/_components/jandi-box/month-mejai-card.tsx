@@ -5,13 +5,18 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { LoadingButton, RefreshButton, Spinner } from "@/components";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { useRefreshData, useTimeAgo } from "@/hooks";
 import { useJandiQuery } from "@/queries";
 import { DayGameData } from "@/types";
 
 import { updateGameCountForMonth } from "./utils/updateGameCountForMonth";
 
-import { EmptyBlocks, MejaiBox, WeekDayBar } from ".";
+import { EmptyBlocks, GameCountChart, MejaiBox, WeekDayBar } from ".";
 
 type Props = Readonly<{
   month: number;
@@ -80,7 +85,20 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
       <span className="mb-4 mt-4 text-2xl font-semibold">
         {year}년 {month}월
       </span>
-      <span className="mb-2">총 {sumOfGameCount}게임</span>
+      <HoverCard openDelay={0} closeDelay={0}>
+        <HoverCardTrigger asChild>
+          <span className="mb-2 cursor-pointer underline decoration-dotted transition-colors hover:text-primary">
+            총 {sumOfGameCount}게임
+          </span>
+        </HoverCardTrigger>
+        <HoverCardContent
+          className="w-fit border bg-background/80 backdrop-blur-sm"
+          side="bottom"
+          align="center"
+        >
+          <GameCountChart data={monthData} sumOfGameCount={sumOfGameCount} />
+        </HoverCardContent>
+      </HoverCard>
       <WeekDayBar />
       <div className="grid w-full grid-cols-7 gap-1">
         <EmptyBlocks year={year} month={month} />

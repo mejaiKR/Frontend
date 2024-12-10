@@ -24,6 +24,13 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --chart-6: 190 75% 50%;
+    --chart-7: 45 70% 50%;
   }
 
   * {
@@ -54,16 +61,19 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --chart-6: 190 75% 50%;
+    --chart-7: 45 70% 50%;
   }
-
-
 }
 .HoverCardContent {
-  width: var(--radix-popover-width);
-  opacity: 0.8;
+  @apply w-[var(--radix-popover-width)] bg-background/80 backdrop-blur-sm;
 }
 
 .LocalStatusBoxUnit {
-  @apply hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-100 rounded-md px-4
+  @apply rounded-md px-4 transition-colors duration-100 hover:bg-gray-200 dark:hover:bg-gray-600;
 }
-
