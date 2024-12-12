@@ -1,6 +1,6 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
 import { fetchUserInfo } from "@/lib/fetch-func";
@@ -12,7 +12,7 @@ export const SummonerContent = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id") ?? "";
   const tag = searchParams.get("tag") ?? "";
-  const { error, isFetching } = useSuspenseQuery({
+  const { error, isFetching } = useQuery({
     queryKey: [QUERY_KEY.userInfo, { id, tag }],
     queryFn: fetchUserInfo,
   });
