@@ -6,14 +6,11 @@ import { AxiosError } from "axios";
 import Image from "next/image";
 
 import { BookMarkButton } from "@/app/summoner-page/_components";
-import {
-  ImageSkeleton,
-  LoadingButton,
-  RefreshButton,
-  ShareButton,
-} from "@/components";
+import { LoadingButton, RefreshButton, ShareButton } from "@/components";
 import { useRefreshData, useTimeAgo } from "@/hooks";
 import { useUserInfoQuery } from "@/queries";
+
+import { UserInfoBoxSkeleton } from "./user-info-box-skeleton";
 
 type Props = Readonly<{
   id: string;
@@ -39,9 +36,8 @@ export const UserInfoBox = ({ id, tag }: Props) => {
 
   if (isLoading || data === undefined)
     return (
-      <div className="m-6 flex h-32 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
-        <ImageSkeleton />
-        <div className="ml-4 flex h-full w-60 flex-col justify-center"></div>
+      <div className="m-4 flex h-40 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+        <UserInfoBoxSkeleton />
       </div>
     );
   if (error instanceof AxiosError) {
