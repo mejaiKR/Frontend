@@ -1,8 +1,10 @@
 "use client";
 
 import { MonthMejaiCard } from "@/app/summoner-page/_components";
-import { Card, CardContent, Skeleton } from "@/components";
+import { Card, CardContent } from "@/components";
 import { useIntersectionObserver } from "@/hooks";
+
+import { MonthMejaiCardSkeleton } from "./jandi-box-skeleton";
 
 type Props = Readonly<{
   month: number;
@@ -16,7 +18,7 @@ export const LazyLoadedMonthMejaiCard = ({ month, year }: Props) => {
   });
 
   return (
-    <div ref={ref} style={{ minHeight: "100px" }}>
+    <div ref={ref}>
       {isVisible ? (
         <Card>
           <CardContent className="flex aspect-square flex-col items-center justify-center p-6">
@@ -24,9 +26,7 @@ export const LazyLoadedMonthMejaiCard = ({ month, year }: Props) => {
           </CardContent>
         </Card>
       ) : (
-        <div className="flex size-full items-center justify-center">
-          <Skeleton className="h-full w-full" />
-        </div>
+        <MonthMejaiCardSkeleton />
       )}
     </div>
   );

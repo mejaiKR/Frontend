@@ -67,8 +67,8 @@ export const JandiBox = () => {
         opts={{ align: "center", startIndex: selectedMonth - 1 }}
         className="max-w-x flex w-full flex-col"
       >
-        <CarouselPrevious className="absolute left-14 top-12 z-10" />
-        <CarouselNext className="absolute right-14 top-12 z-10" />
+        <CarouselPrevious className="absolute left-14 top-28 z-10" />
+        <CarouselNext className="absolute right-14 top-28 z-10" />
         <CarouselContent>
           {months.map((month) => (
             <CarouselItem key={month}>
