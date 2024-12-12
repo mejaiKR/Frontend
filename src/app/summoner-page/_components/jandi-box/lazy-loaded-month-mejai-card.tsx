@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
 import { MonthMejaiCard } from "@/app/summoner-page/_components";
-import { Skeleton } from "@/components";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, Skeleton } from "@/components";
+import { useIntersectionObserver } from "@/hooks";
 
 type Props = Readonly<{
   month: number;
@@ -12,30 +10,10 @@ type Props = Readonly<{
 }>;
 
 export const LazyLoadedMonthMejaiCard = ({ month, year }: Props) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const currentRef = ref.current;
-
-    const observer = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.disconnect();
-      }
-    });
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
+  const [ref, isVisible] = useIntersectionObserver({
+    threshold: 0,
+    freezeOnceVisible: true,
+  });
 
   return (
     <div ref={ref} style={{ minHeight: "100px" }}>
