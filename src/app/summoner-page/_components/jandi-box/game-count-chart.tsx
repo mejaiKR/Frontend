@@ -1,5 +1,7 @@
 "use client";
 
+import { memo } from "react";
+
 import {
   Bar,
   BarChart,
@@ -19,7 +21,7 @@ type Props = {
   data: DayGameData[];
 };
 
-export const GameCountChart = ({ data }: Props) => {
+export const GameCountChart = memo(({ data }: Props) => {
   const chartData = [
     { day: "월", gameCount: 0, fill: "hsl(var(--chart-1))" },
     { day: "화", gameCount: 0, fill: "hsl(var(--chart-2))" },
@@ -60,4 +62,6 @@ export const GameCountChart = ({ data }: Props) => {
       </ChartContainer>
     </div>
   );
-};
+});
+
+GameCountChart.displayName = "GameCountChart";

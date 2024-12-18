@@ -83,10 +83,9 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
         {year}년 {month}월
       </span>
       <span className="mb-2">총 {sumOfGameCount}게임</span>
-      {viewType === "chart" && (
-        <GameCountChart data={monthData} sumOfGameCount={sumOfGameCount} />
-      )}
-      {viewType === "mejai" && (
+      {viewType === "chart" ? (
+        <GameCountChart data={monthData} />
+      ) : (
         <>
           <WeekDayBar />
           <div className="grid w-full grid-cols-7 gap-1">
