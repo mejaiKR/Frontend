@@ -21,7 +21,7 @@ export const LazyLoadedMonthMejaiCard = ({ month, year }: Props) => {
     <div ref={ref}>
       {isVisible ? (
         <Card>
-          <CardContent className="flex aspect-square flex-col items-center justify-center p-6">
+          <CardContent className="flex aspect-square flex-col items-center p-6">
             <MonthMejaiCard month={month} year={year} />
           </CardContent>
         </Card>
