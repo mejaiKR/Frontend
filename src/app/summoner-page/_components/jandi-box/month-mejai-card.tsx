@@ -3,14 +3,11 @@
 import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
+import { useRecoilValue } from "recoil";
 
 import { LoadingButton, RefreshButton, Spinner } from "@/components";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { useRefreshData, useTimeAgo } from "@/hooks";
+import { viewTypeState } from "@/lib/recoil/atoms";
 import { useJandiQuery } from "@/queries";
 import { DayGameData } from "@/types";
 
@@ -29,7 +26,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
   const id = params?.get("id") ?? "";
   const tag = params?.get("tag") ?? "";
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
-
+  const viewType = useRecoilValue(viewTypeState);
   const { data, isLoading, refetch, isFetching } = useJandiQuery(
     id,
     tag,
@@ -69,7 +66,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
       </div>
     );
   return (
-    <div className="mt-1 flex w-full flex-col items-center justify-between">
+    <div className="mt-1 flex w-full flex-col items-center">
       {isRefreshing ? (
         <LoadingButton title="스트릭 갱신 중..." />
       ) : (
@@ -85,36 +82,30 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
       <span className="mb-4 mt-4 text-2xl font-semibold">
         {year}년 {month}월
       </span>
-      <HoverCard openDelay={0} closeDelay={0}>
-        <HoverCardTrigger asChild>
-          <span className="mb-2 cursor-pointer underline decoration-dotted transition-colors hover:text-primary">
-            총 {sumOfGameCount}게임
-          </span>
-        </HoverCardTrigger>
-        <HoverCardContent
-          className="w-fit border bg-background/80 backdrop-blur-sm"
-          side="bottom"
-          align="center"
-        >
-          <GameCountChart data={monthData} sumOfGameCount={sumOfGameCount} />
-        </HoverCardContent>
-      </HoverCard>
-      <WeekDayBar />
-      <div className="grid w-full grid-cols-7 gap-1">
-        <EmptyBlocks year={year} month={month} />
-        {monthData.map((day) => (
-          <div
-            key={`${day.date}-${day.gameCount}`}
-            className="aspect-w-1 aspect-h-1"
-          >
-            <MejaiBox
-              date={day.date}
-              gameCount={day.gameCount}
-              imageUrl={day.imageUrl}
-            />
+      <span className="mb-2">총 {sumOfGameCount}게임</span>
+      {viewType === "chart" && (
+        <GameCountChart data={monthData} sumOfGameCount={sumOfGameCount} />
+      )}
+      {viewType === "mejai" && (
+        <>
+          <WeekDayBar />
+          <div className="grid w-full grid-cols-7 gap-1">
+            <EmptyBlocks year={year} month={month} />
+            {monthData.map((day) => (
+              <div
+                key={`${day.date}-${day.gameCount}`}
+                className="aspect-w-1 aspect-h-1"
+              >
+                <MejaiBox
+                  date={day.date}
+                  gameCount={day.gameCount}
+                  imageUrl={day.imageUrl}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 };

@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import dayjs from "dayjs";
+import { useRecoilState } from "recoil";
 
 import {
   Carousel,
@@ -18,6 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { viewTypeState } from "@/lib/recoil/atoms";
+import { ViewType } from "@/types";
 
 import { LazyLoadedMonthMejaiCard } from "./lazy-loaded-month-mejai-card";
 
@@ -27,6 +30,7 @@ export const JandiBox = () => {
   const [selectedMonth, setSelectedMonth] = useState(
     () => currentDate.month() + 1,
   );
+  const [viewType, setViewType] = useRecoilState(viewTypeState);
 
   // 현재 년도인 경우 현재 월까지만, 이전 년도는 12월까지 표시
   const months = Array.from(
@@ -39,7 +43,7 @@ export const JandiBox = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <div className="flex w-full justify-end pr-4">
+      <div className="flex w-full justify-end gap-2 pr-4">
         <Select
           value={selectedYear.toString()}
           onValueChange={(value) => {
@@ -59,6 +63,24 @@ export const JandiBox = () => {
                 {year}년
               </SelectItem>
             ))}
+          </SelectContent>
+        </Select>
+        <Select
+          value={viewType}
+          onValueChange={(value) => {
+            setViewType(value as ViewType);
+          }}
+        >
+          <SelectTrigger className="w-[140px]">
+            <SelectValue placeholder="보기 타입" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem key="mejai" value="mejai">
+              메자이
+            </SelectItem>
+            <SelectItem key="chart" value="chart">
+              차트
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>

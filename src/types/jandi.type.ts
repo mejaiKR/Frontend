@@ -8,3 +8,5 @@ export type JandiData = {
   userGameCount: DayGameData[];
   lastUpdatedAt: string;
 };
+
+export type ViewType = "mejai" | "chart";
