@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { Footer, LeaderBoardBox, NavBar, SearchBar } from "@/app/_components";
 import { ClientRoot, GoogleAd } from "@/components";
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
       className={`${gmarketMedium.variable} ${gmarketBold.variable} ${netmarbleBold.variable}`}
       suppressHydrationWarning
     >
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
       <body className="flex justify-center">
         <ClientRoot>
           <div className="flex min-h-screen w-full min-w-[340px] max-w-[550px] flex-col">
