@@ -19,6 +19,7 @@
     ]
   },
   "dependencies": {
+    "@next/third-parties": "14.1.0",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
