@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import dayjs from "dayjs";
-import { useRecoilState } from "recoil";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   Carousel,
@@ -19,18 +19,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { viewTypeState } from "@/lib/recoil/atoms";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ViewType } from "@/types";
 
 import { LazyLoadedMonthMejaiCard } from "./lazy-loaded-month-mejai-card";
 
 export const JandiBox = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [currentDate] = useState(() => dayjs());
   const [selectedYear, setSelectedYear] = useState(() => currentDate.year());
   const [selectedMonth, setSelectedMonth] = useState(
     () => currentDate.month() + 1,
   );
-  const [viewType, setViewType] = useRecoilState(viewTypeState);
+
+  const viewType = (searchParams.get("viewType") as ViewType) || "mejai";
+
+  const updateViewType = useCallback(
+    (newViewType: ViewType) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("viewType", newViewType);
+      router.replace(`?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router],
+  );
 
   // 현재 년도인 경우 현재 월까지만, 이전 년도는 12월까지 표시
   const months = Array.from(
@@ -43,7 +55,23 @@ export const JandiBox = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <div className="flex w-full justify-end gap-2 pr-4">
+      <div className="flex w-full justify-between gap-2 px-4">
+        <Tabs
+          value={viewType}
+          onValueChange={(value) => {
+            updateViewType(value as ViewType);
+          }}
+          className="w-[140px]"
+        >
+          <TabsList className="w-full">
+            <TabsTrigger value="mejai" className="w-1/2">
+              달력
+            </TabsTrigger>
+            <TabsTrigger value="chart" className="w-1/2">
+              차트
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
         <Select
           value={selectedYear.toString()}
           onValueChange={(value) => {
@@ -63,24 +91,6 @@ export const JandiBox = () => {
                 {year}년
               </SelectItem>
             ))}
-          </SelectContent>
-        </Select>
-        <Select
-          value={viewType}
-          onValueChange={(value) => {
-            setViewType(value as ViewType);
-          }}
-        >
-          <SelectTrigger className="w-[140px]">
-            <SelectValue placeholder="보기 타입" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem key="mejai" value="mejai">
-              메자이
-            </SelectItem>
-            <SelectItem key="chart" value="chart">
-              차트
-            </SelectItem>
           </SelectContent>
         </Select>
       </div>
