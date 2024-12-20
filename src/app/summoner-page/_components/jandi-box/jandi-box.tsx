@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { viewTypeState } from "@/lib/recoil/atoms";
 import { ViewType } from "@/types";
 
@@ -43,7 +44,23 @@ export const JandiBox = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <div className="flex w-full justify-end gap-2 pr-4">
+      <div className="flex w-full justify-between gap-2 px-4">
+        <Tabs
+          value={viewType}
+          onValueChange={(value) => {
+            setViewType(value as ViewType);
+          }}
+          className="w-[140px]"
+        >
+          <TabsList className="w-full">
+            <TabsTrigger value="mejai" className="w-1/2">
+              달력
+            </TabsTrigger>
+            <TabsTrigger value="chart" className="w-1/2">
+              차트
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
         <Select
           value={selectedYear.toString()}
           onValueChange={(value) => {
@@ -63,24 +80,6 @@ export const JandiBox = () => {
                 {year}년
               </SelectItem>
             ))}
-          </SelectContent>
-        </Select>
-        <Select
-          value={viewType}
-          onValueChange={(value) => {
-            setViewType(value as ViewType);
-          }}
-        >
-          <SelectTrigger className="w-[140px]">
-            <SelectValue placeholder="보기 타입" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem key="mejai" value="mejai">
-              메자이
-            </SelectItem>
-            <SelectItem key="chart" value="chart">
-              차트
-            </SelectItem>
           </SelectContent>
         </Select>
       </div>
