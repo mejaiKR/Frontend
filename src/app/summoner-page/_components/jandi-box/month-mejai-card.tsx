@@ -61,7 +61,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
 
   if (isLoading)
     return (
-      <div className="flex h-48 w-48 items-center justify-center">
+      <div className="flex size-full items-center justify-center">
         <Spinner />
       </div>
     );
