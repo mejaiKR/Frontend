@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import dayjs from "dayjs";
-import { useRecoilState } from "recoil";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   Carousel,
@@ -20,18 +20,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { viewTypeState } from "@/lib/recoil/atoms";
 import { ViewType } from "@/types";
 
 import { LazyLoadedMonthMejaiCard } from "./lazy-loaded-month-mejai-card";
 
 export const JandiBox = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [currentDate] = useState(() => dayjs());
   const [selectedYear, setSelectedYear] = useState(() => currentDate.year());
   const [selectedMonth, setSelectedMonth] = useState(
     () => currentDate.month() + 1,
   );
-  const [viewType, setViewType] = useRecoilState(viewTypeState);
+
+  const viewType = (searchParams.get("viewType") as ViewType) || "mejai";
+
+  const updateViewType = useCallback(
+    (newViewType: ViewType) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("viewType", newViewType);
+      router.replace(`?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router],
+  );
 
   // 현재 년도인 경우 현재 월까지만, 이전 년도는 12월까지 표시
   const months = Array.from(
@@ -48,7 +59,7 @@ export const JandiBox = () => {
         <Tabs
           value={viewType}
           onValueChange={(value) => {
-            setViewType(value as ViewType);
+            updateViewType(value as ViewType);
           }}
           className="w-[140px]"
         >

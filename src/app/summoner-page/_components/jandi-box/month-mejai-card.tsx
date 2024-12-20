@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
-import { useRecoilValue } from "recoil";
 
 import { LoadingButton, RefreshButton, Spinner } from "@/components";
 import { useRefreshData, useTimeAgo } from "@/hooks";
-import { viewTypeState } from "@/lib/recoil/atoms";
 import { useJandiQuery } from "@/queries";
-import { DayGameData } from "@/types";
+import { DayGameData, ViewType } from "@/types";
 
 import { updateGameCountForMonth } from "./utils/updateGameCountForMonth";
 
@@ -26,7 +24,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
   const id = params?.get("id") ?? "";
   const tag = params?.get("tag") ?? "";
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
-  const viewType = useRecoilValue(viewTypeState);
+  const viewType = (params?.get("viewType") as ViewType) ?? "mejai";
   const { data, isLoading, refetch, isFetching } = useJandiQuery(
     id,
     tag,
