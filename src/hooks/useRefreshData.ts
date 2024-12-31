@@ -31,8 +31,8 @@ export const useRefreshData = ({
   refetchFn,
   lastUpdatedAt,
 }: RefreshDataParams) => {
-  const checkEndpoint = API_ENDPOINTS.UPDATE_STATUS + refreshTarget;
-  const endpoint = API_ENDPOINTS.PROFILE_UPDATE + refreshTarget;
+  const endpoint =
+    API_ENDPOINTS.UPDATE_STATUS + "/" + refreshTarget + "/renewal";
 
   // 업데이트 상태 확인을 위한 쿼리
   const { refetch: refetchStatus } = useQuery({
@@ -41,7 +41,7 @@ export const useRefreshData = ({
     queryFn: async () => {
       const params = new URLSearchParams({ id, tag, ...additionalParams });
       const response = await axios.get<{ lastUpdatedAt: string }>(
-        `${checkEndpoint}?${params}`,
+        `${endpoint}?${params}`,
       );
       return response.data;
     },
@@ -98,8 +98,14 @@ export const useRefreshData = ({
 
   const isRefreshDisabled = useMemo(() => {
     if (!lastUpdatedAt) return false;
-    const now = dayjs().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-    const diffMinutes = dayjs(now).diff(dayjs(lastUpdatedAt), "minute");
+
+    // 마이크로초 형식 처리
+    const formattedDate = lastUpdatedAt.includes(".")
+      ? lastUpdatedAt.split(".")[0] + "Z"
+      : lastUpdatedAt;
+
+    const now = dayjs().format();
+    const diffMinutes = dayjs(now).diff(dayjs(formattedDate), "minute");
     const diffHours = Math.floor(diffMinutes / 60);
 
     return diffHours < 2;

@@ -42,7 +42,7 @@ export const LeaderBoardUnit = ({ year, month }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((userData: RankingUserData, idx: number) => (
+        {data?.ranking?.map((userData: RankingUserData, idx: number) => (
           <TableRow key={`${userData.summonerName}${userData.tagLine}`}>
             <TableCell className="font-medium">{idx + 1}</TableCell>
             <TableCell>

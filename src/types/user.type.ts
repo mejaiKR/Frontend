@@ -6,6 +6,10 @@ export type RankingUserData = {
   tagLine: string;
 };
 
+export type RankingData = {
+  ranking: RankingUserData[];
+};
+
 export type UserData = {
   flexRank: RankInfo;
   lastUpdatedAt: string;
@@ -14,4 +18,9 @@ export type UserData = {
   soloRank: RankInfo;
   summonerName: string;
   tagLine: string;
+};
+
+export type SummonerId = {
+  id: string;
+  tag: string;
 };

@@ -48,7 +48,7 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
   useEffect(() => {
     if (data) {
       const updatedData = updateGameCountForMonth(
-        data.userGameCount,
+        data.userGameCounts,
         year,
         month,
         setSumOfGameCount,

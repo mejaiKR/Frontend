@@ -5,7 +5,7 @@ export type DayGameData = {
 };
 
 export type JandiData = {
-  userGameCount: DayGameData[];
+  userGameCounts: DayGameData[];
   lastUpdatedAt: string;
 };
 

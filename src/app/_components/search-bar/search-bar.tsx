@@ -10,8 +10,9 @@ import SearchIcon from "@/../public/search.svg";
 import { LocalStatusBox, RecommendedNicknameList } from "@/app/_components";
 import { Button, Input } from "@/components/ui";
 import { useClickOutside, useSummonerNavigation } from "@/hooks";
+import { API_ENDPOINTS } from "@/lib/endpoint";
 import { isVisibleDropdownState } from "@/lib/recoil/atoms";
-import { SERVER_URL } from "@/lib/utils";
+import { SummonerId } from "@/types";
 
 export const SearchBar = () => {
   const searchBarRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ export const SearchBar = () => {
       if (searchInputValue) {
         startTransition(() => {
           axios
-            .get(`${SERVER_URL}/users/search`, {
+            .get(API_ENDPOINTS.SEARCH, {
               params: {
                 id: searchInputValue,
                 count: 5,
@@ -41,7 +42,9 @@ export const SearchBar = () => {
             })
             .then((res) => {
               setSearchResults(
-                res.data.map((user: any) => `${user.id}#${user.tag}`),
+                res.data.profiles.map(
+                  (user: SummonerId) => `${user.id}#${user.tag}`,
+                ),
               );
             })
             .catch((err) => {
