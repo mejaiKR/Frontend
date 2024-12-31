@@ -1,11 +1,16 @@
 import dayjs from "dayjs";
 
 export const useTimeAgo = (lastUpdatedAt: string | undefined) => {
-  if (!lastUpdatedAt || lastUpdatedAt === "1900-01-01T00:00:00.000Z")
+  if (!lastUpdatedAt || lastUpdatedAt === "1900-01-01T00:00:00.000000")
     return "업데이트 정보 없음";
 
-  const now = dayjs().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-  const diffMinutes = dayjs(now).diff(dayjs(lastUpdatedAt), "minute");
+  // ISO 형식으로 변환 (마이크로초 부분 처리)
+  const formattedDate = lastUpdatedAt.includes(".")
+    ? lastUpdatedAt.split(".")[0] + "Z"
+    : lastUpdatedAt;
+
+  const now = dayjs().format();
+  const diffMinutes = dayjs(now).diff(dayjs(formattedDate), "minute");
   const diffHours = Math.floor(diffMinutes / 60);
   const diffDays = Math.floor(diffHours / 24);
 
