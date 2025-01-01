@@ -55,10 +55,15 @@ export const useRefreshData = ({
     const result = await refetchStatus();
     if (!result.data) return false;
 
-    const lastUpdateAt = dayjs(result.data.lastUpdatedAt);
-    const lastUpdatedAtDate = dayjs(lastUpdatedAt);
+    // 서버에서 받은 최신 업데이트 시간
+    const serverLastUpdateAt = dayjs(result.data.lastUpdatedAt);
+    // 현재 클라이언트에 저장된 업데이트 시간 (undefined면 1900-01-01로 설정)
+    const clientLastUpdateAt = dayjs(
+      lastUpdatedAt ?? "1900-01-01T00:00:00.000000",
+    );
 
-    if (lastUpdateAt.isAfter(lastUpdatedAtDate)) {
+    // 클라이언트의 업데이트 시간이 서버의 업데이트 시간보다 더 이전인 경우에만 갱신
+    if (clientLastUpdateAt.isBefore(serverLastUpdateAt)) {
       await refetchFn();
       return true;
     }
@@ -99,13 +104,9 @@ export const useRefreshData = ({
   const isRefreshDisabled = useMemo(() => {
     if (!lastUpdatedAt) return false;
 
-    // 마이크로초 형식 처리
-    const formattedDate = lastUpdatedAt.includes(".")
-      ? lastUpdatedAt.split(".")[0] + "Z"
-      : lastUpdatedAt;
-
+    // 마이크로초 형식 그대로 사용
     const now = dayjs().format();
-    const diffMinutes = dayjs(now).diff(dayjs(formattedDate), "minute");
+    const diffMinutes = dayjs(now).diff(dayjs(lastUpdatedAt), "minute");
     const diffHours = Math.floor(diffMinutes / 60);
 
     return diffHours < 2;
