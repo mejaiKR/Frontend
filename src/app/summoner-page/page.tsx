@@ -9,22 +9,28 @@ import { Spinner } from "@/components/ui";
 
 import { ErrorPage, SummonerContent } from "./_components";
 
-export default function SummonerPage() {
+const ErrorBoundaryWithKey = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const tag = searchParams.get("tag");
 
   return (
     <ErrorBoundary FallbackComponent={ErrorPage} key={`${id}-${tag}`}>
-      <Suspense
-        fallback={
-          <div className="flex h-96 w-full items-center justify-center">
-            <Spinner />
-          </div>
-        }
-      >
-        <SummonerContent />
-      </Suspense>
+      <SummonerContent />
     </ErrorBoundary>
+  );
+};
+
+export default function SummonerPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-96 w-full items-center justify-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <ErrorBoundaryWithKey />
+    </Suspense>
   );
 }
