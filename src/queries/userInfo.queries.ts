@@ -23,5 +23,7 @@ export const useJandiQuery = (
   return useQuery({
     queryKey: [QUERY_KEY.jandi, { id, tag, year, month }],
     queryFn: fetchJandi,
+    retry: false,
+    retryOnMount: false,
   });
 };
