@@ -2,24 +2,9 @@
 
 import { Suspense } from "react";
 
-import { useSearchParams } from "next/navigation";
-import { ErrorBoundary } from "react-error-boundary";
-
 import { Spinner } from "@/components/ui";
 
-import { ErrorPage, SummonerContent } from "./_components";
-
-const ErrorBoundaryWithKey = () => {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  const tag = searchParams.get("tag");
-
-  return (
-    <ErrorBoundary FallbackComponent={ErrorPage} key={`${id}-${tag}`}>
-      <SummonerContent />
-    </ErrorBoundary>
-  );
-};
+import { ErrorBoundarySummonerContent } from "./_components";
 
 export default function SummonerPage() {
   return (
@@ -30,7 +15,7 @@ export default function SummonerPage() {
         </div>
       }
     >
-      <ErrorBoundaryWithKey />
+      <ErrorBoundarySummonerContent />
     </Suspense>
   );
 }
