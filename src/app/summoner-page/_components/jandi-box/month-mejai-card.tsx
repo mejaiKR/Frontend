@@ -54,6 +54,8 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
         setSumOfGameCount,
       );
       setMonthData(updatedData);
+    } else {
+      setMonthData([]);
     }
   }, [data, year, month, isFetching]);
 
