@@ -78,7 +78,7 @@ export const SearchBar = () => {
             id="default-search"
             maxLength={22}
             ref={inputRef}
-            className="block h-12 w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 pr-28 ps-10 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className="block h-12 w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 pr-28 ps-10 text-[16px] text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             placeholder="소환사명#태그"
             required
             value={searchInputValue}
