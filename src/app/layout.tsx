@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   title: "mejai.kr",
   description: "mejai.kr",
   keywords: "mejai.kr",
+  viewport: {
+    initialScale: 1.0,
+    maximumScale: 1,
+    width: "device-width",
+    userScalable: false,
+  },
 };
 
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
@@ -24,12 +30,6 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
       className={`${gmarketMedium.variable} ${gmarketBold.variable} ${netmarbleBold.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        />
-      </head>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
       <body className="flex justify-center">
         <ClientRoot>
