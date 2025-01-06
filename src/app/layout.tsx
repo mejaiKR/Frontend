@@ -7,20 +7,21 @@ import { ClientRoot, GoogleAd } from "@/components";
 
 import { gmarketBold, gmarketMedium, netmarbleBold } from "./fonts";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
+
+export const viewport: Viewport = {
+  initialScale: 1.0,
+  maximumScale: 1,
+  width: "device-width",
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   title: "mejai.kr",
   description: "mejai.kr",
   keywords: "mejai.kr",
-  viewport: {
-    initialScale: 1.0,
-    maximumScale: 1,
-    width: "device-width",
-    userScalable: false,
-  },
 };
 
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
