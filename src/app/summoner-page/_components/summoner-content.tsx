@@ -25,7 +25,7 @@ export const SummonerContent = () => {
     <>
       <UserInfoBox id={id} tag={tag} />
       <TierBox id={id} tag={tag} />
-      <JandiBox />
+      {!isFetching && <JandiBox />}
     </>
   );
 };
