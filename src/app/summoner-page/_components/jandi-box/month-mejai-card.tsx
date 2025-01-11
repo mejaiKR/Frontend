@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 
+import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
 import { LoadingButton, RefreshButton, Spinner } from "@/components";
 import { useRefreshData, useTimeAgo } from "@/hooks";
-import { useJandiQuery } from "@/queries";
+import { queries } from "@/lib/queryKey";
 import { DayGameData, ViewType } from "@/types";
 
 import { updateGameCountForMonth } from "./utils/updateGameCountForMonth";
@@ -25,11 +26,8 @@ export const MonthMejaiCard = ({ month, year }: Props) => {
   const tag = params?.get("tag") ?? "";
   const [sumOfGameCount, setSumOfGameCount] = useState(0);
   const viewType = (params?.get("viewType") as ViewType) ?? "mejai";
-  const { data, isLoading, refetch, isFetching } = useJandiQuery(
-    id,
-    tag,
-    year,
-    month,
+  const { data, isLoading, refetch, isFetching } = useQuery(
+    queries.jandi.detail({ id, tag, year, month }),
   );
 
   const { isRefreshing, handleRefresh, isRefreshDisabled } = useRefreshData({

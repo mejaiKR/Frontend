@@ -2,13 +2,14 @@
 
 import { useEffect } from "react";
 
+import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Image from "next/image";
 
 import { BookMarkButton } from "@/app/summoner-page/_components";
 import { LoadingButton, RefreshButton, ShareButton } from "@/components";
 import { useRefreshData, useTimeAgo } from "@/hooks";
-import { useUserInfoQuery } from "@/queries";
+import { queries } from "@/lib/queryKey";
 
 import { UserInfoBoxSkeleton } from "./user-info-box-skeleton";
 
@@ -18,7 +19,9 @@ type Props = Readonly<{
 }>;
 
 export const UserInfoBox = ({ id, tag }: Props) => {
-  const { data, isLoading, error, refetch } = useUserInfoQuery(id, tag);
+  const { data, isLoading, error, refetch } = useQuery(
+    queries.userInfo.detail({ id, tag }),
+  );
 
   const { isRefreshing, handleRefresh, isRefreshDisabled } = useRefreshData({
     id,

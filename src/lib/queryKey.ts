@@ -1,5 +1,31 @@
-export const QUERY_KEY = {
-  userInfo: "userInfo",
-  jandi: "jandi",
-  leaderboard: "leaderboard",
-};
+import { createQueryKeyStore } from "@lukemorales/query-key-factory";
+
+import { fetchJandi, fetchLeaderBoard, fetchUserInfo } from "./fetch-func";
+
+export const queries = createQueryKeyStore({
+  userInfo: {
+    detail: (params: { id: string; tag: string }) => ({
+      queryKey: [params],
+      queryFn: () => fetchUserInfo(params),
+    }),
+  },
+  jandi: {
+    detail: (params: {
+      id: string;
+      tag: string;
+      year: number;
+      month: number;
+    }) => ({
+      queryKey: [params],
+      queryFn: () => fetchJandi(params),
+      retry: false,
+      retryOnMount: false,
+    }),
+  },
+  leaderboard: {
+    detail: (params: { year: number; month: number }) => ({
+      queryKey: [params],
+      queryFn: () => fetchLeaderBoard(params),
+    }),
+  },
+});
