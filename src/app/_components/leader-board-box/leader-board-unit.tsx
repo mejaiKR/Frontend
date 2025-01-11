@@ -1,5 +1,7 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+
 import { Spinner } from "@/components";
 import {
   Table,
@@ -11,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useSummonerNavigation } from "@/hooks/useSummonerNavigation";
-import { useLeaderBoardQuery } from "@/queries";
+import { queries } from "@/lib/queryKey";
 import { RankingUserData } from "@/types";
 
 type Props = Readonly<{
@@ -20,7 +22,9 @@ type Props = Readonly<{
 }>;
 
 export const LeaderBoardUnit = ({ year, month }: Props) => {
-  const { data, error, isLoading } = useLeaderBoardQuery(year, month);
+  const { data, error, isLoading } = useQuery(
+    queries.leaderboard.detail({ year, month }),
+  );
   const { moveToSummonerPage } = useSummonerNavigation();
 
   if (isLoading)
@@ -33,7 +37,9 @@ export const LeaderBoardUnit = ({ year, month }: Props) => {
 
   return (
     <Table className="mt-4">
-      <TableCaption>{month}월 탑 게이머</TableCaption>
+      <TableCaption className="caption-top text-xl">
+        {month}월 탑 게이머
+      </TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">순위</TableHead>

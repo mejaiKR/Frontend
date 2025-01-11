@@ -1,8 +1,9 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { nanoid } from "nanoid";
 
-import { useUserInfoQuery } from "@/queries";
+import { queries } from "@/lib/queryKey";
 
 import { TierBoxSkeleton } from "./tier-box-skeleton";
 import { TierUnit } from "./tier-unit";
@@ -12,7 +13,9 @@ type Props = {
 };
 
 export const TierBox = ({ id, tag }: Props) => {
-  const { data, isLoading, error } = useUserInfoQuery(id, tag);
+  const { data, isLoading, error } = useQuery(
+    queries.userInfo.detail({ id, tag }),
+  );
 
   if (isLoading || data === undefined)
     return (
