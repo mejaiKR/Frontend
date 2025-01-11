@@ -33,7 +33,9 @@ export const LeaderBoardUnit = ({ year, month }: Props) => {
 
   return (
     <Table className="mt-4">
-      <TableCaption>{month}월 탑 게이머</TableCaption>
+      <TableCaption className="caption-top text-xl">
+        {month}월 탑 게이머
+      </TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">순위</TableHead>
