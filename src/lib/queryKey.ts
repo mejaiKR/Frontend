@@ -18,8 +18,6 @@ export const queries = createQueryKeyStore({
     }) => ({
       queryKey: [params],
       queryFn: () => fetchJandi(params),
-      retry: false,
-      retryOnMount: false,
     }),
   },
   leaderboard: {
