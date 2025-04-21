@@ -32,5 +32,4 @@ typescript, next.js, tailwindcss, react-query, recoil, shadcn
   LocalStorage 사용해서 즐겨찾기, 검색 기록 기능 구현 :  https://github.com/mejaiGG/Frontend/pull/16
 ### 기능 5
   useTransition 사용해서 검색 추천 기능 구현 : https://github.com/mejaiKR/Frontend/pull/19
-
 <br>
