@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -d "/home/ec2-user/build" ]; then
-    rm -rf /home/ec2-user/build/*
+if [ -d "/home/ubuntu/build" ]; then
+    rm -rf /home/ubuntu/build/*
 else
-    echo "/home/ec2-user/build directory does not exist."
+    echo "/home/ubuntu/build directory does not exist."
 fi
