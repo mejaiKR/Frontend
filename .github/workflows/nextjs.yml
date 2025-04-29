@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Make .env.local
         run: |
-          echo "${{ secrets.NEXT_ENV }}" > .env.local
+          printf "%s" "${{ secrets.NEXT_ENV }}" > .env.local   # 줄바꿈 유지
       - name: Detect package manager
         id: detect-package-manager
         run: |
