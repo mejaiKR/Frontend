@@ -23,13 +23,13 @@ type Props = {
 
 export const GameCountChart = memo(({ data }: Props) => {
   const chartData = [
+    { day: "일", gameCount: 0, fill: "hsl(var(--chart-7))" },
     { day: "월", gameCount: 0, fill: "hsl(var(--chart-1))" },
     { day: "화", gameCount: 0, fill: "hsl(var(--chart-2))" },
     { day: "수", gameCount: 0, fill: "hsl(var(--chart-3))" },
     { day: "목", gameCount: 0, fill: "hsl(var(--chart-4))" },
     { day: "금", gameCount: 0, fill: "hsl(var(--chart-5))" },
     { day: "토", gameCount: 0, fill: "hsl(var(--chart-6))" },
-    { day: "일", gameCount: 0, fill: "hsl(var(--chart-7))" },
   ];
 
   data.forEach((game) => {
