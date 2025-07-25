@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -33,18 +33,6 @@ export const UserInfoBox = ({ id, tag }: Props) => {
 
   const timeAgo = useTimeAgo(data?.lastUpdatedAt);
 
-  const [profileIconSrc, setProfileIconSrc] = useState<string | undefined>(
-    data?.profileIcon,
-  );
-  const handleProfileIconError = () => {
-    if (!profileIconSrc) return;
-    const match = profileIconSrc.match(/(\d+)\.\w+$/);
-    const iconNum = match ? match[1] : "29";
-    setProfileIconSrc(
-      `https://ddragon.leagueoflegends.com/cdn/15.14.1/img/profileicon/${iconNum}.png`,
-    );
-  };
-
   useEffect(() => {
     document.title = `${id}#${tag} - mejai.kr`;
   }, [id, tag]);
@@ -70,13 +58,12 @@ export const UserInfoBox = ({ id, tag }: Props) => {
     <div className="m-4 flex h-40 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
       <div className="relative flex flex-col items-center justify-center">
         <Image
-          src={profileIconSrc || ""}
+          src={data.profileIcon}
           alt="Profile Icon"
           draggable={false}
           width={140}
           height={140}
           className="rounded-2xl"
-          onError={handleProfileIconError}
         />
         <span className="absolute left-1/2 top-full -translate-x-1/2 -translate-y-5 transform rounded-full bg-gray-900 px-2 text-xs text-white">
           {data.level}
