@@ -17,7 +17,7 @@ import { SummonerId } from "@/types";
 export const SearchBar = () => {
   const searchBarRef = useRef<HTMLDivElement>(null);
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [_, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [isVisibleDropdown, setIsVisibleDropdown] = useRecoilState(
     isVisibleDropdownState,
   );
